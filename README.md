@@ -6,8 +6,8 @@ Chat Messaging System (CMS)
 * Ali Gill - ThrillerNight00 
 * Ismail Iraz - ihakkiraz
 
-DIVIDING TASKS
-* User Story 1/2 - Chiraz Belarbi 
+**Dividing Tasks**
+* User Story 2 + Entities - Chiraz Belarbi 
 * User Story 3/4 - Ismail Iraz 
 * User Story 5/6 - Joojo Botchway 
 * API - Ali Gill
