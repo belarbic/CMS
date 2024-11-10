@@ -27,3 +27,12 @@ c.belarbi
 - [x] Create create_chatroom interface_adapter and add apprpriate files.
 - [ ] Complete all files in create_chatroom use_case folder.
 - [ ] Complete all files in create_chatroom interface_adapter folder.
+
+ihakkiraz
+- [X] add id (getter and setter) to message entity
+- [X] implement search message interactor
+- [X] implement message repository (should be in data access)
+- [X] implement search message controller & presenter
+- [X] implement edit message controller & presenter
+- [X] implement edit message interactor
+- [X] implement message view for presenter
