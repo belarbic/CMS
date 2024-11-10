@@ -36,6 +36,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
 
+    // new button to create new chatroom
+    private final JButton createChatRoom;
+
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
@@ -55,6 +58,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         changePassword = new JButton("Change Password");
         buttons.add(changePassword);
+
+        // this code creates the Create Chat Room button and adds it to buttons.
+        createChatRoom = new JButton("Create Chat Room");
+        buttons.add(createChatRoom);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 

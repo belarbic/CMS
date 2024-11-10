@@ -7,5 +7,5 @@ import entity.User;
  */
 public interface CreateChatRoomUserDataAccessInterface {
 
-    // to be completed
+    // TODO
 }
