@@ -36,3 +36,4 @@ ihakkiraz
 - [X] implement edit message controller & presenter
 - [X] implement edit message interactor
 - [X] implement message view for presenter
+- [] look for warnings and possible checkstyle errors
