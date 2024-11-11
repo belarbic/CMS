@@ -1,3 +1,4 @@
+/*
 package view;
 
 import java.awt.Component;
@@ -20,10 +21,11 @@ import interface_adapter.create_chatroom.CreateChatRoomViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
-
-/**
+*/
+/*
  * The View for when the user is logging into the program.
  */
+/*
 public class CreateChatRoomView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName = "create chat room";
@@ -131,11 +133,12 @@ public class CreateChatRoomView extends JPanel implements ActionListener, Proper
         this.add(passwordInfo);
         this.add(buttons);
     }
-
-    /**
+*/
+    /*
      * React to a button click that results in evt.
      * @param evt the ActionEvent to react to
      */
+/*
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
@@ -160,3 +163,4 @@ public class CreateChatRoomView extends JPanel implements ActionListener, Proper
         this.loginController = loginController;
     }
 }
+*/
