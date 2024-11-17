@@ -1,7 +1,5 @@
 package entity;
 
-import java.util.ArrayList;
-
 /**
  * Factory for creating users.
  */

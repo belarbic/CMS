@@ -19,19 +19,19 @@ public class Main {
      * @param args unused arguments
      */
     public static void main(String[] args) {
-        try {
-            FileInputStream fis = new FileInputStream("cmspractice-uoft-firebase-adminsdk-ivykq-7fe701b624.json");
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(fis))
-                    .setDatabaseUrl("https://cmspractice-uoft-default-rtdb.firebaseio.com/")
-                    .build();
-            FirebaseApp.initializeApp(options);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ChatService chatService = new ChatService();
-        chatService.addMessageListener("groupId1");
-        chatService.sendMessage("groupId1", "Hello World!", "TestUser");
+//        try {
+//            FileInputStream fis = new FileInputStream("firebase_config.json");
+//            FirebaseOptions options = new FirebaseOptions.Builder()
+//                    .setCredentials(GoogleCredentials.fromStream(fis))
+//                    .setDatabaseUrl("https://cmspractice-uoft-default-rtdb.firebaseio.com/")
+//                    .build();
+//            FirebaseApp.initializeApp(options);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        ChatService chatService = new ChatService();
+//        chatService.addMessageListener("groupId1");
+//        chatService.sendMessage("groupId1", "Hello World!", "TestUser");
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                                             .addLoginView()
