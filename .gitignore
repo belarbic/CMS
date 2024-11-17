@@ -4,7 +4,8 @@ out/
 !**/src/test/**/out/
 .idea/easycode.ignore
 
-*.json
+cmspractice-uoft-710dcd9b775c.json
+firebase_config.json
 
 target/
 
