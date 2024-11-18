@@ -12,7 +12,7 @@ public class SearchMessageInteractor {
     private final MessageRepositoryInterface messageRepository;
 
     /**
-     * Constructs a new SearchMessagesInteractor.
+     * Initializes the SearchMessageInteractor with the specified repository.
      *
      * @param messageRepository The repository that stores the messages.
      */
@@ -22,6 +22,7 @@ public class SearchMessageInteractor {
 
     /**
      * Searches for messages containing the given keyword.
+     * Performs a case-insensitive match of the keyword in message content.
      *
      * @param keyword The keyword to search for in message contents.
      * @return A list of messages that contain the given keyword.

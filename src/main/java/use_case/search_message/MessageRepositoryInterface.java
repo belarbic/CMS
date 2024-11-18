@@ -10,8 +10,7 @@ import entity.Message;
  */
 public interface MessageRepositoryInterface {
     /**
-     * Adds a message to the repository.
-     * The repository will persist the message data for future retrieval.
+     * Adds a message to the repository for future retrieval.
      *
      * @param message The message to be added. Must not be null.
      * @throws IllegalArgumentException If the message is null.
@@ -19,17 +18,15 @@ public interface MessageRepositoryInterface {
     void addMessage(Message message);
 
     /**
-     * Retrieves all messages from the repository.
-     * This method returns a collection of all messages stored in the repository.
+     * Retrieves all messages stored in the repository.
      *
      * @return A list containing all the messages stored in the repository.
-     *         If no messages are stored, an empty list is returned.
+     *         Returns an empty list if no messages are stored.
      */
     ArrayList<Message> getMessages();
 
     /**
      * Retrieves a message by its unique ID.
-     * This method allows retrieving a specific message from the repository based on its unique identifier.
      *
      * @param id The unique ID of the message to be retrieved.
      * @return The message with the given ID, or null if no such message exists.
@@ -39,7 +36,7 @@ public interface MessageRepositoryInterface {
 
     /**
      * Searches for messages containing the specified keyword in their content.
-     * This method allows for filtering messages based on the presence of a keyword in their content.
+     * The search is case-insensitive and matches partial keywords.
      *
      * @param keyword The keyword to search for in message content.
      * @return A list of messages containing the specified keyword.
@@ -49,8 +46,7 @@ public interface MessageRepositoryInterface {
     ArrayList<Message> searchMessageByKeyword(String keyword);
 
     /**
-     * Deletes a message by its unique ID.
-     * This method removes the specified message from the repository.
+     * Deletes a message identified by its unique ID from the repository.
      *
      * @param id The unique ID of the message to be deleted.
      * @throws IllegalArgumentException If the ID is null or empty.
@@ -59,13 +55,12 @@ public interface MessageRepositoryInterface {
     void deleteMessageById(String id);
 
     /**
-     * Updates a message's content by its ID.
-     * This method allows modifying the content of an existing message stored in the repository.
+     * Updates the content of a message identified by its unique ID.
      *
      * @param id The ID of the message to be updated.
      * @param content The new content for the message.
      * @return The updated message with the new content.
-     * @throws IllegalArgumentException If the ID or newContent is null or empty.
+     * @throws IllegalArgumentException If the ID or content is null or empty.
      * @throws java.util.NoSuchElementException If no message is found with the given ID.
      */
     Message updateMessageContent(String id, String content) throws NoSuchElementException;
