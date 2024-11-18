@@ -1,5 +1,7 @@
 package view;
 
+import java.util.List;
+
 /**
  * Interface for displaying message-related information to the user.
  * The view will implement these methods to show success or failure messages
@@ -20,4 +22,24 @@ public interface MessageView {
      * @param errorMessage The error message to display.
      */
     void showError(String errorMessage);
+
+    /**
+     * Displays the search results to the user.
+     *
+     * @param formattedMessages A list of formatted messages from the search results.
+     */
+    void showSearchResults(List<String> formattedMessages);
+
+    /**
+     * Displays a message indicating that no search results were found.
+     */
+    void showNoResults();
+
+    /**
+     * Displays the status of the edit operation (success or failure).
+     *
+     * @param isSuccess Indicates whether the edit operation was successful.
+     * @param message The message to display, describing the status.
+     */
+    void showEditStatus(boolean isSuccess, String message);
 }
