@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -9,9 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
@@ -30,7 +29,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private ChangePasswordController changePasswordController;
     private LogoutController logoutController;
 
-    private final JLabel username;
+    private final JLabel name;
 
     private final JButton logOut;
 
@@ -58,7 +57,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         //        new JLabel("Password"), passwordInputField);
 
         final JLabel usernameInfo = new JLabel("Currently logged in: ");
-        username = new JLabel();
+        name = new JLabel();
         final JLabel welcomeStatement = new JLabel("What would you like to do? ");
 
         final JPanel buttons = new JPanel();
@@ -141,7 +140,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                     if (evt.getSource().equals(createChatRoom)) {
                         // 1. get the state out of the loggedInViewModel. It contains the username.
                         final LoggedInState currentState = loggedInViewModel.getState();
-                        // 2. Execute the logout Controller.
+                        // 2. Execute the createChatRoom Controller.
                         createChatRoomController.execute(
                                 currentState.getUsername()
                         );
@@ -151,7 +150,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         this.add(title);
         this.add(usernameInfo);
-        this.add(username);
+        this.add(name);
         this.add(welcomeStatement);
 
         // this.add(passwordInfo);
@@ -163,7 +162,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("state")) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
-            username.setText(state.getUsername());
+            name.setText(state.getUsername());
         }
         else if (evt.getPropertyName().equals("password")) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
