@@ -3,7 +3,7 @@ package interface_adapter.create_chatroom;
 import interface_adapter.ViewModel;
 
 /**
- * The View Model for the Login View.
+ * The View Model for the Create ChatRoom View.
  */
 public class CreateChatRoomViewModel extends ViewModel<CreateChatRoomState> {
 
