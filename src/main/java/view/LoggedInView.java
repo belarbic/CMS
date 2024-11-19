@@ -16,6 +16,7 @@ import javax.swing.event.DocumentListener;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.create_chatroom.CreateChatRoomController;
 import interface_adapter.logout.LogoutController;
 
 /**
@@ -41,6 +42,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     // new button to create new chatroom
     private final JButton createChatRoom;
+    private CreateChatRoomController createChatRoomController;
 
     // new button to view current chatrooms
     private final JButton viewChatRooms;
@@ -133,6 +135,20 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 }
         );
 
+        createChatRoom.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                evt -> {
+                    if (evt.getSource().equals(createChatRoom)) {
+                        // 1. get the state out of the loggedInViewModel. It contains the username.
+                        final LoggedInState currentState = loggedInViewModel.getState();
+                        // 2. Execute the logout Controller.
+                        createChatRoomController.execute(
+                                currentState.getUsername()
+                        );
+                    }
+                }
+        );
+
         this.add(title);
         this.add(usernameInfo);
         this.add(username);
@@ -153,7 +169,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             JOptionPane.showMessageDialog(null, "password updated for " + state.getUsername());
         }
-
     }
 
     public String getViewName() {
@@ -166,5 +181,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
+    }
+
+    public void setCreateChatRoomController(CreateChatRoomController createChatRoomController) {
+        this.createChatRoomController = createChatRoomController;
     }
 }
