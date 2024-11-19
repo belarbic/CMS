@@ -15,6 +15,12 @@ public interface CreateChatRoomUserDataAccessInterface {
     boolean existsByName(String name);
 
     /**
+     * Returns the name of the chatRoom.
+     * @return the name of the chatRoom.; null indicates that there isn't a name.
+     */
+    String getName();
+
+    /**
      * Saves the ChatRoom.
      * @param  chatRoom the chatRoom to save
      */
