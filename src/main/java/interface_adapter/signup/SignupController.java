@@ -30,8 +30,6 @@ public class SignupController {
     public void execute(String username, String password1, String password2) {
         final SignupInputData signupInputData = new SignupInputData(
                 username, password1, password2);
-        initializeFirebase();
-        signUpUser(username, password1);
 
         userSignupUseCaseInteractor.execute(signupInputData);
     }
@@ -41,31 +39,5 @@ public class SignupController {
      */
     public void switchToLoginView() {
         userSignupUseCaseInteractor.switchToLoginView();
-    }
-    public static void initializeFirebase() {
-        try (FileInputStream fileInputStream = new FileInputStream("cmspractice-uoft-710dcd9b775c.json")) {
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(fileInputStream))
-                    .build();
-            FirebaseApp app = FirebaseApp.initializeApp(options);
-            System.out.println("Firebase initialized Successfully");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    public void signUpUser(String email, String password) {
-        try {
-            CreateRequest request = new CreateRequest()
-                    .setEmail(email)
-                    .setPassword(password);
-            UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
-            System.out.println("Successfully created user: " + userRecord.getUid());
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

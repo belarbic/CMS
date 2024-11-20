@@ -16,19 +16,22 @@ import com.google.firebase.FirebaseOptions;
 public class Main {
     /**
      * Builds and runs the CA architecture of the application.
-     * @param args unused arguments
      */
+
+    public static void initializeFirebase() {
+        try (FileInputStream fileInputStream = new FileInputStream("cmspractice-uoft-710dcd9b775c.json")) {
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(fileInputStream))
+                    .build();
+            FirebaseApp app = FirebaseApp.initializeApp(options);
+            System.out.println("Firebase initialized Successfully");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
     public static void main(String[] args) {
-//        try {
-//            FileInputStream fis = new FileInputStream("firebase_config.json");
-//            FirebaseOptions options = new FirebaseOptions.Builder()
-//                    .setCredentials(GoogleCredentials.fromStream(fis))
-//                    .setDatabaseUrl("https://cmspractice-uoft-default-rtdb.firebaseio.com/")
-//                    .build();
-//            FirebaseApp.initializeApp(options);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 //        ChatService chatService = new ChatService();
 //        chatService.addMessageListener("groupId1");
 //        chatService.sendMessage("groupId1", "Hello World!", "TestUser");
@@ -45,5 +48,6 @@ public class Main {
 
         application.pack();
         application.setVisible(true);
+        initializeFirebase();
     }
 }
