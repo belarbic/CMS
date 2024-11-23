@@ -16,9 +16,6 @@ public class Message {
     public Message(String content, String sender) {
         // TODO make a call to the API for ID
         this.id = "";
-
-      public Message(String id, String content, User sender, ChatRoom chatRoom) {
-        this.id = id;
         this.content = content;
         this.sender = sender;
         this.timestamp = LocalDateTime.now();
@@ -31,10 +28,6 @@ public class Message {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public User getSender() {
-        return sender;
     }
 
     public String getContent() {
@@ -55,5 +48,10 @@ public class Message {
 
     public boolean isEdited() {
         return edited;
+    }
+
+    public String getChatRoom() {
+        // TODO have to discuss this
+        return "";
     }
 }
