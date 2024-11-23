@@ -9,5 +9,8 @@
         <module name="CMS" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="note-application" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
