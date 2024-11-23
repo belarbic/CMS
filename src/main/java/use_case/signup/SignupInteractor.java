@@ -40,6 +40,8 @@ public class SignupInteractor implements SignupInputBoundary {
     }
     /**
      * The Signup Interactor. // RENAME
+     * @param email username.
+     * @param password password.
      */
 
     public void signUpFirebaseUser(String email, String password) {

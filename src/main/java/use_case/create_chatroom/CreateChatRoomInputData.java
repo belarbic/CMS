@@ -1,9 +1,9 @@
 package use_case.create_chatroom;
 
+import java.util.ArrayList;
+
 import entity.Message;
 import entity.User;
-
-import java.util.ArrayList;
 
 /**
  * The input data for the Create ChatRoom Use Case.

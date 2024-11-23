@@ -1,6 +1,6 @@
 package use_case.create_chatroom;
 
-import entity.User;
+// import entity.User;
 
 /**
  * The interface of the DAO for the Create ChatRoom Use Case.

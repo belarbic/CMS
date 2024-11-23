@@ -21,9 +21,9 @@ public class Main {
     public static void initializeFirebase() {
         try (FileInputStream fileInputStream = new FileInputStream("cmspractice-uoft-710dcd9b775c.json")) {
             FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(fileInputStream))
+                    .setCredentials(GoogleCredentials.fromStream(fileInputStream))    // Load Firebase credentials.
                     .build();
-            FirebaseApp app = FirebaseApp.initializeApp(options);
+            FirebaseApp app = FirebaseApp.initializeApp(options);    // Initialize Firebase app.
             System.out.println("Firebase initialized Successfully");
         }
         catch (Exception e) {

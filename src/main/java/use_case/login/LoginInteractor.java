@@ -1,19 +1,20 @@
 package use_case.login;
 
-import entity.User;
-
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
+import entity.User;
+
 /**
  * The Login Interactor.
  */
 public class LoginInteractor implements LoginInputBoundary {
     private static final String API_KEY = "AIzaSyBqkrvRoPFfXPg7eU2_bZk6l_lDcUgZav0";
-    private static final String SIGNIN_URL = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + API_KEY;
+    private static final String SIGNIN_URL =
+            "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + API_KEY;
     private final LoginUserDataAccessInterface userDataAccessObject;
     private final LoginOutputBoundary loginPresenter;
 
@@ -46,6 +47,13 @@ public class LoginInteractor implements LoginInputBoundary {
             }
         }
     }
+
+    /**
+     * Sends the JSON (email and password) to Firebase.
+     * @param email username of user.
+     * @param password password.
+     * @return If the server responds with HTTP status 200 (HTTP_OK) it returns true.
+     */
     public boolean signInFirebaseUser(String email, String password) {
         try {
             URL url = new URL(SIGNIN_URL);

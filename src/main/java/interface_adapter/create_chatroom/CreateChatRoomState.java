@@ -35,6 +35,10 @@ public class CreateChatRoomState {
         return messages;
     }
 
+    /**
+     * Sets a Message.
+     * @param message The message object.
+     */
     public void setMessages(Message message) {
         this.messages.add(message);
     }
@@ -43,6 +47,7 @@ public class CreateChatRoomState {
     public String getLoginError() {
         return loginError;
     }
+
     public void setLoginError(String usernameError) {
         this.loginError = usernameError;
     }
