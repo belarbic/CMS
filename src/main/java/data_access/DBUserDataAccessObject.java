@@ -31,6 +31,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
     private static final String MESSAGE = "message";
+    private static final String UID = "uid";
     private final UserFactory userFactory;
 
     public DBUserDataAccessObject(UserFactory userFactory) {
@@ -115,6 +116,71 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
 
             if (responseBody.getInt(STATUS_CODE_LABEL) == SUCCESS_CODE) {
                 // success!
+            }
+            else {
+                throw new RuntimeException(responseBody.getString(MESSAGE));
+            }
+        }
+        catch (IOException | JSONException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * Saves UID.
+     */
+    @Override
+    public void saveUid(String username, String uid) {
+        final OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+
+        // POST METHOD
+        final MediaType mediaType = MediaType.parse(CONTENT_TYPE_JSON);
+        final JSONObject requestBody = new JSONObject();
+        requestBody.put(USERNAME, username);
+        requestBody.put(UID, uid);
+        final RequestBody body = RequestBody.create(requestBody.toString(), mediaType);
+        final Request request = new Request.Builder()
+                .url("http://vm003.teach.cs.toronto.edu:20112/user_uid")
+                .method("POST", body)
+                .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_JSON)
+                .build();
+        try {
+            final Response response = client.newCall(request).execute();
+
+            final JSONObject responseBody = new JSONObject(response.body().string());
+
+            if (responseBody.getInt(STATUS_CODE_LABEL) == SUCCESS_CODE) {
+                // success!
+            }
+            else {
+                throw new RuntimeException(responseBody.getString(MESSAGE));
+            }
+        }
+        catch (IOException | JSONException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * Saves UID by username.
+     */
+    @Override
+    public String getUidByUsername(String username) {
+        final OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        final Request request = new Request.Builder()
+                .url(String.format("http://vm003.teach.cs.toronto.edu:20112/user_uid?username=%s", username))
+                .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_JSON)
+                .build();
+        try {
+            final Response response = client.newCall(request).execute();
+
+            final JSONObject responseBody = new JSONObject(response.body().string());
+
+            if (responseBody.getInt(STATUS_CODE_LABEL) == SUCCESS_CODE) {
+                final JSONObject userJSONObject = responseBody.getJSONObject("user_uid");
+                return userJSONObject.getString(UID);
             }
             else {
                 throw new RuntimeException(responseBody.getString(MESSAGE));

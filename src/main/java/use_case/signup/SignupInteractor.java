@@ -38,12 +38,17 @@ public class SignupInteractor implements SignupInputBoundary {
             userPresenter.prepareSuccessView(signupOutputData);
         }
     }
+    /**
+     * The Signup Interactor. // RENAME
+     */
+
     public void signUpFirebaseUser(String email, String password) {
         try {
             UserRecord.CreateRequest request = new UserRecord.CreateRequest()
                     .setEmail(email)
                     .setPassword(password);
             UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
+            userDataAccessObject.saveUid(email, userRecord.getUid());
             System.out.println("Successfully created user: " + userRecord.getUid());
         }
         catch (Exception e) {

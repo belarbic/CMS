@@ -1,5 +1,9 @@
 package use_case.logout;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
+
 /**
  * The Logout Interactor.
  */
@@ -25,6 +29,13 @@ public class LogoutInteractor implements LogoutInputBoundary {
         final String username = logoutInputData.getUsername();
         userDataAccessObject.setCurrentUsername(null);
         final LogoutOutputData logoutOutputData = new LogoutOutputData(username, false);
+        try {
+            String user_uid = userDataAccessObject.getUidByUsername(username);
+            FirebaseAuth.getInstance().revokeRefreshTokens(user_uid);
+            System.out.println("Successfully Logged Out");
+        } catch (FirebaseAuthException e) {
+            throw new RuntimeException(e);
+        }
         logoutPresenter.prepareSuccessView(logoutOutputData);
     }
 }
