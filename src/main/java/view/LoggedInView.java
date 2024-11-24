@@ -139,7 +139,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                         final LoggedInState currentState = loggedInViewModel.getState();
                         // 2. Execute the createChatRoom Controller.
                         createChatRoomController.execute(
-                                currentState.getUsername()
+                                currentState.getUsername(),
+                                ""
                         );
                     }
                 }

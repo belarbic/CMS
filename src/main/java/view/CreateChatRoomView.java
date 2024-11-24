@@ -28,6 +28,7 @@ public class CreateChatRoomView extends JPanel implements ActionListener, Proper
     private final CreateChatRoomViewModel createChatRoomViewModel;
 
     private final JTextField nameInputField = new JTextField(15);
+    private final JTextField messageInputField = new JTextField(15);
     private final JLabel nameErrorField = new JLabel();
 
     private final JButton createChatRoom;
@@ -42,8 +43,11 @@ public class CreateChatRoomView extends JPanel implements ActionListener, Proper
         final JLabel title = new JLabel("Create Chatroom");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel("Name"), nameInputField);
+        final LabelTextPanel nameInfo = new LabelTextPanel(
+                new JLabel("Chatroom Name"), nameInputField);
+
+        final LabelTextPanel messageInfo = new LabelTextPanel(
+                new JLabel("First Message"), messageInputField);
 
         final JPanel buttons = new JPanel();
         createChatRoom = new JButton("Create!");
@@ -58,7 +62,8 @@ public class CreateChatRoomView extends JPanel implements ActionListener, Proper
                             final CreateChatRoomState currentState = createChatRoomViewModel.getState();
 
                             createChatRoomController.execute(
-                                    currentState.getName()
+                                    currentState.getName(),
+                                    currentState.getFirstMessage()
                             );
                         }
                     }
@@ -91,11 +96,36 @@ public class CreateChatRoomView extends JPanel implements ActionListener, Proper
             }
         });
 
+        messageInputField.getDocument().addDocumentListener(new DocumentListener() {
+
+            private void documentListenerHelper() {
+                final CreateChatRoomState currentState = createChatRoomViewModel.getState();
+                currentState.setName(messageInputField.getText());
+                createChatRoomViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
-        this.add(usernameInfo);
+        this.add(nameInfo);
         this.add(nameErrorField);
+        this.add(messageInfo);
         this.add(buttons);
     }
 
@@ -116,6 +146,7 @@ public class CreateChatRoomView extends JPanel implements ActionListener, Proper
 
     private void setFields(CreateChatRoomState state) {
         nameInputField.setText(state.getName());
+        messageInputField.setText(state.getFirstMessage());
     }
 
     public String getViewName() {

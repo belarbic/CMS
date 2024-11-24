@@ -27,6 +27,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     private String currentUsername;
     private ChatRoom chatRoom;
     private String name;
+    private String firstMessage;
 
     @Override
     public boolean existsByName(String identifier) {
@@ -41,6 +42,16 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public String getFirstMessage() {
+        return this.firstMessage;
+    }
+
+    @Override
+    public void setFirstMessage(String firstMessage) {
+        this.firstMessage = firstMessage;
     }
 
     @Override
