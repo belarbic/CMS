@@ -5,20 +5,16 @@ package use_case.create_chatroom;
  */
 public class CreateChatRoomOutputData {
 
-    private final String username;
-
+    private final String name;
     private final boolean useCaseFailed;
 
-    public CreateChatRoomOutputData(String username, boolean useCaseFailed) {
-        this.username = username;
+    public CreateChatRoomOutputData(String name, boolean useCaseFailed) {
+        this.name = name;
         this.useCaseFailed = useCaseFailed;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public boolean isUseCaseFailed() {
-        return useCaseFailed;
-    }
 }

@@ -3,8 +3,10 @@ package data_access;
 import java.util.HashMap;
 import java.util.Map;
 
+import entity.ChatRoom;
 import entity.User;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
+import use_case.create_chatroom.CreateChatRoomUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
@@ -16,15 +18,39 @@ import use_case.signup.SignupUserDataAccessInterface;
 public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
-        LogoutUserDataAccessInterface {
+        LogoutUserDataAccessInterface,
+        CreateChatRoomUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
+    private final Map<String, ChatRoom> chatRooms = new HashMap<>();
 
     private String currentUsername;
+    private ChatRoom chatRoom;
+    private String name;
 
     @Override
     public boolean existsByName(String identifier) {
         return users.containsKey(identifier);
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public void save(ChatRoom chatRoom) {
+        chatRooms.put(chatRoom.getName(), chatRoom);
+    }
+
+    @Override
+    public ChatRoom getChatRoom() {
+        return this.chatRoom;
     }
 
     @Override
