@@ -1,10 +1,7 @@
 package app;
 
 import javax.swing.JFrame;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
@@ -22,17 +19,16 @@ public class Main {
         try (FileInputStream fileInputStream = new FileInputStream("cmspractice-uoft-710dcd9b775c.json")) {
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(fileInputStream))    // Load Firebase credentials.
+                    .setDatabaseUrl("https://cmspractice-uoft-default-rtdb.firebaseio.com/")
                     .build();
             FirebaseApp app = FirebaseApp.initializeApp(options);    // Initialize Firebase app.
             System.out.println("Firebase initialized Successfully");
         }
         catch (Exception e) {
             e.printStackTrace();
-
         }
     }
     public static void main(String[] args) {
-//        ChatService chatService = new ChatService();
 //        chatService.addMessageListener("groupId1");
 //        chatService.sendMessage("groupId1", "Hello World!", "TestUser");
         final AppBuilder appBuilder = new AppBuilder();
@@ -49,5 +45,7 @@ public class Main {
         application.pack();
         application.setVisible(true);
         initializeFirebase();
+        ChatService chatService = new ChatService();
+        chatService.getChatList();
     }
 }

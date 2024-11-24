@@ -1,10 +1,9 @@
 package app;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Connects to the chats node in the Firebase Realtime Database.
@@ -61,6 +60,27 @@ public class ChatService {
 
             @Override
             // If the listener fails, it logs the error.
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println(databaseError.getMessage());
+            }
+        });
+    }
+    public void getChatList() {
+        chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, Object> chatList = (HashMap<String, Object>) dataSnapshot.getValue();
+                    System.out.println("Chat List: ");
+                    for (Map.Entry<String, Object> entry : chatList.entrySet()) {
+                        System.out.println(entry.getKey() + ": " + entry.getValue());
+                    }
+                }
+                else {
+                    System.out.println("No chat found");
+                }
+            }
+            @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println(databaseError.getMessage());
             }
