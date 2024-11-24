@@ -4,6 +4,9 @@ out/
 !**/src/test/**/out/
 .idea/easycode.ignore
 
+.idea/
+CMS.iml
+
 target/
 
 ### Eclipse ###
