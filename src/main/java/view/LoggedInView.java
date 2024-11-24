@@ -20,7 +20,7 @@ import interface_adapter.logout.LogoutController;
  */
 public class LoggedInView extends JPanel implements PropertyChangeListener {
 
-    private final String viewName = "logged in";
+    private final String viewName = "Logged In";
     private final LoggedInViewModel loggedInViewModel;
     // private final JLabel passwordErrorField = new JLabel();
     private ChangePasswordController changePasswordController;
@@ -69,11 +69,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         buttons.add(changeUsername);
 
         // this code creates the Create Chat Room button and adds it to buttons.
-        createChatRoom = new JButton("Create Chat Room");
+        createChatRoom = new JButton("Create Chatroom");
         buttons.add(createChatRoom);
 
         // this code creates the View Chat Room button and adds it to buttons.
-        viewChatRooms = new JButton("View Chat Rooms");
+        viewChatRooms = new JButton("View Chatrooms");
         buttons.add(viewChatRooms);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
