@@ -30,3 +30,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### IntelliJ and IDEA-specific ###
+*.iml
+.idea/
