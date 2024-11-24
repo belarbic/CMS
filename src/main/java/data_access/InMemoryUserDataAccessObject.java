@@ -9,6 +9,7 @@ import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.create_chatroom.CreateChatRoomUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
+import use_case.search_message.SearchMessageUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 /**
@@ -19,7 +20,8 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface,
-        CreateChatRoomUserDataAccessInterface {
+        CreateChatRoomUserDataAccessInterface,
+        SearchMessageUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
     private final Map<String, ChatRoom> chatRooms = new HashMap<>();
