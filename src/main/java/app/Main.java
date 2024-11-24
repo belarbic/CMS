@@ -20,6 +20,8 @@ public class Main {
                                             .addLoginUseCase()
                                             .addChangePasswordUseCase()
                                             .addLogoutUseCase()
+                                            .addCreateChatRoomView()
+                                            .addCreateChatRoomUseCase()
                                             .build();
 
         application.pack();
