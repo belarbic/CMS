@@ -19,7 +19,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         LogoutUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
-    private final Map<String, String> users_uids = new HashMap<>();
+    private final Map<String, String> usersUids = new HashMap<>();
 
     private String currentUsername;
 
@@ -41,7 +41,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
      */
     @Override
     public void saveUid(String username, String uid) {
-        users_uids.put(username, uid);
+        usersUids.put(username, uid);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
      */
     @Override
     public String getUidByUsername(String username) {
-        return users_uids.get(username);
+        return usersUids.get(username);
     }
 
     @Override

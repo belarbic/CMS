@@ -1,11 +1,16 @@
 package app;
 
-import com.google.firebase.database.*;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Connects to the chats node in the Firebase Realtime Database.
  */
 public class ChatService {
+    public static final String MESSAGES = "messages";
     private final DatabaseReference chatRef;
 
     public ChatService() {
@@ -19,9 +24,9 @@ public class ChatService {
      * @param sender  The person who sent the data.
      */
     public void sendMessage(String groupId, String content, String sender) {
-        String messageId = chatRef.child(groupId).child("messages").push().getKey();
-        Message message = new Message(sender, content, System.currentTimeMillis());
-        chatRef.child(groupId).child("messages").child(messageId).setValueAsync(message);
+        final String messageId = chatRef.child(groupId).child(MESSAGES).push().getKey();
+        final Message message = new Message(sender, content, System.currentTimeMillis());
+        chatRef.child(groupId).child(MESSAGES).child(messageId).setValueAsync(message);
 
     }
 
@@ -30,31 +35,28 @@ public class ChatService {
      * @param groupId Unique ID.
      */
     public void addMessageListener(String groupId) {
-        chatRef.child(groupId).child("messages").addChildEventListener(new ChildEventListener() {
+        chatRef.child(groupId).child(MESSAGES).addChildEventListener(new ChildEventListener() {
             @Override
             // Triggers when a new message is added.
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 // Converts the raw data into a Message object.
-                Message message = dataSnapshot.getValue(Message.class);
-                System.out.println("New message from " + message.sender + ": " + message.content);
+                final Message message = dataSnapshot.getValue(Message.class);
+                System.out.println("New message from " + message.getSender() + ": " + message.getContent());
             }
 
             @Override
             // When a message is updated.
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override
             // When a message is removed.
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
             }
 
             @Override
             // When a message's position changes.
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override

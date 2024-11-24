@@ -1,5 +1,6 @@
 package use_case.signup;
 
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord;
 import entity.User;
@@ -46,15 +47,15 @@ public class SignupInteractor implements SignupInputBoundary {
 
     public void signUpFirebaseUser(String email, String password) {
         try {
-            UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+            final UserRecord.CreateRequest request = new UserRecord.CreateRequest()
                     .setEmail(email)
                     .setPassword(password);
-            UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
+            final UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
             userDataAccessObject.saveUid(email, userRecord.getUid());
             System.out.println("Successfully created user: " + userRecord.getUid());
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        catch (FirebaseException firebaseException) {
+            firebaseException.printStackTrace();
         }
     }
 
