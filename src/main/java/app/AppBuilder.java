@@ -102,9 +102,7 @@ public class AppBuilder {
     private SearchMessageViewModel searchMessageViewModel;
     private EditMessageView editMessageView;
     private EditMessageViewModel editMessageViewModel;
-    private ViewChatRoomsView viewChatRoomsView;
-    private ViewChatRoomsViewModel viewChatRoomsViewModel;
-  
+
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
     }
@@ -166,9 +164,10 @@ public class AppBuilder {
         viewChatRoomsView = new ViewChatRoomsView(viewChatRoomsViewModel);
         cardPanel.add(viewChatRoomsView, viewChatRoomsView.getViewName());
         return this;
+    }
 
+    /**
      * Adds the SearchMessage View to the application.
-     *
      * @return this builder
      */
     public AppBuilder addSearchMessageView() {
@@ -252,9 +251,10 @@ public class AppBuilder {
         final ViewChatRoomsController viewChatRoomsController = new ViewChatRoomsController(viewChatRoomsInteractor);
         loggedInView.setViewChatRoomsController(viewChatRoomsController);
         return this;
+    }
 
+    /**
      * Adds the Search Message Use Case to the application.
-     *
      * @return this builder
      */
     public AppBuilder addSearchMessageUseCase() {

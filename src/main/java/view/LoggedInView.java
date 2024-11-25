@@ -177,10 +177,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                         final LoggedInState currentState = loggedInViewModel.getState();
                         // 2. Execute the createChatRoom Controller.
                         viewChatRoomsController.execute();
-                       );
                     }
                 }
         );
+
         searchMessages.addActionListener(
                 evt -> {
                     if (evt.getSource().equals(searchMessages)) {
@@ -246,6 +246,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setViewChatRoomsController(ViewChatRoomsController viewChatRoomsController) {
         this.viewChatRoomsController = viewChatRoomsController;
+    }
 
     public void setSearchMessageController(SearchMessageController searchMessageController) {
         this.searchMessageController = searchMessageController;
