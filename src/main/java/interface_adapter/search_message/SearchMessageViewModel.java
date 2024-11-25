@@ -1,69 +1,18 @@
+
 package interface_adapter.search_message;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import entity.Message;
+import interface_adapter.ViewModel;
 
 /**
- * ViewModel for storing and presenting search results and errors.
+ * The View Model for the Search Message View.
  */
-public class SearchMessageViewModel {
-
-    private List<String> formattedMessages = new ArrayList<>();
-    private String error;
+public class SearchMessageViewModel extends ViewModel<SearchMessageState> {
 
     /**
-     * Updates the messages with formatted search results.
-     *
-     * @param messages The list of messages to format and store.
+     * Creates a new SearchMessageViewModel.
      */
-    public void updateMessages(List<Message> messages) {
-        formattedMessages.clear();
-        for (Message message : messages) {
-            formattedMessages.add(formatMessage(message));
-        }
-        error = null;
-    }
-
-    /**
-     * Sets an error message for display.
-     *
-     * @param error The error message to store.
-     */
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    /**
-     * Retrieves the current error message.
-     *
-     * @return The error message, or null if no error is set.
-     */
-    public String getError() {
-        return error;
-    }
-
-    /**
-     * Formats a message for display.
-     *
-     * @param message The message to format.
-     * @return A formatted string representation of the message.
-     */
-    private String formatMessage(Message message) {
-        return "Group: " + message.getChatRoom()
-                + " | Sender: " + message.getSender()
-                + " | Timestamp: " + message.getTimestamp()
-                + " | Content: " + message.getContent();
-    }
-
-    /**
-     * Retrieves the formatted search results.
-     *
-     * @return A list of formatted messages.
-     */
-    public List<String> getFormattedMessages() {
-        return formattedMessages;
+    public SearchMessageViewModel() {
+        super("search message");
+        setState(new SearchMessageState());
     }
 }
-
