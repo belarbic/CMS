@@ -88,6 +88,17 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
         this.save();
     }
 
+    /**
+     * Saves the user.
+     *
+     * @param username the user to save
+     * @param uid      the user to save
+     */
+    @Override
+    public void saveUid(String username, String uid) {
+
+    }
+
     @Override
     public User get(String username) {
         return accounts.get(username);

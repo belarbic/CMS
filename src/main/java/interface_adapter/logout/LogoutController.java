@@ -21,6 +21,7 @@ public class LogoutController {
     public void execute(String username) {
         // 1. instantiate the `LogoutInputData`, which should contain the username.
         // 2. tell the Interactor to execute.
+
         final LogoutInputData logoutInputData = new LogoutInputData(username);
         logoutUseCaseInteractor.execute(logoutInputData);
     }

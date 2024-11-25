@@ -13,9 +13,9 @@ import use_case.logout.LogoutOutputData;
  */
 public class LogoutPresenter implements LogoutOutputBoundary {
 
-    private final LoggedInViewModel loggedInViewModel;
-    private final ViewManagerModel viewManagerModel;
-    private final LoginViewModel loginViewModel;
+    private LoggedInViewModel loggedInViewModel;
+    private ViewManagerModel viewManagerModel;
+    private LoginViewModel loginViewModel;
 
     public LogoutPresenter(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInViewModel,
@@ -23,6 +23,7 @@ public class LogoutPresenter implements LogoutOutputBoundary {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.loginViewModel = loginViewModel;
+
     }
 
     @Override

@@ -27,6 +27,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         EditMessageUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
+    private final Map<String, String> usersUids = new HashMap<>();
     private final Map<String, ChatRoom> chatRooms = new HashMap<>();
 
     private String currentUsername;
@@ -63,6 +64,17 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         users.put(user.getName(), user);
     }
 
+    /**
+     * Saves the user.
+     *
+     * @param username the user to save
+     * @param uid      the user to save
+     */
+    @Override
+    public void saveUid(String username, String uid) {
+        usersUids.put(username, uid);
+    }
+
     @Override
     public User get(String username) {
         return users.get(username);
@@ -77,6 +89,17 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     @Override
     public void setCurrentUsername(String name) {
         this.currentUsername = name;
+    }
+
+    /**
+     * Sets the username indicating who is the current user of the application.
+     *
+     * @param username the new current username.
+     * @return UID.
+     */
+    @Override
+    public String getUidByUsername(String username) {
+        return usersUids.get(username);
     }
 
     @Override
