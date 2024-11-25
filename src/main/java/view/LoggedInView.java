@@ -6,13 +6,20 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_chatroom.CreateChatRoomController;
 import interface_adapter.create_chatroom.CreateChatRoomViewModel;
+import interface_adapter.edit_message.EditMessageController;
+import interface_adapter.logout.LogoutController;
+import interface_adapter.search_message.SearchMessageController;
 import interface_adapter.login.LoginState;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.view_chatrooms.ViewChatRoomsController;
@@ -35,7 +42,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     // private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
 
-    //new button to change username
+    // new button to change username
     private final JButton changeUsername;
 
     // new button to create new chatroom
@@ -45,6 +52,13 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     // new button to view current chatrooms
     private final JButton viewChatRooms;
     private ViewChatRoomsController viewChatRoomsController;
+
+    // new button to search messages
+    private final JButton searchMessages;
+    private SearchMessageController searchMessageController;
+
+    private final JButton testEditMessage;
+    private EditMessageController editMessageController;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
@@ -78,6 +92,12 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         // this code creates the View Chat Room button and adds it to buttons.
         viewChatRooms = new JButton("View Chatrooms");
         buttons.add(viewChatRooms);
+
+        searchMessages = new JButton("Search Messages");
+        buttons.add(searchMessages);
+
+        testEditMessage = new JButton("Test Edit Message");
+        buttons.add(testEditMessage);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -157,6 +177,31 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                         final LoggedInState currentState = loggedInViewModel.getState();
                         // 2. Execute the createChatRoom Controller.
                         viewChatRoomsController.execute();
+                       );
+                    }
+                }
+        );
+        searchMessages.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(searchMessages)) {
+                        final LoggedInState currentState = loggedInViewModel.getState();
+                        searchMessageController.execute(
+                                "",
+                                currentState.getUsername()
+                        );
+                    }
+                }
+        );
+
+        testEditMessage.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(testEditMessage)) {
+                        final LoggedInState currentState = loggedInViewModel.getState();
+                        editMessageController.execute(
+                                "test-message-id",
+                                "Hello World",
+                                currentState.getUsername()
+                        );
                     }
                 }
         );
@@ -201,5 +246,12 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setViewChatRoomsController(ViewChatRoomsController viewChatRoomsController) {
         this.viewChatRoomsController = viewChatRoomsController;
+
+    public void setSearchMessageController(SearchMessageController searchMessageController) {
+        this.searchMessageController = searchMessageController;
+    }
+
+    public void setEditMessageController(EditMessageController editMessageController) {
+        this.editMessageController = editMessageController;
     }
 }

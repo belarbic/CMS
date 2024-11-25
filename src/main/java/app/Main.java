@@ -24,6 +24,10 @@ public class Main {
                                             .addLogoutUseCase()
                                             .addCreateChatRoomView()
                                             .addCreateChatRoomUseCase()
+                                            .addSearchMessageView()
+                                            .addSearchMessageUseCase()
+                                            .addEditMessageView()
+                                            .addEditMessageUseCase()
                                             .build();
 
         application.pack();
