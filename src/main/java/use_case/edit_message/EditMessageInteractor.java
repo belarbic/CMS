@@ -1,39 +1,71 @@
 
 package use_case.edit_message;
 
-import java.util.ArrayList;
-
-import entity.ChatRoom;
 import entity.Message;
 import entity.User;
 
 /**
- * The Edit Message Interactor
+ * The Edit Message Interactor.
  */
-public class EditMessageInteractor {
-    private final MessageRepositoryInterface messageRepository;
+public class EditMessageInteractor implements EditMessageInputBoundary {
 
-    public EditMessageInteractor(MessageRepositoryInterface messageRepository) {
-        this.messageRepository = messageRepository;
-    }
+    private final EditMessageUserDataAccessInterface userDataAccessObject;
+    private final EditMessageOutputBoundary editMessagePresenter;
 
     /**
-     * Edits the content of an existing message.
-     *
-     * @param id The ID of the message to edit.
-     * @param content The new content to replace the existing message content.
-     * @return The updated message.
-     * @throws IllegalArgumentException if content is empty or null.
+     * Creates a new EditMessageInteractor.
+     * @param userDataAccessInterface the data access interface
+     * @param editMessageOutputBoundary the output boundary
      */
-    public Message editMessage(String id, String content) {
-        if (content == null || content.trim().isEmpty()) {
-            throw new IllegalArgumentException("Content cannot be null or empty");
+    public EditMessageInteractor(EditMessageUserDataAccessInterface userDataAccessInterface,
+                                 EditMessageOutputBoundary editMessageOutputBoundary) {
+        this.userDataAccessObject = userDataAccessInterface;
+        this.editMessagePresenter = editMessageOutputBoundary;
+    }
+
+    @Override
+    public void execute(EditMessageInputData editMessageInputData) {
+        final String messageId = editMessageInputData.getMessageId();
+        final String newContent = editMessageInputData.getNewContent();
+        final String username = editMessageInputData.getUsername();
+
+        if (isInvalidContent(newContent)) {
+            prepareFailureView("Message content cannot be empty");
         }
+        else if (!userDataAccessObject.existsByName(username)) {
+            prepareFailureView("User not found");
+        }
+        else {
+            processMessageEdit(messageId, newContent, username);
+        }
+    }
 
-        final Message message = messageRepository.getMessageById(id);
+    private boolean isInvalidContent(String content) {
+        return content == null || content.trim().isEmpty();
+    }
 
-        message.setContent(content);
+    private void processMessageEdit(String messageId, String newContent, String username) {
+        final Message message = userDataAccessObject.getMessage(messageId);
 
-        return messageRepository.updateMessageContent(id, content);
+        if (message == null) {
+            prepareFailureView("Message not found");
+        }
+        else if (!message.getSender().equals(username)) {
+            prepareFailureView("You can only edit your own messages");
+        }
+        else {
+            userDataAccessObject.updateMessage(messageId, newContent);
+            prepareSuccessView(newContent);
+        }
+    }
+
+    private void prepareSuccessView(String newContent) {
+        final EditMessageOutputData editMessageOutputData =
+                new EditMessageOutputData(newContent, false);
+        editMessagePresenter.prepareSuccessView(editMessageOutputData);
+    }
+
+    private void prepareFailureView(String error) {
+        editMessagePresenter.prepareFailView(error);
     }
 }
