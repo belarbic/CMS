@@ -21,6 +21,9 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.search_message.SearchMessageController;
+import interface_adapter.search_message.SearchMessagePresenter;
+import interface_adapter.search_message.SearchMessageViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -36,10 +39,18 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.search_message.SearchMessageInputBoundary;
+import use_case.search_message.SearchMessageInteractor;
+import use_case.search_message.SearchMessageOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.*;
+import view.CreateChatRoomView;
+import view.LoggedInView;
+import view.LoginView;
+import view.SearchMessageView;
+import view.SignupView;
+import view.ViewManager;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -71,6 +82,8 @@ public class AppBuilder {
     private LoginView loginView;
     private CreateChatRoomView createChatRoomView;
     private CreateChatRoomViewModel createChatRoomViewModel;
+    private SearchMessageView searchMessageView;
+    private SearchMessageViewModel searchMessageViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -121,6 +134,17 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the SearchMessage View to the application.
+     * @return this builder
+     */
+    public AppBuilder addSearchMessageView() {
+        searchMessageViewModel = new SearchMessageViewModel();
+        searchMessageView = new SearchMessageView(searchMessageViewModel);
+        cardPanel.add(searchMessageView, searchMessageView.getViewName());
+        return this;
+    }
+
+    /**
      * Adds the Signup Use Case to the application.
      * @return this builder
      */
@@ -164,6 +188,29 @@ public class AppBuilder {
         loggedInView.setCreateChatRoomController(createChatRoomController);
         return this;
     }
+
+    /**
+     * Adds the Search Message Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addSearchMessageUseCase() {
+        final SearchMessageOutputBoundary searchMessageOutputBoundary = new SearchMessagePresenter(
+                viewManagerModel,
+                loggedInViewModel,
+                searchMessageViewModel);
+
+        final SearchMessageInputBoundary searchMessageInteractor = new SearchMessageInteractor(
+                userDataAccessObject, searchMessageOutputBoundary);
+
+        final SearchMessageController searchMessageController = new SearchMessageController(
+                searchMessageInteractor);
+
+        searchMessageView.setSearchMessageController(searchMessageController);
+        loggedInView.setSearchMessageController(searchMessageController);
+        return this;
+    }
+}
+
 
     /**
      * Adds the Change Password Use Case to the application.

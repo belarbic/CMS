@@ -9,7 +9,7 @@ import entity.Message;
  */
 public class SearchMessageState {
     private String keyword = "";
-    private String searchError = null;
+    private String searchError;
     private String username = "";
     private ArrayList<Message> messages = new ArrayList<>();
 

@@ -1,10 +1,14 @@
+
 package use_case.edit_message;
 
+import java.util.ArrayList;
+
+import entity.ChatRoom;
 import entity.Message;
-import use_case.search_message.MessageRepositoryInterface;
+import entity.User;
 
 /**
- * Interactor for message edting.
+ * The Edit Message Interactor
  */
 public class EditMessageInteractor {
     private final MessageRepositoryInterface messageRepository;

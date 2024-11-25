@@ -22,6 +22,8 @@ public class Main {
                                             .addLogoutUseCase()
                                             .addCreateChatRoomView()
                                             .addCreateChatRoomUseCase()
+                                            .addSearchMessageView()
+                                            .addSearchMessageUseCase()
                                             .build();
 
         application.pack();

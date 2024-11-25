@@ -31,43 +31,54 @@ public class SearchMessageInteractor implements SearchMessageInputBoundary {
         final String keyword = searchMessageInputData.getKeyword();
         final String username = searchMessageInputData.getUsername();
 
-        if (keyword == null || keyword.trim().isEmpty()) {
-            searchMessagePresenter.prepareFailView("Search keyword cannot be empty");
-            return;
+        if (isInvalidKeyword(keyword)) {
+            prepareFailureView("Search keyword cannot be empty");
         }
-
-        if (!userDataAccessObject.existsByName(username)) {
-            searchMessagePresenter.prepareFailView("User not found");
-            return;
+        else if (!userDataAccessObject.existsByName(username)) {
+            prepareFailureView("User not found");
         }
+        else {
+            searchAndPresentMessages(username, keyword);
+        }
+    }
 
-        try {
-            final User user = userDataAccessObject.get(username);
-            final ArrayList<Message> matchedMessages = new ArrayList<>();
+    private boolean isInvalidKeyword(String keyword) {
+        return keyword == null || keyword.trim().isEmpty();
+    }
 
-            for (ChatRoom chatRoom : user.getChatRooms()) {
-                for (Message message : chatRoom.getMessages()) {
-                    if (message.getContent().toLowerCase()
-                            .contains(keyword.toLowerCase())) {
-                        matchedMessages.add(message);
-                    }
+    private void searchAndPresentMessages(String username, String keyword) {
+        final User user = userDataAccessObject.get(username);
+        final ArrayList<Message> matchedMessages = searchMessages(user, keyword);
+
+        if (matchedMessages.isEmpty()) {
+            prepareFailureView("No messages found containing: " + keyword);
+        }
+        else {
+            prepareSuccessView(matchedMessages);
+        }
+    }
+
+    private ArrayList<Message> searchMessages(User user, String keyword) {
+        final ArrayList<Message> matchedMessages = new ArrayList<>();
+
+        for (ChatRoom chatRoom : user.getChatRooms()) {
+            for (Message message : chatRoom.getMessages()) {
+                if (message.getContent().toLowerCase().contains(keyword.toLowerCase())) {
+                    matchedMessages.add(message);
                 }
             }
-
-            if (matchedMessages.isEmpty()) {
-                searchMessagePresenter.prepareFailView(
-                        "No messages found containing: " + keyword);
-                return;
-            }
-
-            final SearchMessageOutputData searchMessageOutputData =
-                    new SearchMessageOutputData(matchedMessages, false);
-            searchMessagePresenter.prepareSuccessView(searchMessageOutputData);
-
         }
-        catch (Exception e) {
-            searchMessagePresenter.prepareFailView(
-                    "Error searching messages: " + e.getMessage());
-        }
+
+        return matchedMessages;
+    }
+
+    private void prepareSuccessView(ArrayList<Message> matchedMessages) {
+        final SearchMessageOutputData searchMessageOutputData =
+                new SearchMessageOutputData(matchedMessages, false);
+        searchMessagePresenter.prepareSuccessView(searchMessageOutputData);
+    }
+
+    private void prepareFailureView(String errorMessage) {
+        searchMessagePresenter.prepareFailView(errorMessage);
     }
 }
