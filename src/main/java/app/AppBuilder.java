@@ -16,6 +16,9 @@ import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_chatroom.CreateChatRoomController;
 import interface_adapter.create_chatroom.CreateChatRoomPresenter;
 import interface_adapter.create_chatroom.CreateChatRoomViewModel;
+import interface_adapter.edit_message.EditMessageController;
+import interface_adapter.edit_message.EditMessagePresenter;
+import interface_adapter.edit_message.EditMessageViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -33,6 +36,9 @@ import use_case.change_password.ChangePasswordOutputBoundary;
 import use_case.create_chatroom.CreateChatRoomInputBoundary;
 import use_case.create_chatroom.CreateChatRoomInteractor;
 import use_case.create_chatroom.CreateChatRoomOutputBoundary;
+import use_case.edit_message.EditMessageInputBoundary;
+import use_case.edit_message.EditMessageInteractor;
+import use_case.edit_message.EditMessageOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -46,6 +52,7 @@ import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import view.CreateChatRoomView;
+import view.EditMessageView;
 import view.LoggedInView;
 import view.LoginView;
 import view.SearchMessageView;
@@ -84,6 +91,8 @@ public class AppBuilder {
     private CreateChatRoomViewModel createChatRoomViewModel;
     private SearchMessageView searchMessageView;
     private SearchMessageViewModel searchMessageViewModel;
+    private EditMessageView editMessageView;
+    private EditMessageViewModel editMessageViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -91,6 +100,7 @@ public class AppBuilder {
 
     /**
      * Adds the Signup View to the application.
+     *
      * @return this builder
      */
     public AppBuilder addSignupView() {
@@ -102,6 +112,7 @@ public class AppBuilder {
 
     /**
      * Adds the Login View to the application.
+     *
      * @return this builder
      */
     public AppBuilder addLoginView() {
@@ -113,6 +124,7 @@ public class AppBuilder {
 
     /**
      * Adds the LoggedIn View to the application.
+     *
      * @return this builder
      */
     public AppBuilder addLoggedInView() {
@@ -124,6 +136,7 @@ public class AppBuilder {
 
     /**
      * Adds the CreateChatRoom View to the application.
+     *
      * @return this builder
      */
     public AppBuilder addCreateChatRoomView() {
@@ -135,6 +148,7 @@ public class AppBuilder {
 
     /**
      * Adds the SearchMessage View to the application.
+     *
      * @return this builder
      */
     public AppBuilder addSearchMessageView() {
@@ -145,7 +159,20 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the EditMessage View to the application.
+     *
+     * @return this builder
+     */
+    public AppBuilder addEditMessageView() {
+        editMessageViewModel = new EditMessageViewModel();
+        editMessageView = new EditMessageView(editMessageViewModel);
+        cardPanel.add(editMessageView, editMessageView.getViewName());
+        return this;
+    }
+
+    /**
      * Adds the Signup Use Case to the application.
+     *
      * @return this builder
      */
     public AppBuilder addSignupUseCase() {
@@ -161,6 +188,7 @@ public class AppBuilder {
 
     /**
      * Adds the Login Use Case to the application.
+     *
      * @return this builder
      */
     public AppBuilder addLoginUseCase() {
@@ -176,6 +204,7 @@ public class AppBuilder {
 
     /**
      * Adds the Create ChatRoom Use Case to the application.
+     *
      * @return this builder
      */
     public AppBuilder addCreateChatRoomUseCase() {
@@ -184,13 +213,15 @@ public class AppBuilder {
         final CreateChatRoomInputBoundary createChatRoomInteractor = new CreateChatRoomInteractor(
                 userDataAccessObject, createChatRoomOutputBoundary);
 
-        final CreateChatRoomController createChatRoomController = new CreateChatRoomController(createChatRoomInteractor);
+        final CreateChatRoomController createChatRoomController =
+                new CreateChatRoomController(createChatRoomInteractor);
         loggedInView.setCreateChatRoomController(createChatRoomController);
         return this;
     }
 
     /**
      * Adds the Search Message Use Case to the application.
+     *
      * @return this builder
      */
     public AppBuilder addSearchMessageUseCase() {
@@ -209,11 +240,31 @@ public class AppBuilder {
         loggedInView.setSearchMessageController(searchMessageController);
         return this;
     }
-}
 
+    /**
+     * Adds the Edit Message Use Case to the application.
+     *
+     * @return this builder
+     */
+    public AppBuilder addEditMessageUseCase() {
+        final EditMessageOutputBoundary editMessageOutputBoundary = new EditMessagePresenter(
+                viewManagerModel,
+                loggedInViewModel,
+                editMessageViewModel);
+
+        final EditMessageInputBoundary editMessageInteractor = new EditMessageInteractor(
+                userDataAccessObject, editMessageOutputBoundary);
+
+        final EditMessageController editMessageController = new EditMessageController(
+                editMessageInteractor);
+
+        editMessageView.setEditMessageController(editMessageController);
+        return this;
+    }
 
     /**
      * Adds the Change Password Use Case to the application.
+     *
      * @return this builder
      */
     public AppBuilder addChangePasswordUseCase() {
@@ -231,6 +282,7 @@ public class AppBuilder {
 
     /**
      * Adds the Logout Use Case to the application.
+     *
      * @return this builder
      */
     public AppBuilder addLogoutUseCase() {
@@ -247,6 +299,7 @@ public class AppBuilder {
 
     /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.
+     *
      * @return the application
      */
     public JFrame build() {
@@ -261,3 +314,4 @@ public class AppBuilder {
         return application;
     }
 }
+

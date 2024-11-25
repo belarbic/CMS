@@ -24,6 +24,8 @@ public class Main {
                                             .addCreateChatRoomUseCase()
                                             .addSearchMessageView()
                                             .addSearchMessageUseCase()
+                                            .addEditMessageView()
+                                            .addEditMessageUseCase()
                                             .build();
 
         application.pack();

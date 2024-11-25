@@ -8,6 +8,8 @@ public class EditMessageState {
     private String content = "";
     private String username = "";
     private String editError;
+    private String timestamp = "";
+    private String originalContent = "";
 
     public String getMessageId() {
         return messageId;
@@ -40,4 +42,21 @@ public class EditMessageState {
     public void setEditError(String error) {
         this.editError = error;
     }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public String getOriginalContent() {
+        return originalContent;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setOriginalContent(String originalContent) {
+        this.originalContent = originalContent;
+    }
 }
+

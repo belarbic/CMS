@@ -17,6 +17,7 @@ import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_chatroom.CreateChatRoomController;
 import interface_adapter.create_chatroom.CreateChatRoomViewModel;
+import interface_adapter.edit_message.EditMessageController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.search_message.SearchMessageController;
 
@@ -51,6 +52,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     // new button to search messages
     private final JButton searchMessages;
     private SearchMessageController searchMessageController;
+
+    private final JButton testEditMessage;
+    private EditMessageController editMessageController;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
@@ -87,6 +91,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         searchMessages = new JButton("Search Messages");
         buttons.add(searchMessages);
+
+        testEditMessage = new JButton("Test Edit Message");
+        buttons.add(testEditMessage);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -169,6 +176,19 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 }
         );
 
+        testEditMessage.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(testEditMessage)) {
+                        final LoggedInState currentState = loggedInViewModel.getState();
+                        editMessageController.execute(
+                                "test-message-id",
+                                "Hello World",
+                                currentState.getUsername()
+                        );
+                    }
+                }
+        );
+
         this.add(title);
         this.add(usernameInfo);
         this.add(name);
@@ -209,5 +229,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setSearchMessageController(SearchMessageController searchMessageController) {
         this.searchMessageController = searchMessageController;
+    }
+
+    public void setEditMessageController(EditMessageController editMessageController) {
+        this.editMessageController = editMessageController;
     }
 }
