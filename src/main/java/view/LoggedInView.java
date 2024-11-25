@@ -6,7 +6,11 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
@@ -83,8 +87,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         searchMessages = new JButton("Search Messages");
         buttons.add(searchMessages);
-
-
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 

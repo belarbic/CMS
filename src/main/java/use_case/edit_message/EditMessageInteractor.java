@@ -2,7 +2,6 @@
 package use_case.edit_message;
 
 import entity.Message;
-import entity.User;
 
 /**
  * The Edit Message Interactor.
