@@ -13,7 +13,9 @@ import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_chatroom.CreateChatRoomController;
 import interface_adapter.create_chatroom.CreateChatRoomViewModel;
+import interface_adapter.login.LoginState;
 import interface_adapter.logout.LogoutController;
+import interface_adapter.view_chatrooms.ViewChatRoomsController;
 
 /**
  * The View for when the user is logged into the program.
@@ -42,6 +44,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     // new button to view current chatrooms
     private final JButton viewChatRooms;
+    private ViewChatRoomsController viewChatRoomsController;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
@@ -146,6 +149,18 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 }
         );
 
+        viewChatRooms.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                evt -> {
+                    if (evt.getSource().equals(viewChatRooms)) {
+                        // 1. get the state out of the loggedInViewModel. It contains the username.
+                        final LoggedInState currentState = loggedInViewModel.getState();
+                        // 2. Execute the createChatRoom Controller.
+                        viewChatRoomsController.execute();
+                    }
+                }
+        );
+
         this.add(title);
         this.add(usernameInfo);
         this.add(name);
@@ -182,5 +197,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setCreateChatRoomController(CreateChatRoomController createChatRoomController) {
         this.createChatRoomController = createChatRoomController;
+    }
+
+    public void setViewChatRoomsController(ViewChatRoomsController viewChatRoomsController) {
+        this.viewChatRoomsController = viewChatRoomsController;
     }
 }

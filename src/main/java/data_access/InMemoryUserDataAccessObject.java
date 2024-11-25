@@ -10,6 +10,7 @@ import use_case.create_chatroom.CreateChatRoomUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
+import use_case.view_chatrooms.ViewChatRoomsUserDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing user data. This implementation does
@@ -19,7 +20,8 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface,
-        CreateChatRoomUserDataAccessInterface {
+        CreateChatRoomUserDataAccessInterface,
+        ViewChatRoomsUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
     private final Map<String, ChatRoom> chatRooms = new HashMap<>();

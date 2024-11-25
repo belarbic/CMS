@@ -24,6 +24,9 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.view_chatrooms.ViewChatRoomsController;
+import interface_adapter.view_chatrooms.ViewChatRoomsPresenter;
+import interface_adapter.view_chatrooms.ViewChatRoomsViewModel;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
@@ -39,6 +42,9 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import use_case.view_chatrooms.ViewChatRoomsInputBoundary;
+import use_case.view_chatrooms.ViewChatRoomsInteractor;
+import use_case.view_chatrooms.ViewChatRoomsOutputBoundary;
 import view.*;
 
 /**
@@ -71,6 +77,8 @@ public class AppBuilder {
     private LoginView loginView;
     private CreateChatRoomView createChatRoomView;
     private CreateChatRoomViewModel createChatRoomViewModel;
+    private ViewChatRoomsView viewChatRoomsView;
+    private ViewChatRoomsViewModel viewChatRoomsViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -121,6 +129,17 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the ViewChatRooms View to the application.
+     * @return this builder
+     */
+    public AppBuilder addViewChatRoomsView() {
+        viewChatRoomsViewModel = new ViewChatRoomsViewModel();
+        viewChatRoomsView = new ViewChatRoomsView(viewChatRoomsViewModel);
+        cardPanel.add(viewChatRoomsView, viewChatRoomsView.getViewName());
+        return this;
+    }
+
+    /**
      * Adds the Signup Use Case to the application.
      * @return this builder
      */
@@ -162,6 +181,21 @@ public class AppBuilder {
 
         final CreateChatRoomController createChatRoomController = new CreateChatRoomController(createChatRoomInteractor);
         loggedInView.setCreateChatRoomController(createChatRoomController);
+        return this;
+    }
+
+    /**
+     * Adds the View ChatRoom Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addViewChatRoomsUseCase() {
+        final ViewChatRoomsOutputBoundary viewChatRoomsOutputBoundary = new ViewChatRoomsPresenter(viewManagerModel,
+                loggedInViewModel, viewChatRoomsViewModel);
+        final ViewChatRoomsInputBoundary viewChatRoomsInteractor = new ViewChatRoomsInteractor(
+                userDataAccessObject, viewChatRoomsOutputBoundary);
+
+        final ViewChatRoomsController viewChatRoomsController = new ViewChatRoomsController(viewChatRoomsInteractor);
+        loggedInView.setViewChatRoomsController(viewChatRoomsController);
         return this;
     }
 
