@@ -1,63 +1,58 @@
+
 package interface_adapter.edit_message;
 
-import java.util.NoSuchElementException;
-
-import entity.Message;
-import use_case.edit_message.EditMessageInteractor;
-import view.MessageView;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.change_password.LoggedInState;
+import interface_adapter.change_password.LoggedInViewModel;
+import use_case.edit_message.EditMessageOutputBoundary;
+import use_case.edit_message.EditMessageOutputData;
 
 /**
- * Presenter responsible for managing the interaction between the EditMessage use case
- * and the user interface (view). The presenter receives results from the use case
- * and passes them to the view to display to the user.
+ * The Presenter for the Edit Message Use Case.
  */
-public class EditMessagePresenter {
+public class EditMessagePresenter implements EditMessageOutputBoundary {
 
-    private final EditMessageInteractor editMessageInteractor;
-    private final MessageView messageView;
     private final EditMessageViewModel editMessageViewModel;
+    private final ViewManagerModel viewManagerModel;
+    private final LoggedInViewModel loggedInViewModel;
 
     /**
-     * Constructs a new MessagePresenter with the specified use case and view.
-     *
-     * @param editMessageInteractor The use case for editing messages.
-     * @param messageView The view for displaying message-related information.
-     * @param editMessageViewModel The view model for structuring the edit operation status.
+     * Creates a new EditMessagePresenter.
+     * @param viewManagerModel manages the views in the application
+     * @param loggedInViewModel the view model for the logged in state
+     * @param editMessageViewModel the view model for edit message functionality
      */
-    public EditMessagePresenter(EditMessageInteractor editMessageInteractor, MessageView messageView,
+    public EditMessagePresenter(ViewManagerModel viewManagerModel,
+                                LoggedInViewModel loggedInViewModel,
                                 EditMessageViewModel editMessageViewModel) {
-        this.editMessageInteractor = editMessageInteractor;
-        this.messageView = messageView;
+        this.viewManagerModel = viewManagerModel;
+        this.loggedInViewModel = loggedInViewModel;
         this.editMessageViewModel = editMessageViewModel;
     }
 
-    /**
-     * Handles the process of editing a message.
-     * This method receives input (message ID and new content) from the user,
-     * invokes the use case, and updates the view based on the result.
-     *
-     * @param id The ID of the message to edit.
-     * @param content The new content to replace the old message content.
-     * @throws IllegalArgumentException If the message ID or new content is invalid (null or empty).
-     * @throws NoSuchElementException If the message with the specified ID does not exist.
-     */
-    public void editMessage(String id, String content) {
+    @Override
+    public void prepareSuccessView(EditMessageOutputData response) {
+        // On success, update the message
+        final EditMessageState editMessageState = editMessageViewModel.getState();
+        editMessageState.setContent(response.getNewContent());
 
-        try {
-            if (id == null || id.trim().isEmpty()) {
-                throw new IllegalArgumentException("Message ID cannot be null or empty.");
-            }
-            if (content == null || content.trim().isEmpty()) {
-                throw new IllegalArgumentException("Message content cannot be null or empty.");
-            }
+        // Keep the current logged-in user information
+        final LoggedInState loggedInState = loggedInViewModel.getState();
+        editMessageState.setUsername(loggedInState.getUsername());
 
-            final Message updatedMessage = editMessageInteractor.editMessage(id, content);
-            editMessageViewModel.updateStatus(true, "Message updated successfully: " + updatedMessage.getContent());
-            messageView.showEditStatus(editMessageViewModel.isSuccess(), editMessageViewModel.getMessage());
-        }
-        catch (NoSuchElementException exception) {
-            editMessageViewModel.updateStatus(false, "Error: Message with ID " + id + " not found.");
-            messageView.showEditStatus(editMessageViewModel.isSuccess(), editMessageViewModel.getMessage());
-        }
+        this.editMessageViewModel.setState(editMessageState);
+        this.editMessageViewModel.firePropertyChanged();
+
+        // Return to previous view
+        this.viewManagerModel.setState(loggedInViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareFailView(String error) {
+        final EditMessageState editMessageState = editMessageViewModel.getState();
+        editMessageState.setEditError(error);
+        this.editMessageViewModel.setState(editMessageState);
+        this.editMessageViewModel.firePropertyChanged();
     }
 }
