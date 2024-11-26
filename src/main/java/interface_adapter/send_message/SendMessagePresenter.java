@@ -18,37 +18,34 @@ public class SendMessagePresenter {
     }
 
     /**
-     * Handles success in sending a message by updating the ViewModel and notifying the view.
+     * Updates the ViewModel and View for a successful send operation.
      *
      * @param message The message that was successfully sent.
      */
     public void presentMessageSuccess(Message message) {
-        viewModel.addMessage(message);
-        view.showUpdatedMessage(viewModel.getMessages().get(viewModel.getMessages().size() - 1));
+        // Update the ViewModel state
+        viewModel.getState().setContent(message.getContent());
+        viewModel.getState().setSenderUsername(message.getSender().getName());
+        viewModel.getState().setTimestamp(message.getTimestamp().toString());
+        viewModel.getState().setMessageSent(true);
+        viewModel.getState().setSendError(null);
+
+        // Notify the view
+        view.showUpdatedMessage(viewModel.getState().getContent());
     }
 
     /**
-     * Handles failure in sending a message.
+     * Updates the ViewModel and View for a failed send operation.
      *
-     * @param errorMessage The error message to display.
+     * @param errorMessage The error message describing the failure.
      */
     public void presentMessageFailure(String errorMessage) {
-        view.showError(errorMessage);
-    }
+        // Update the ViewModel state
+        viewModel.getState().setSendError(errorMessage);
+        viewModel.getState().setMessageSent(false);
 
-    /**
-     * Displays search results using the ViewModel.
-     *
-     * @param messages The list of messages from the search results.
-     */
-    public void presentSearchResults(List<Message> messages) {
-        if (messages.isEmpty()) {
-            view.showNoResults();
-        }
-        else {
-            viewModel.updateMessages(messages);
-            view.showSearchResults(viewModel.getMessages());
-        }
+        // Notify the view
+        view.showError(errorMessage);
     }
 
 }
