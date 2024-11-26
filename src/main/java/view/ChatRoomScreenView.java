@@ -1,13 +1,16 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import entity.ChatRoom;
 import entity.User;
@@ -94,11 +97,11 @@ public class ChatRoomScreenView extends JFrame implements MessageView {
     private void sendMessage() {
         final String content = inputField.getText().trim();
         if (!content.isEmpty()) {
-            sendMessageController.handleSendMessage(content, currentUser, chatRoom);
+            sendMessageController.execute(content, currentUser, chatRoom);
             inputField.setText("");
         }
         else {
-            presenter.presentMessageFailure("Message cannot be empty!");
+            presenter.presentFailView("Message cannot be empty!");
         }
     }
 
