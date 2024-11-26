@@ -1,32 +1,34 @@
 package interface_adapter.send_message;
 
-import java.util.List;
-
-import entity.Message;
+import use_case.send_message.SendMessageOutputBoundary;
+import use_case.send_message.SendMessageOutputData;
 import view.MessageView;
+
 
 /**
  * The presenter for the send message use case.
  */
-public class SendMessagePresenter {
+public class SendMessagePresenter implements SendMessageOutputBoundary {
     private final MessageView view;
     private final SendMessageViewModel viewModel;
 
+    /**
+     * Constructs a new SendMessagePresenter.
+     *
+     * @param view      The view to update.
+     * @param viewModel The view model to update.
+     */
     public SendMessagePresenter(MessageView view, SendMessageViewModel viewModel) {
         this.view = view;
         this.viewModel = viewModel;
     }
 
-    /**
-     * Updates the ViewModel and View for a successful send operation.
-     *
-     * @param message The message that was successfully sent.
-     */
-    public void presentMessageSuccess(Message message) {
-        // Update the ViewModel state
-        viewModel.getState().setContent(message.getContent());
-        viewModel.getState().setSenderUsername(message.getSender().getName());
-        viewModel.getState().setTimestamp(message.getTimestamp().toString());
+    @Override
+    public void presentSuccessView(SendMessageOutputData outputData) {
+        // Update ViewModel state
+        viewModel.getState().setContent(outputData.getContent());
+        viewModel.getState().setSenderUsername(outputData.getSenderUsername());
+        viewModel.getState().setTimestamp(outputData.getTimestamp());
         viewModel.getState().setMessageSent(true);
         viewModel.getState().setSendError(null);
 
@@ -34,18 +36,13 @@ public class SendMessagePresenter {
         view.showUpdatedMessage(viewModel.getState().getContent());
     }
 
-    /**
-     * Updates the ViewModel and View for a failed send operation.
-     *
-     * @param errorMessage The error message describing the failure.
-     */
-    public void presentMessageFailure(String errorMessage) {
-        // Update the ViewModel state
+    @Override
+    public void presentFailView(String errorMessage) {
+        // Update ViewModel state
         viewModel.getState().setSendError(errorMessage);
         viewModel.getState().setMessageSent(false);
 
         // Notify the view
         view.showError(errorMessage);
     }
-
 }

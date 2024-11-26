@@ -2,16 +2,17 @@ package interface_adapter.send_message;
 
 import entity.ChatRoom;
 import entity.User;
-import use_case.send_message.SendMessageInteractor;
+import use_case.send_message.SendMessageInputBoundary;
+import use_case.send_message.SendMessageInputData;
 
 /**
  * The controller for the send message use case.
  */
 public class SendMessageController {
-    private final SendMessageInteractor interactor;
+    private final SendMessageInputBoundary sendMessageUseCaseInteractor;
 
-    public SendMessageController(SendMessageInteractor interactor) {
-        this.interactor = interactor;
+    public SendMessageController(SendMessageInputBoundary sendMessageUseCaseInteractor) {
+        this.sendMessageUseCaseInteractor = sendMessageUseCaseInteractor;
     }
 
     /**
@@ -21,7 +22,10 @@ public class SendMessageController {
      * @param sender   The user sending the message.
      * @param chatRoom The chat room where the message is sent.
      */
-    public void handleSendMessage(String content, User sender, ChatRoom chatRoom) {
-        interactor.sendMessage(content, sender, chatRoom);
+    public void execute(String content, User sender, ChatRoom chatRoom) {
+        final SendMessageInputData inputData = new SendMessageInputData(content, sender.getName(), chatRoom.getName());
+
+        // Pass input data to the input boundary
+        sendMessageUseCaseInteractor.execute(inputData);
     }
 }
