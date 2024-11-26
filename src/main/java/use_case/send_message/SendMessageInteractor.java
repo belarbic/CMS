@@ -7,39 +7,48 @@ import entity.User;
 /**
  * Interactor for the send message use case.
  */
-public class SendMessageInteractor {
-    private final ChatMessageRepositoryInterface messageRepository;
+public class SendMessageInteractor implements SendMessageInputBoundary {
+    private final SendMessageUserDataAccessInterface userDataAccessObject;
+    private final SendMessageOutputBoundary outputBoundary;
 
-    public SendMessageInteractor(ChatMessageRepositoryInterface messageRepository) {
-        this.messageRepository = messageRepository;
+    public SendMessageInteractor(SendMessageUserDataAccessInterface userDataAccessObject,
+                                 SendMessageOutputBoundary outputBoundary) {
+        this.userDataAccessObject = userDataAccessObject;
+        this.outputBoundary = outputBoundary;
     }
 
-    /**
-     * Sends a message and stores it in the repository and chat room.
-     *
-     * @param content  The message content.
-     * @param sender   The user sending the message.
-     * @param chatRoom The chat room where the message is sent.
-     * @throws IllegalArgumentException If any parameter is null or content is empty.
-     */
-    public void sendMessage(String content, User sender, ChatRoom chatRoom) {
+    @Override
+    public void execute(SendMessageInputData inputData) {
+        final String content = inputData.getContent();
+        final String senderUsername = inputData.getSenderUsername();
+        final String chatRoomName = inputData.getChatRoomName();
+
         if (content == null || content.trim().isEmpty()) {
-            throw new IllegalArgumentException("Message content cannot be null or empty.");
-        }
-        if (sender == null) {
-            throw new IllegalArgumentException("Sender cannot be null.");
-        }
-        if (chatRoom == null) {
-            throw new IllegalArgumentException("ChatRoom cannot be null.");
+            outputBoundary.presentFailView("Message content cannot be empty");
+            return;
         }
 
-        // Extract the sender's name from the User object
-        final String senderName = sender.getName();
+        if (!userDataAccessObject.chatRoomExists(chatRoomName)) {
+            outputBoundary.presentFailView("Chat room not found");
+            return;
+        }
 
-        final Message message = new Message(content, senderName);
+        if (!userDataAccessObject.userExistsInChatRoom(senderUsername, chatRoomName)) {
+            outputBoundary.presentFailView("Sender not found in chat room");
+            return;
+        }
 
-        // Add the message to the chat room
+        final ChatRoom chatRoom = userDataAccessObject.getChatRoomByName(chatRoomName);
+        final User sender = userDataAccessObject.getUserInChatRoom(senderUsername, chatRoomName);
+
+        final Message message = new Message(content, sender, chatRoom);
         chatRoom.getMessages().add(message);
-    }
 
+        final SendMessageOutputData outputData = new SendMessageOutputData(
+                message.getContent(),
+                sender.getName(),
+                message.getTimestamp().toString()
+        );
+        outputBoundary.presentSuccessView(outputData);
+    }
 }

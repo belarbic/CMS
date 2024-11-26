@@ -76,7 +76,8 @@ public class ChatRoomScreenView extends JFrame implements MessageView {
     }
 
     public ChatRoomScreenView(JTextArea messageArea, JTextField inputField, JButton sendButton,
-                              ChatRoom chatRoom, User currentUser, SendMessageController sendMessageController, SendMessageViewModel viewModel, SendMessagePresenter presenter) {
+                              ChatRoom chatRoom, User currentUser, SendMessageController sendMessageController,
+                              SendMessageViewModel viewModel, SendMessagePresenter presenter) {
         this.messageArea = messageArea;
         this.inputField = inputField;
         this.sendButton = sendButton;
@@ -122,7 +123,8 @@ public class ChatRoomScreenView extends JFrame implements MessageView {
 
     @Override
     public void showNoResults() {
-        JOptionPane.showMessageDialog(this, "No results found.", "Search Results", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "No results found.", "Search Results",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
