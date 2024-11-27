@@ -7,18 +7,28 @@ import java.time.LocalDateTime;
  */
 public class Message {
 
+    private String id;
     private String content;
     private User sender;
     private LocalDateTime timestamp;
     private boolean edited;
     private ChatRoom chatRoom;
 
-    public Message(String content, User sender, ChatRoom chatRoom) {
+    public Message(String id, String content, User sender, ChatRoom chatRoom) {
+        this.id = id;
         this.content = content;
         this.chatRoom = chatRoom;
         this.sender = sender;
         this.timestamp = LocalDateTime.now();
         this.edited = false;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public User getSender() {
