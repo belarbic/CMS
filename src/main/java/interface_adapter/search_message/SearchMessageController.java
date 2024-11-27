@@ -1,44 +1,32 @@
 package interface_adapter.search_message;
 
-import java.util.ArrayList;
-
-import entity.Message;
-import use_case.search_message.SearchMessageInteractor;
+import use_case.search_message.SearchMessageInputBoundary;
+import use_case.search_message.SearchMessageInputData;
 
 /**
- * The SearchMessagesController is responsible for processing user input for the search.
- * It invokes the interactor to search for messages and passes the results to the presenter for display.
+ * The controller for the Search Message Use Case.
  */
 public class SearchMessageController {
-    private SearchMessageInteractor searchMessageInteractor;
-    private SearchMessagePresenter searchMessagePresenter;
+
+    private final SearchMessageInputBoundary searchMessageUseCaseInteractor;
 
     /**
-     * Initializes the SearchMessageController with the given interactor and presenter.
-     *
-     * @param searchMessagesInteractor The interactor that handles searching for messages.
-     * @param searchMessagesPresenter  The presenter that displays the search results.
+     * Creates a new SearchMessageController.
+     * @param searchMessageUseCaseInteractor the interactor for search message use case
      */
-    public SearchMessageController(SearchMessageInteractor searchMessagesInteractor,
-                                   SearchMessagePresenter searchMessagesPresenter) {
-        this.searchMessageInteractor = searchMessagesInteractor;
-        this.searchMessagePresenter = searchMessagesPresenter;
+    public SearchMessageController(SearchMessageInputBoundary searchMessageUseCaseInteractor) {
+        this.searchMessageUseCaseInteractor = searchMessageUseCaseInteractor;
     }
 
     /**
-     * Processes the search input from the user.
-     * Retrieves the search results from the interactor and passes them to the presenter.
-     *
-     * @param keyword The search keyword entered by the user.
-     * @throws IllegalArgumentException If the keyword is null or empty.
+     * Executes the Search Message Use Case.
+     * @param keyword the search term to look for
+     * @param username the username of the user performing the search
      */
-    public void handleSearchInput(String keyword) {
-        if (keyword == null || keyword.trim().isEmpty()) {
-            throw new IllegalArgumentException("Search keyword cannot be null or empty.");
-        }
+    public void execute(String keyword, String username) {
+        final SearchMessageInputData searchMessageInputData = new SearchMessageInputData(
+                keyword, username);
 
-        final ArrayList<Message> searchResults = searchMessageInteractor.searchMessage(keyword);
-        searchMessagePresenter.presentSearchResults(searchResults);
+        searchMessageUseCaseInteractor.execute(searchMessageInputData);
     }
 }
-

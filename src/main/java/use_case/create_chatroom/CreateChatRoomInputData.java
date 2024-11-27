@@ -6,7 +6,7 @@ import entity.Message;
 import entity.User;
 
 /**
- * The input data for the Create ChatRoom Use Case.
+ * The Input Data for the Create ChatRoom Use Case.
  */
 public class CreateChatRoomInputData {
 

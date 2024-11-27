@@ -1,143 +1,121 @@
+
 package view;
 
-import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import interface_adapter.search_message.SearchMessageController;
+import interface_adapter.search_message.SearchMessageState;
 import interface_adapter.search_message.SearchMessageViewModel;
 
 /**
- * A Swing-based implementation of the search message view.
- * Provides a user interface for searching messages and displaying results.
+ * The View for searching messages in the program.
  */
-public class SearchMessageView extends JFrame implements MessageView {
+public class SearchMessageView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    static final int COLUMN_SIZE = 20;
-    static final int J_FRAME_WIDTH = 600;
-    static final int J_FRAME_HEIGHT = 400;
-
-    private final JTextField searchInputField;
-    private final JButton searchButton;
-    private final JTextArea searchResultsArea;
-    private final JLabel errorLabel;
-
-    private final SearchMessageController searchMessageController;
-    private final SearchMessageViewModel viewModel;
+    private final String viewName = "search message";
+    private final SearchMessageViewModel searchMessageViewModel;
+    private final JTextField keywordInputField = new JTextField(15);
+    private final JLabel searchErrorField = new JLabel();
+    private final DefaultListModel<String> listModel = new DefaultListModel<>();
+    private final JList<String> resultsList;
+    private final JButton search;
+    private final JButton cancel;
+    private SearchMessageController searchMessageController;
 
     /**
-     * Constructs a SearchMessageView with the specified controller and ViewModel.
-     *
-     * @param searchMessageController The controller for handling search input.
-     * @param viewModel               The ViewModel for storing and retrieving search results.
+     * Creates a new SearchMessageView.
+     * @param searchMessageViewModel the view model
      */
-    public SearchMessageView(SearchMessageController searchMessageController, SearchMessageViewModel viewModel) {
-        this.searchMessageController = searchMessageController;
-        this.viewModel = viewModel;
+    public SearchMessageView(SearchMessageViewModel searchMessageViewModel) {
+        this.searchMessageViewModel = searchMessageViewModel;
+        this.searchMessageViewModel.addPropertyChangeListener(this);
+        this.resultsList = new JList<>(listModel);
 
-        // Set up the JFrame
-        this.setTitle("Search Messages");
-        this.setSize(J_FRAME_WIDTH, J_FRAME_HEIGHT);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new BorderLayout());
+        final JLabel title = new JLabel("Search Messages Screen");
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final JPanel searchPanel = new JPanel();
-        searchInputField = new JTextField(COLUMN_SIZE);
-        searchButton = new JButton("Search");
-        searchPanel.add(new JLabel("Keyword:"));
-        searchPanel.add(searchInputField);
-        searchPanel.add(searchButton);
+        final LabelTextPanel searchInfo = new LabelTextPanel(
+                new JLabel("Search Keyword"), keywordInputField);
 
-        errorLabel = new JLabel();
-        errorLabel.setForeground(java.awt.Color.RED);
+        final JPanel buttons = new JPanel();
+        search = new JButton("Search Messages");
+        buttons.add(search);
+        cancel = new JButton("Cancel");
+        buttons.add(cancel);
 
-        // Results area
-        searchResultsArea = new JTextArea();
-        searchResultsArea.setEditable(false);
-        final JScrollPane resultsScrollPane = new JScrollPane(searchResultsArea);
+        final JScrollPane scrollPane = new JScrollPane(resultsList);
 
-        // Add components to frame
-        this.add(searchPanel, BorderLayout.NORTH);
-        this.add(resultsScrollPane, BorderLayout.CENTER);
-        this.add(errorLabel, BorderLayout.SOUTH);
+        search.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(search)) {
+                        final SearchMessageState currentState = searchMessageViewModel.getState();
+                        searchMessageController.execute(
+                                currentState.getKeyword(),
+                                currentState.getUsername()
+                        );
+                    }
+                }
+        );
 
-        // Add listeners
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handleSearch();
+        cancel.addActionListener(this);
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        this.add(title);
+        this.add(searchInfo);
+        this.add(searchErrorField);
+        this.add(buttons);
+        this.add(scrollPane);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        final SearchMessageState state = (SearchMessageState) evt.getNewValue();
+        setFields(state);
+        searchErrorField.setText(state.getSearchError());
+
+        listModel.clear();
+        if (state.getMessages() != null) {
+            for (var message : state.getMessages()) {
+                listModel.addElement(String.format("[%s] %s: %s",
+                        message.getTimestamp(),
+                        message.getSender(),
+                        message.getContent()));
             }
-        });
+        }
+    }
+
+    private void setFields(SearchMessageState state) {
+        keywordInputField.setText(state.getKeyword());
+    }
+
+    public String getViewName() {
+        return viewName;
     }
 
     /**
-     * Handles the search button click event.
-     * Sends the keyword to the controller and updates the view with results or errors.
+     * Sets the search message controller.
+     * @param controller the controller to set
      */
-    private void handleSearch() {
-        final String keyword = searchInputField.getText();
-        searchMessageController.handleSearchInput(keyword);
-
-        // Display results
-        final List<String> results = viewModel.getFormattedMessages();
-        if (!results.isEmpty()) {
-            showSearchResults(results);
-        }
-        else {
-            showNoResults();
-        }
-
-        // Display errors
-        if (viewModel.getError() != null) {
-            showError(viewModel.getError());
-        }
-    }
-
-    @Override
-    public void showSearchResults(List<String> searchResults) {
-        searchResultsArea.setText("");
-        for (String result : searchResults) {
-            searchResultsArea.append(result + "\n");
-        }
-        errorLabel.setText("");
-    }
-
-    @Override
-    public void showNoResults() {
-        searchResultsArea.setText("No results found.");
-        errorLabel.setText("");
-    }
-
-    @Override
-    public void showError(String errorMessage) {
-        errorLabel.setText(errorMessage);
-        searchResultsArea.setText("");
-    }
-
-    @Override
-    public void showUpdatedMessage(String updatedMessage) {
-        throw new UnsupportedOperationException("SearchMessageView does not support this operation.");
-    }
-
-    @Override
-    public void showEditStatus(boolean isSuccess, String message) {
-        throw new UnsupportedOperationException("SearchMessageView does not support this operation.");
-    }
-
-    /**
-     * Starts the view by making it visible.
-     */
-    public void start() {
-        this.setVisible(true);
+    public void setSearchMessageController(SearchMessageController controller) {
+        this.searchMessageController = controller;
     }
 }
-

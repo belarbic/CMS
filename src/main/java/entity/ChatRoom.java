@@ -8,14 +8,16 @@ import java.util.ArrayList;
 public class ChatRoom {
 
     private String name;
+    private String firstMessage;
     private ArrayList<User> participants;
     private ArrayList<Message> messages;
 
-    public ChatRoom(String name, ArrayList<User> participants, Message message) {
+    public ChatRoom(String name, String firstMessage) {
         this.name = name;
-        this.participants = participants;
+        // TODO participants added with calls to API
+        this.participants = new ArrayList<User>();
         this.messages = new ArrayList<Message>();
-        this.messages.add(message);
+        this.messages.add(new Message(firstMessage, null));
     }
 
     public String getName() {
@@ -31,23 +33,23 @@ public class ChatRoom {
     }
 
     /**
-     * A method that adds a participant to the chatRoom.
-     * @param user the user we want to add.
+     * A method to add participants.
+     * @param participant the participant we're adding.
      */
-    public void addParticipant(User user) {
-        participants.add(user);
-    }
-
-    /**
-     * A method that removes a participant from the chatRoom.
-     * @param user the user we want to remove.
-     */
-    public void removeParticipant(User user) {
-        participants.remove(user);
+    public void addParticipants(User participant) {
+        participants.add(participant);
     }
 
     public ArrayList<Message> getMessages() {
         return messages;
+    }
+
+    /**
+     * A method to add a message.
+     * @param message the message we're adding.
+     */
+    public void addMessage(Message message) {
+        messages.add(message);
     }
 
 }

@@ -36,10 +36,18 @@ public class Main {
                                             .addLoginView()
                                             .addSignupView()
                                             .addLoggedInView()
+                                            .addViewChatRoomsView()
+                                            .addViewChatRoomsUseCase()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
                                             .addChangePasswordUseCase()
                                             .addLogoutUseCase()
+                                            .addCreateChatRoomView()
+                                            .addCreateChatRoomUseCase()
+                                            .addSearchMessageView()
+                                            .addSearchMessageUseCase()
+                                            .addEditMessageView()
+                                            .addEditMessageUseCase()
                                             .build();
 
         application.pack();

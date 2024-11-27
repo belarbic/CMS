@@ -1,5 +1,15 @@
 package interface_adapter.create_chatroom;
 
-public class CreateChatRoomViewModel {
-// to be completed.
+import interface_adapter.ViewModel;
+
+/**
+ * The View Model for the Create ChatRoom View.
+ */
+public class CreateChatRoomViewModel extends ViewModel<CreateChatRoomState> {
+
+    public CreateChatRoomViewModel() {
+        super("Create Chatroom");
+        setState(new CreateChatRoomState());
+    }
+
 }
