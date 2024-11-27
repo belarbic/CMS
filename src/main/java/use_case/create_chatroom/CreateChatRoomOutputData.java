@@ -6,10 +6,12 @@ package use_case.create_chatroom;
 public class CreateChatRoomOutputData {
 
     private final String name;
+    private final String firstMessage;
     private final boolean useCaseFailed;
 
-    public CreateChatRoomOutputData(String name, boolean useCaseFailed) {
+    public CreateChatRoomOutputData(String name, String firstMessage, boolean useCaseFailed) {
         this.name = name;
+        this.firstMessage = firstMessage;
         this.useCaseFailed = useCaseFailed;
     }
 
@@ -17,4 +19,7 @@ public class CreateChatRoomOutputData {
         return name;
     }
 
+    public String getFirstMessage() {
+        return firstMessage;
+    }
 }

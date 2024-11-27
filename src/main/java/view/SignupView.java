@@ -24,7 +24,7 @@ import interface_adapter.signup.SignupViewModel;
  * The View for the Signup Use Case.
  */
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
-    private final String viewName = "sign up";
+    private final String viewName = "Sign Up";
 
     private final SignupViewModel signupViewModel;
     private final JTextField usernameInputField = new JTextField(15);
@@ -33,7 +33,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private SignupController signupController;
 
     private final JButton signUp;
-    private final JButton cancel;
     private final JButton toLogin;
 
     public SignupView(SignupViewModel signupViewModel) {
@@ -55,8 +54,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         buttons.add(toLogin);
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
-        cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(cancel);
 
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -82,8 +79,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     }
                 }
         );
-
-        cancel.addActionListener(this);
 
         addUsernameListener();
         addPasswordListener();

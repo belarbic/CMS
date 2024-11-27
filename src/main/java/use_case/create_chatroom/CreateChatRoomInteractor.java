@@ -19,12 +19,14 @@ public class CreateChatRoomInteractor implements CreateChatRoomInputBoundary {
     @Override
     public void execute(CreateChatRoomInputData createChatRoomInputData) {
         final String name = createChatRoomInputData.getName();
+        final String firstMessage = createChatRoomInputData.getFirstMessage();
         userDataAccessObject.setName(name);
+        userDataAccessObject.setFirstMessage(firstMessage);
         if (userDataAccessObject.getName().isEmpty() || userDataAccessObject.getName() == null) {
             createChatRoomPresenter.prepareFailView("ChatRoom needs a name!");
         }
         else {
-            final CreateChatRoomOutputData createChatRoomOutputData = new CreateChatRoomOutputData(userDataAccessObject.getName(), false);
+            final CreateChatRoomOutputData createChatRoomOutputData = new CreateChatRoomOutputData(userDataAccessObject.getName(), userDataAccessObject.getFirstMessage(), false);
             createChatRoomPresenter.prepareSuccessView(createChatRoomOutputData);
         }
     }
