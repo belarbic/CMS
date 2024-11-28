@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.ArrayList;
+
 /**
  * The representation of a user in our program.
  */
@@ -16,5 +18,7 @@ public interface User {
      * @return the password of the user.
      */
     String getPassword();
+
+    ArrayList<ChatRoom> getChatRooms();
 
 }

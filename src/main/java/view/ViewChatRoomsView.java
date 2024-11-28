@@ -1,17 +1,12 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -39,12 +34,17 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
         this.viewChatRoomsViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel("View Chatrooms");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font("Arial", Font.BOLD, 24));  // Set font size and bold
+        title.setAlignmentX(Component.CENTER_ALIGNMENT); // Center title alignment
+        this.add(Box.createVerticalStrut(50));
 
         final JLabel welcomeStatement = new JLabel("Here are the chatrooms you're a part of: ");
+        welcomeStatement.setFont(new Font("Arial", Font.BOLD, 16));  // Set font size and bold
+        welcomeStatement.setAlignmentX(Component.CENTER_ALIGNMENT); // Center title alignment
+        this.add(Box.createVerticalStrut(50));
 
         final JPanel buttons = new JPanel();
-        cancel = new JButton("Cancel");
+        cancel = new JButton("Back");
         buttons.add(cancel);
 
         cancel.addActionListener(this);
@@ -62,6 +62,7 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
      */
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
+
     }
 
     @Override

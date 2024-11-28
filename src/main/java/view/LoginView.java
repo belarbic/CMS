@@ -14,6 +14,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FlowLayout;
+import javax.swing.Box;
 
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.login.LoginController;
@@ -39,44 +43,184 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JButton cancel;
     private LoginController loginController;
 
-    public LoginView(LoginViewModel loginViewModel) {
+//    public LoginView(LoginViewModel loginViewModel) {
+//
+//        this.loginViewModel = loginViewModel;
+//        this.loginViewModel.addPropertyChangeListener(this);
+//
+//        final JLabel title = new JLabel("Login");
+//        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+//
+//        final LabelTextPanel usernameInfo = new LabelTextPanel(
+//                new JLabel("Username"), usernameInputField);
+//        final LabelTextPanel passwordInfo = new LabelTextPanel(
+//                new JLabel("Password"), passwordInputField);
+//
+//        final JPanel buttons = new JPanel();
+//        logIn = new JButton("Log In");
+//        buttons.add(logIn);
+//        cancel = new JButton("Back");
+//        buttons.add(cancel);
+//
+//        logIn.addActionListener(
+//                new ActionListener() {
+//                    public void actionPerformed(ActionEvent evt) {
+//                        if (evt.getSource().equals(logIn)) {
+//                            final LoginState currentState = loginViewModel.getState();
+//
+//                            loginController.execute(
+//                                    currentState.getUsername(),
+//                                    currentState.getPassword()
+//                            );
+//                        }
+//                    }
+//                }
+//        );
+//
+//        cancel.addActionListener(this);
+//
+//        usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
+//
+//            private void documentListenerHelper() {
+//                final LoginState currentState = loginViewModel.getState();
+//                currentState.setUsername(usernameInputField.getText());
+//                loginViewModel.setState(currentState);
+//            }
+//
+//            @Override
+//            public void insertUpdate(DocumentEvent e) {
+//                documentListenerHelper();
+//            }
+//
+//            @Override
+//            public void removeUpdate(DocumentEvent e) {
+//                documentListenerHelper();
+//            }
+//
+//            @Override
+//            public void changedUpdate(DocumentEvent e) {
+//                documentListenerHelper();
+//            }
+//        });
+//
+//        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+//
+//        passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
+//
+//            private void documentListenerHelper() {
+//                final LoginState currentState = loginViewModel.getState();
+//                currentState.setPassword(new String(passwordInputField.getPassword()));
+//                loginViewModel.setState(currentState);
+//            }
+//
+//            @Override
+//            public void insertUpdate(DocumentEvent e) {
+//                documentListenerHelper();
+//            }
+//
+//            @Override
+//            public void removeUpdate(DocumentEvent e) {
+//                documentListenerHelper();
+//            }
+//
+//            @Override
+//            public void changedUpdate(DocumentEvent e) {
+//                documentListenerHelper();
+//            }
+//        });
+//
+//        this.add(title);
+//        this.add(usernameInfo);
+//        this.add(usernameErrorField);
+//        this.add(passwordInfo);
+//        this.add(buttons);
+//    }
+public LoginView(LoginViewModel loginViewModel) {
+    this.loginViewModel = loginViewModel;
+    this.loginViewModel.addPropertyChangeListener(this);
 
-        this.loginViewModel = loginViewModel;
-        this.loginViewModel.addPropertyChangeListener(this);
+    // Title label styling and alignment
+    final JLabel title = new JLabel("Login");
+    title.setFont(new Font("Arial", Font.BOLD, 24));  // Set font size and bold
+    title.setAlignmentX(Component.CENTER_ALIGNMENT); // Center title alignment
 
-        final JLabel title = new JLabel("Login");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+    // Add vertical spacing before the title to match the SignupView
+    this.add(Box.createVerticalStrut(50));  // Adjust the value (50) for more or less space
 
-        final LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel("Username"), usernameInputField);
-        final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel("Password"), passwordInputField);
+    // Create the input panels for username and password
+    final LabelTextPanel usernameInfo = createLabelTextPanel("Username", usernameInputField);
+    final LabelTextPanel passwordInfo = createLabelTextPanel("Password", passwordInputField);
 
-        final JPanel buttons = new JPanel();
-        logIn = new JButton("Log In");
-        buttons.add(logIn);
-        cancel = new JButton("Cancel");
-        buttons.add(cancel);
+    usernameInputField.setPreferredSize(new java.awt.Dimension(250, 30));  // Increase width and height
+    usernameInputField.setFont(new Font("Arial", Font.PLAIN, 16));  // Increase font size
+    usernameInfo.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20)); // Add padding for clarity
 
-        logIn.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(logIn)) {
-                            final LoginState currentState = loginViewModel.getState();
+    passwordInputField.setPreferredSize(new java.awt.Dimension(250, 30));  // Increase width and height
+    passwordInputField.setFont(new Font("Arial", Font.PLAIN, 16));  // Increase font size
+    passwordInfo.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20)); // Add padding for clarity
 
-                            loginController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getPassword()
-                            );
-                        }
-                    }
-                }
-        );
+    // Create buttons panel and add buttons to it
+    final JPanel buttons = new JPanel();
+    buttons.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Center buttons with spacing
 
-        cancel.addActionListener(this);
+    // Log In button styling
+    logIn = createButton("Log In", new Color(34, 193, 195), Color.WHITE);
+    buttons.add(logIn);
 
+    // Back button styling
+    cancel = createButton("Back", new Color(204, 204, 204), Color.BLACK);
+    buttons.add(cancel);
+
+    // Button action listeners
+    logIn.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            if (evt.getSource().equals(logIn)) {
+                final LoginState currentState = loginViewModel.getState();
+                loginController.execute(
+                        currentState.getUsername(),
+                        currentState.getPassword()
+                );
+            }
+        }
+    });
+
+    cancel.addActionListener(this);
+
+    // Add listeners for username and password input fields
+    addUsernameListener();
+    addPasswordListener();
+
+    // Set layout of the main panel and add components
+    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    this.add(title);
+    this.add(usernameInfo);
+    this.add(usernameErrorField);
+    this.add(passwordInfo);
+    this.add(buttons);
+}
+
+    // Helper method to create LabelTextPanel with label and input field
+    private LabelTextPanel createLabelTextPanel(String labelText, JTextField inputField) {
+        final JLabel label = new JLabel(labelText);
+        LabelTextPanel panel = new LabelTextPanel(label, inputField);
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10)); // Add padding for clarity
+        return panel;
+    }
+
+    // Helper method to create a button with specific label, background, and foreground color
+    private JButton createButton(String labelText, Color backgroundColor, Color textColor) {
+        JButton button = new JButton(labelText);
+        button.setFont(new Font("Arial", Font.PLAIN, 14));  // Font styling for button
+        button.setFocusPainted(false);  // Remove default focus border
+        button.setBackground(backgroundColor);  // Set button background color
+        button.setForeground(textColor);  // Set button text color
+        return button;
+    }
+
+
+    // Add listeners for username input field
+    private void addUsernameListener() {
         usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
-
             private void documentListenerHelper() {
                 final LoginState currentState = loginViewModel.getState();
                 currentState.setUsername(usernameInputField.getText());
@@ -98,11 +242,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 documentListenerHelper();
             }
         });
+    }
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+    // Add listeners for password input field
+    private void addPasswordListener() {
         passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
-
             private void documentListenerHelper() {
                 final LoginState currentState = loginViewModel.getState();
                 currentState.setPassword(new String(passwordInputField.getPassword()));
@@ -124,13 +268,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 documentListenerHelper();
             }
         });
-
-        this.add(title);
-        this.add(usernameInfo);
-        this.add(usernameErrorField);
-        this.add(passwordInfo);
-        this.add(buttons);
     }
+
 
     /**
      * React to a button click that results in evt.

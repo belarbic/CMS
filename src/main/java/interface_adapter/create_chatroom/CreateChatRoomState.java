@@ -12,6 +12,8 @@ public class CreateChatRoomState {
     private String loginError;
     // need to make createChatRoomError
     private String name = "";
+    private String firstMessage = "";
+    private String createChatRoomError;
     private ArrayList<User> participants = new ArrayList<User>();
     private ArrayList<Message> messages = new ArrayList<Message>();
 
@@ -50,5 +52,22 @@ public class CreateChatRoomState {
 
     public void setLoginError(String usernameError) {
         this.loginError = usernameError;
+    }
+
+    public String getFirstMessage() {
+        return firstMessage;
+
+    }
+
+    public String getCreateChatRoomError() {
+        return createChatRoomError;
+    }
+
+    public void setFirstMessage(String firstMessage) {
+        this.firstMessage = firstMessage;
+    }
+
+    public void setCreateChatRoomError(String nameError) {
+        this.createChatRoomError = nameError;
     }
 }
