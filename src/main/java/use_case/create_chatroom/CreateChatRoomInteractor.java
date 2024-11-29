@@ -1,8 +1,5 @@
 package use_case.create_chatroom;
 
-import entity.ChatRoom;
-import entity.User;
-
 /**
  * The CreateChatRoom Interactor.
  */

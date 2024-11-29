@@ -1,23 +1,14 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FlowLayout;
-import javax.swing.Box;
 
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.login.LoginController;
@@ -135,87 +126,106 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 //        this.add(passwordInfo);
 //        this.add(buttons);
 //    }
-public LoginView(LoginViewModel loginViewModel) {
-    this.loginViewModel = loginViewModel;
-    this.loginViewModel.addPropertyChangeListener(this);
+    public LoginView(LoginViewModel loginViewModel) {
+        this.loginViewModel = loginViewModel;
+        this.loginViewModel.addPropertyChangeListener(this);
 
-    // Title label styling and alignment
-    final JLabel title = new JLabel("Login");
-    title.setFont(new Font("Arial", Font.BOLD, 24));  // Set font size and bold
-    title.setAlignmentX(Component.CENTER_ALIGNMENT); // Center title alignment
+        // Title label styling and alignment
+        final JLabel title = new JLabel("Login");
+        title.setFont(new Font("Roboto", Font.BOLD, 28));  // Set font size and bold
+        title.setAlignmentX(Component.CENTER_ALIGNMENT); // Center title alignment
 
-    // Add vertical spacing before the title to match the SignupView
-    this.add(Box.createVerticalStrut(50));  // Adjust the value (50) for more or less space
+        // Add vertical spacing before the title to match the SignupView
+        this.add(Box.createVerticalStrut(40));  // Adjust the value (40) for more or less space
 
-    // Create the input panels for username and password
-    final LabelTextPanel usernameInfo = createLabelTextPanel("Username", usernameInputField);
-    final LabelTextPanel passwordInfo = createLabelTextPanel("Password", passwordInputField);
+        // Create the input panels for username and password
+        final LabelTextPanel usernameInfo = createLabelTextPanel("Username:", usernameInputField);
+        final LabelTextPanel passwordInfo = createLabelTextPanel("Password:", passwordInputField);
 
-    usernameInputField.setPreferredSize(new java.awt.Dimension(250, 30));  // Increase width and height
-    usernameInputField.setFont(new Font("Arial", Font.PLAIN, 16));  // Increase font size
-    usernameInfo.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20)); // Add padding for clarity
+        usernameInputField.setPreferredSize(new java.awt.Dimension(250, 35));  // Wider and taller input field
+        usernameInputField.setFont(new Font("Arial", Font.PLAIN, 16));  // Larger text in input field
+        usernameInfo.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10)); // Add padding for clarity
+        usernameInfo.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));  // Left margin for the entire panel
 
-    passwordInputField.setPreferredSize(new java.awt.Dimension(250, 30));  // Increase width and height
-    passwordInputField.setFont(new Font("Arial", Font.PLAIN, 16));  // Increase font size
-    passwordInfo.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20)); // Add padding for clarity
 
-    // Create buttons panel and add buttons to it
-    final JPanel buttons = new JPanel();
-    buttons.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Center buttons with spacing
+        passwordInputField.setPreferredSize(new java.awt.Dimension(250, 35));  // Wider and taller input field
+        passwordInputField.setFont(new Font("Arial", Font.PLAIN, 16));  // Larger text in input field
+        passwordInfo.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10)); // Add padding for clarity
 
-    // Log In button styling
-    logIn = createButton("Log In", new Color(34, 193, 195), Color.WHITE);
-    buttons.add(logIn);
+        // Add red error message for username validation (centered)
+        usernameErrorField.setFont(new Font("Arial", Font.ITALIC, 12));
+        usernameErrorField.setForeground(Color.RED);
+        usernameErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-    // Back button styling
-    cancel = createButton("Back", new Color(204, 204, 204), Color.BLACK);
-    buttons.add(cancel);
+        // Create buttons panel and add buttons to it
+        final JPanel buttons = new JPanel();
+        buttons.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Center buttons with spacing
 
-    // Button action listeners
-    logIn.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent evt) {
-            if (evt.getSource().equals(logIn)) {
-                final LoginState currentState = loginViewModel.getState();
-                loginController.execute(
-                        currentState.getUsername(),
-                        currentState.getPassword()
-                );
+        // Log In button styling
+        logIn = createButton("Log In", new Color(34, 193, 195), Color.WHITE);
+        buttons.add(logIn);
+
+        // Back button styling
+        cancel = createButton("Back", new Color(204, 204, 204), Color.BLACK);
+        buttons.add(cancel);
+
+        // Button action listeners
+        logIn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource().equals(logIn)) {
+                    final LoginState currentState = loginViewModel.getState();
+                    loginController.execute(
+                            currentState.getUsername(),
+                            currentState.getPassword()
+                    );
+                }
             }
-        }
-    });
+        });
 
-    cancel.addActionListener(this);
+        cancel.addActionListener(this);
 
-    // Add listeners for username and password input fields
-    addUsernameListener();
-    addPasswordListener();
+        // Add listeners for username and password input fields
+        addUsernameListener();
+        addPasswordListener();
 
-    // Set layout of the main panel and add components
-    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    this.add(title);
-    this.add(usernameInfo);
-    this.add(usernameErrorField);
-    this.add(passwordInfo);
-    this.add(buttons);
-}
-
-    // Helper method to create LabelTextPanel with label and input field
+        // Set layout of the main panel and add components
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30)); // Add padding around the form
+        this.setBackground(new Color(240, 240, 240)); // Light gray background for the login form
+        this.add(title);
+        this.add(Box.createVerticalStrut(20)); // Spacing after the title
+        this.add(usernameInfo);
+        this.add(usernameErrorField);
+        this.add(Box.createVerticalStrut(10)); // Spacing between username and password fields
+        this.add(passwordInfo);
+        this.add(Box.createVerticalStrut(20)); // Spacing before buttons
+        this.add(buttons);
+    }
     private LabelTextPanel createLabelTextPanel(String labelText, JTextField inputField) {
         final JLabel label = new JLabel(labelText);
+        label.setFont(new Font("Arial", Font.PLAIN, 14)); // Set font size for labels
+        inputField.setPreferredSize(new Dimension(250, 30)); // Wider input fields
+        inputField.setFont(new Font("Arial", Font.PLAIN, 16)); // Larger input text
+        inputField.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200))); // Subtle border
+
         LabelTextPanel panel = new LabelTextPanel(label, inputField);
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10)); // Add padding for clarity
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10)); // Spacing between label and field
         return panel;
     }
-
-    // Helper method to create a button with specific label, background, and foreground color
     private JButton createButton(String labelText, Color backgroundColor, Color textColor) {
         JButton button = new JButton(labelText);
-        button.setFont(new Font("Arial", Font.PLAIN, 14));  // Font styling for button
-        button.setFocusPainted(false);  // Remove default focus border
-        button.setBackground(backgroundColor);  // Set button background color
-        button.setForeground(textColor);  // Set button text color
+        button.setFont(new Font("Arial", Font.PLAIN, 14)); // Font styling
+        button.setFocusPainted(false); // Remove default focus border
+        button.setBackground(backgroundColor); // Button background color
+        button.setForeground(textColor); // Button text color
+        button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Padding inside button
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Change cursor to hand
         return button;
     }
+
+
+
+
 
 
     // Add listeners for username input field

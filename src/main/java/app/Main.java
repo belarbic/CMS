@@ -31,6 +31,7 @@ public class Main {
     public static void main(String[] args) {
 //        chatService.addMessageListener("groupId1");
 //        chatService.sendMessage("groupId1", "Hello World!", "TestUser");
+        initializeFirebase();
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                                             .addLoginView()
@@ -51,8 +52,8 @@ public class Main {
                                             .build();
 
         application.pack();
+        application.setSize(600, 550);
         application.setVisible(true);
-        initializeFirebase();
         ChatService chatService = new ChatService();
         chatService.getChatList();
     }

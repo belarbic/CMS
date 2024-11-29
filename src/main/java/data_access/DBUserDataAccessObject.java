@@ -2,6 +2,8 @@ package data_access;
 
 import java.io.IOException;
 
+import entity.ChatRoom;
+import entity.Message;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,9 +15,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
+import use_case.create_chatroom.CreateChatRoomUserDataAccessInterface;
+import use_case.edit_message.EditMessageUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
+import use_case.search_message.SearchMessageUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
+import use_case.view_chatrooms.ViewChatRoomsUserDataAccessInterface;
 
 /**
  * The DAO for user data.
@@ -23,7 +29,11 @@ import use_case.signup.SignupUserDataAccessInterface;
 public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
-        LogoutUserDataAccessInterface {
+        LogoutUserDataAccessInterface, CreateChatRoomUserDataAccessInterface,
+        ViewChatRoomsUserDataAccessInterface,
+        SearchMessageUserDataAccessInterface,
+        EditMessageUserDataAccessInterface {
+
     private static final int SUCCESS_CODE = 200;
     private static final String CONTENT_TYPE_LABEL = "Content-Type";
     private static final String CONTENT_TYPE_JSON = "application/json";
@@ -91,6 +101,28 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
         catch (IOException | JSONException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    /**
+     * Gets a message by its ID.
+     *
+     * @param messageId the ID of the message to retrieve
+     * @return the message with the given ID
+     */
+    @Override
+    public Message getMessage(String messageId) {
+        return null;
+    }
+
+    /**
+     * Updates the content of a message.
+     *
+     * @param messageId  the ID of the message to update
+     * @param newContent the new content for the message
+     */
+    @Override
+    public void updateMessage(String messageId, String newContent) {
+
     }
 
     @Override
@@ -226,6 +258,66 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
 
     @Override
     public String getCurrentUsername() {
+        return null;
+    }
+
+    /**
+     * Returns the name of the chatRoom.
+     *
+     * @return the name of the chatRoom.; null indicates that there isn't a name.
+     */
+    @Override
+    public String getName() {
+        return "";
+    }
+
+    /**
+     * Returns the name of the chatRoom.
+     *
+     * @return the name of the chatRoom.; null indicates that there isn't a name.
+     */
+    @Override
+    public String getFirstMessage() {
+        return "";
+    }
+
+    /**
+     * Sets the name of the chatRoom.
+     *
+     * @param firstMessage the name of the ChatRoom
+     * @return the name of the chatRoom.; null indicates that there isn't a name.
+     */
+    @Override
+    public void setFirstMessage(String firstMessage) {
+
+    }
+
+    /**
+     * Sets the name of the chatRoom.
+     *
+     * @param name the name of the ChatRoom
+     * @return the name of the chatRoom.; null indicates that there isn't a name.
+     */
+    @Override
+    public void setName(String name) {
+
+    }
+
+    /**
+     * Saves the ChatRoom.
+     *
+     * @param chatRoom the chatRoom to save
+     */
+    @Override
+    public void save(ChatRoom chatRoom) {
+
+    }
+
+    /**
+     * Returns the ChatRoom.
+     */
+    @Override
+    public ChatRoom getChatRoom() {
         return null;
     }
 }

@@ -23,9 +23,24 @@ public class ChatService {
      * @param sender  The person who sent the data.
      */
     public void sendMessage(String groupId, String content, String sender) {
-        final String messageId = chatRef.child(groupId).child(MESSAGES).push().getKey();
-        final Message message = new Message(sender, content, System.currentTimeMillis());
-        chatRef.child(groupId).child(MESSAGES).child(messageId).setValueAsync(message);
+        chatRef.child(groupId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()) {
+                    chatRef.child(groupId).setValueAsync(new HashMap<String, Object>());
+                    System.out.println("Created new chat room" + groupId);
+                }
+                final String messageId = chatRef.child(groupId).child(MESSAGES).push().getKey();
+                final Message message = new Message(sender, content, System.currentTimeMillis());
+                chatRef.child(groupId).child(MESSAGES).child(messageId).setValueAsync(message);
+                System.out.println("Message sent to " + groupId);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("Failed to read value: " + databaseError.toException());
+            }
+        });
 
     }
 
