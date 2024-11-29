@@ -5,7 +5,7 @@ package use_case.send_message;
  */
 public interface SendMessageInputBoundary {
     /**
-     * Executes the send message use case.
+     * Executes the delete message use case.
      * @param sendMessageInputData the input data
      */
     void execute(SendMessageInputData sendMessageInputData);

@@ -12,6 +12,7 @@ public class Message {
     private LocalDateTime timestamp;
     private String sender;
     private boolean edited;
+    private boolean deleted;
 
     public Message(String content, String sender) {
         // TODO make a call to the API for ID
@@ -20,6 +21,7 @@ public class Message {
         this.sender = sender;
         this.timestamp = LocalDateTime.now();
         this.edited = false;
+        this.deleted = false;
     }
 
     public String getId() {
@@ -31,6 +33,9 @@ public class Message {
     }
 
     public String getContent() {
+        if (deleted) {
+            return "This message has been deleted";
+        }
         return content;
     }
 
@@ -48,6 +53,14 @@ public class Message {
 
     public boolean isEdited() {
         return edited;
+    }
+
+    public boolean deleted() {
+        return deleted;
+    }
+
+    public void delete() {
+        this.deleted = true;
     }
 
     public String getChatRoom() {
