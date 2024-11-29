@@ -11,12 +11,16 @@ import use_case.send_message.SendMessageInputData;
 public class SendMessageController {
     private final SendMessageInputBoundary sendMessageUseCaseInteractor;
 
+    /**
+     * Creates a new SendMessageController.
+     * @param sendMessageUseCaseInteractor the interactor for send message use case
+     */
     public SendMessageController(SendMessageInputBoundary sendMessageUseCaseInteractor) {
         this.sendMessageUseCaseInteractor = sendMessageUseCaseInteractor;
     }
 
     /**
-     * Handles the send message request.
+     * Executes the send message use case.
      *
      * @param content  The message content.
      * @param sender   The user sending the message.

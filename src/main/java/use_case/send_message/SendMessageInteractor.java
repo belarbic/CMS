@@ -41,7 +41,7 @@ public class SendMessageInteractor implements SendMessageInputBoundary {
         final ChatRoom chatRoom = userDataAccessObject.getChatRoomByName(chatRoomName);
         final User sender = userDataAccessObject.getUserInChatRoom(senderUsername, chatRoomName);
 
-        final Message message = new Message(content, sender, chatRoom);
+        final Message message = new Message(content, senderUsername);
         chatRoom.getMessages().add(message);
 
         final SendMessageOutputData outputData = new SendMessageOutputData(
