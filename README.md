@@ -1,29 +1,82 @@
-Chat Messaging System (CMS)
+# Chat Messaging System (CMS)
 
-**Team Members & Github Usernames:**
+The Chat Messaging System (CMS) is an application made for our CSC207 project. 
+Users can chat with one another in chatrooms.
+It allows users to create chatrooms, add participants and send/edit/delete messages in chatrooms.
+Contributors include: Chiraz Belarbi, Ali Gill, Ismail Iraz and Joojo Botchway.
 
-Chiraz Belarbi - belarbic 
+## Table of Contents
+- [Features](#features)
+- [Installation Instructions](#installation-instructions)
+- [License](#license)
+- [Feedback & Contributions](#feedback--contributions)
 
-Joojo Botchway - joojo-faya 
+## Features
 
-Ali Gill - ThrillerNight00 
+To access most of the following features, 
+When you run the app, log in or sign up, until you are on the logged in screen below
+[IMAGE]
 
-Ismail Iraz - ihakkiraz
+***
 
-**Dividing Tasks**
-- [ ] User Story 2 + Entities - Chiraz Belarbi 
-- [ ] User Story 3/4 - Ismail Iraz 
-- [ ] User Story 5/6 - Joojo Botchway 
-- [ ] API - Ali Gill
+### Create a Chatroom
+This feature allows the user to create chatrooms and add other participants.
 
-**Tasks Completed**
+From the logged in view, click on the create chatroom button, which will lead you to the screen below.
+Choose a name for your chatroom, add participants and you can add an optional first message! Then click create.
+[IMAGE]
 
-c.belarbi
-- [x] Add onlineStatus parameter to User entity.
-- [x] Add chatRooms parameter to User entity.
-- [x] Create ChatRoom entity and add appropriate parameters.
-- [x] Create Messages entity and add appropriate parameters.
-- [x] Create create_chatroom use_case folder and add appropriate files.
-- [x] Create create_chatroom interface_adapter and add apprpriate files.
-- [ ] Complete all files in create_chatroom use_case folder.
-- [ ] Complete all files in create_chatroom interface_adapter folder.
+***
+
+### View Chatrooms
+This feature allows the user to see the chatrooms they are a part of and to join a chatroom.
+
+From the logged in view, click on the view chatrooms button, which will lead you to the screen below.
+[IMAGE]
+Here, you can see all the chatrooms you are a part of and can click on any of them to join them.
+
+***
+
+## Installation Instructions
+
+To be able to run this program, download an application that can run java code, these instructions will
+be using [IntelliJ](https://www.jetbrains.com/idea/download/?section=mac).
+
+***
+
+Go to the [github project](https://github.com/belarbic/CMS) and click on <> Code in green as seen below.
+Click on the copy icon circled red, to copy the link to the repository.
+![img.png](img.png)
+
+***
+
+When you open IntelliJ, click on 'Get From VCS' on the top right
+![img_1.png](img_1.png)
+
+***
+
+Then enter the URL where needed and at the bottom right click clone.
+![img_2.png](img_2.png)
+
+***
+
+Now you have the program downloaded!
+
+#### Notes:
+- Make sure to have the latest version of IntelliJ
+- Use openjdk-22 version of Java
+
+***
+
+## Usage
+
+Here is a video demo on how to use the chat messaging system.
+VIDEO
+
+## License
+
+
+## Feedback & Contributions
+
+
+Please note contributions are closed at the moment.
