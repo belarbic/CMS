@@ -13,6 +13,7 @@ import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.search_message.SearchMessageUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
+import use_case.view_chatrooms.ViewChatRoomsUserDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing user data. This implementation does
@@ -23,6 +24,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface,
         CreateChatRoomUserDataAccessInterface,
+        ViewChatRoomsUserDataAccessInterface,
         SearchMessageUserDataAccessInterface,
         EditMessageUserDataAccessInterface {
 
@@ -33,6 +35,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     private String currentUsername;
     private ChatRoom chatRoom;
     private String name;
+    private String firstMessage;
 
     @Override
     public boolean existsByName(String identifier) {
@@ -47,6 +50,16 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public String getFirstMessage() {
+        return this.firstMessage;
+    }
+
+    @Override
+    public void setFirstMessage(String firstMessage) {
+        this.firstMessage = firstMessage;
     }
 
     @Override

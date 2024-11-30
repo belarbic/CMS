@@ -5,10 +5,15 @@ package interface_adapter.create_chatroom;
  */
 public class CreateChatRoomState {
     private String name = "";
+    private String firstMessage = "";
     private String createChatRoomError;
 
     public String getName() {
         return name;
+    }
+
+    public String getFirstMessage() {
+        return firstMessage;
     }
 
     public String getCreateChatRoomError() {
@@ -17,6 +22,10 @@ public class CreateChatRoomState {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setFirstMessage(String firstMessage) {
+        this.firstMessage = firstMessage;
     }
 
     public void setCreateChatRoomError(String nameError) {

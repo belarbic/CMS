@@ -20,13 +20,16 @@ import interface_adapter.create_chatroom.CreateChatRoomViewModel;
 import interface_adapter.edit_message.EditMessageController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.search_message.SearchMessageController;
+import interface_adapter.login.LoginState;
+import interface_adapter.logout.LogoutController;
+import interface_adapter.view_chatrooms.ViewChatRoomsController;
 
 /**
  * The View for when the user is logged into the program.
  */
 public class LoggedInView extends JPanel implements PropertyChangeListener {
 
-    private final String viewName = "logged in";
+    private final String viewName = "Logged In";
     private final LoggedInViewModel loggedInViewModel;
     // private final JLabel passwordErrorField = new JLabel();
     private ChangePasswordController changePasswordController;
@@ -48,6 +51,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     // new button to view current chatrooms
     private final JButton viewChatRooms;
+    private ViewChatRoomsController viewChatRoomsController;
 
     // new button to search messages
     private final JButton searchMessages;
@@ -82,11 +86,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         buttons.add(changeUsername);
 
         // this code creates the Create Chat Room button and adds it to buttons.
-        createChatRoom = new JButton("Create Chat Room");
+        createChatRoom = new JButton("Create Chatroom");
         buttons.add(createChatRoom);
 
         // this code creates the View Chat Room button and adds it to buttons.
-        viewChatRooms = new JButton("View Chat Rooms");
+        viewChatRooms = new JButton("View Chatrooms");
         buttons.add(viewChatRooms);
 
         searchMessages = new JButton("Search Messages");
@@ -158,8 +162,21 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                         final LoggedInState currentState = loggedInViewModel.getState();
                         // 2. Execute the createChatRoom Controller.
                         createChatRoomController.execute(
-                                currentState.getUsername()
+                                currentState.getUsername(),
+                                ""
                         );
+                    }
+                }
+        );
+
+        viewChatRooms.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                evt -> {
+                    if (evt.getSource().equals(viewChatRooms)) {
+                        // 1. get the state out of the loggedInViewModel. It contains the username.
+                        final LoggedInState currentState = loggedInViewModel.getState();
+                        // 2. Execute the createChatRoom Controller.
+                        viewChatRoomsController.execute();
                     }
                 }
         );
@@ -225,6 +242,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setCreateChatRoomController(CreateChatRoomController createChatRoomController) {
         this.createChatRoomController = createChatRoomController;
+    }
+
+    public void setViewChatRoomsController(ViewChatRoomsController viewChatRoomsController) {
+        this.viewChatRoomsController = viewChatRoomsController;
     }
 
     public void setSearchMessageController(SearchMessageController searchMessageController) {

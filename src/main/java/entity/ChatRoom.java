@@ -8,14 +8,16 @@ import java.util.ArrayList;
 public class ChatRoom {
 
     private String name;
+    private String firstMessage;
     private ArrayList<User> participants;
     private ArrayList<Message> messages;
 
-    public ChatRoom(String name) {
+    public ChatRoom(String name, String firstMessage) {
         this.name = name;
         // TODO participants added with calls to API
         this.participants = new ArrayList<User>();
         this.messages = new ArrayList<Message>();
+        this.messages.add(new Message(firstMessage, null));
     }
 
     public String getName() {

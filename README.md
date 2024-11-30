@@ -1,71 +1,82 @@
-# Project Specification for Group #111
+# Chat Messaging System (CMS)
 
-Team Name: Chat Messaging System (CMS)
-Domain:
-Chat System – A platform for sending, receiving, and organizing messages
-between users or in group chats.
+The Chat Messaging System (CMS) is an application made for our CSC207 project. 
+Users can chat with one another in chatrooms.
+It allows users to create chatrooms, add participants and send/edit/delete messages in chatrooms.
+Contributors include: Chiraz Belarbi, Ali Gill, Ismail Iraz and Joojo Botchway.
 
-Software Specification:
-The program should allow users to:
-● Create a chat account with a valid username and password and log in/log
-out of the account
-● Send and receive text messages in real-time.
-● Create group chats with multiple users.
-● Edit or delete sent messages.
-● Search for messages by keyword, user, or timestamp.
-● Use a third-party API for additional functionality (e.g, using real-time
-notifications).
+## Table of Contents
+- [Features](#features)
+- [Installation Instructions](#installation-instructions)
+- [License](#license)
+- [Feedback & Contributions](#feedback--contributions)
 
-User Stories:
-1. Mia wants to create an account. She creates an account by entering a username
-and password into the chatroom. The system returns if the username is valid
-(does not already exist) and if the password is strong enough.
-2. Alice creates a new group chat. She invites her friends and sends the first
-message. All invited users see the message in real-time.
-3. Carol is part of multiple group chats and wants to search for a message so she
-uses the search bar to find a message by keyword.
-4. Michael wants to edit a message he sent in a group chat so he clicks on the edit
-option, modifies his message, and saves it.
+## Features
 
-5. Sophia accidentally sent a message. She wants to delete the message so she
-clicks on the delete button on the message. The message disappears from the
-chat.
-6. The CMS development team wants to design and implement a user-friendly
-interface for account creation, group chat functionality, and message searching
-so users can easily interact with the chat system.
+To access most of the following features, 
+When you run the app, log in or sign up, until you are on the logged in screen below
+[IMAGE]
 
-Proposed Entities for the Domain:
-Message
-● String content
-● User sender
-● DateTime timestamp
-● boolean edited
-● ChatRoom chatRoom
-ChatRoom
-● String name
-● List<User> participants
-● List<Message> messages
-User
-● String username
-● String password
-● List<ChatRoom> chatRooms
-● boolean onlineStatus
+***
 
-Proposed API for the project:
-Firebase Realtime Database API
+### Create a Chatroom
+This feature allows the user to create chatrooms and add other participants.
 
-**Dividing Tasks**
-- [ ] User Story 2 + Entities - Chiraz Belarbi 
-- [ ] User Story 3/4 - Ismail Iraz 
-- [ ] User Story 5/6 - Joojo Botchway 
-- [ ] API - Ali Gill
-● Used to store and synchronize chat data across users in real-time.
+From the logged in view, click on the create chatroom button, which will lead you to the screen below.
+Choose a name for your chatroom, add participants and you can add an optional first message! Then click create.
+[IMAGE]
 
-● Allows users to access chat rooms and messages seamlessly
-across devices.
+***
 
-Scheduled Meeting Times + Mode of Communication:
-[when will your team meet each week — you MUST meet during the weekly tutorial
-timeslot and we strongly recommend scheduling one more regular meeting time]
-Meeting time outside of lab: Mondays 3-4pm
-Mode of Communication: Discord
+### View Chatrooms
+This feature allows the user to see the chatrooms they are a part of and to join a chatroom.
+
+From the logged in view, click on the view chatrooms button, which will lead you to the screen below.
+[IMAGE]
+Here, you can see all the chatrooms you are a part of and can click on any of them to join them.
+
+***
+
+## Installation Instructions
+
+To be able to run this program, download an application that can run java code, these instructions will
+be using [IntelliJ](https://www.jetbrains.com/idea/download/?section=mac).
+
+***
+
+Go to the [github project](https://github.com/belarbic/CMS) and click on <> Code in green as seen below.
+Click on the copy icon circled red, to copy the link to the repository.
+![img.png](img.png)
+
+***
+
+When you open IntelliJ, click on 'Get From VCS' on the top right
+![img_1.png](img_1.png)
+
+***
+
+Then enter the URL where needed and at the bottom right click clone.
+![img_2.png](img_2.png)
+
+***
+
+Now you have the program downloaded!
+
+#### Notes:
+- Make sure to have the latest version of IntelliJ
+- Use openjdk-22 version of Java
+
+***
+
+## Usage
+
+Here is a video demo on how to use the chat messaging system.
+VIDEO
+
+## License
+
+
+## Feedback & Contributions
+
+
+Please note contributions are closed at the moment.

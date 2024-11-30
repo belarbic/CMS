@@ -8,7 +8,7 @@ import interface_adapter.ViewModel;
 public class CreateChatRoomViewModel extends ViewModel<CreateChatRoomState> {
 
     public CreateChatRoomViewModel() {
-        super("create chat room");
+        super("Create Chatroom");
         setState(new CreateChatRoomState());
     }
 
