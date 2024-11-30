@@ -161,9 +161,9 @@ public SignupView(SignupViewModel signupViewModel) {
     this.add(title);
     this.add(Box.createVerticalStrut(20)); // Spacing after the title
     this.add(usernameInfo);
-    this.add(Box.createVerticalStrut(10)); // Spacing between fields
+    this.add(Box.createVerticalStrut(-10)); // Spacing between fields
     this.add(passwordInfo);
-    this.add(Box.createVerticalStrut(10)); // Spacing between fields
+    this.add(Box.createVerticalStrut(-10)); // Spacing between fields
     this.add(repeatPasswordInfo);
     this.add(Box.createVerticalStrut(20)); // Spacing before buttons
     this.add(buttons);

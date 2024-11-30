@@ -153,7 +153,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         passwordInfo.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10)); // Add padding for clarity
 
         // Add red error message for username validation (centered)
-        usernameErrorField.setFont(new Font("Arial", Font.ITALIC, 12));
+        usernameErrorField.setFont(new Font("Arial", Font.ITALIC, 16));
         usernameErrorField.setForeground(Color.RED);
         usernameErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -196,7 +196,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.add(Box.createVerticalStrut(20)); // Spacing after the title
         this.add(usernameInfo);
         this.add(usernameErrorField);
-        this.add(Box.createVerticalStrut(10)); // Spacing between username and password fields
+        this.add(Box.createVerticalStrut(-10)); // Spacing between username and password fields
         this.add(passwordInfo);
         this.add(Box.createVerticalStrut(20)); // Spacing before buttons
         this.add(buttons);

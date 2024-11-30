@@ -161,15 +161,13 @@ public CreateChatRoomView(CreateChatRoomViewModel createChatRoomViewModel) {
     buttons.add(cancel);
 
     // Button action listeners
-    createChatRoom.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent evt) {
-            if (evt.getSource().equals(createChatRoom)) {
-                final CreateChatRoomState currentState = createChatRoomViewModel.getState();
-                ChatService chatService = new ChatService();
-                chatService.addMessageListener(currentState.getName());
-                chatService.sendMessage(currentState.getName(), currentState.getFirstMessage(), currentState.getName());
-                createChatRoomController.execute(currentState.getName(), currentState.getFirstMessage());
-            }
+    createChatRoom.addActionListener(evt -> {
+        if (evt.getSource().equals(createChatRoom)) {
+            final CreateChatRoomState currentState = createChatRoomViewModel.getState();
+            ChatService chatService = new ChatService();
+            chatService.addMessageListener(currentState.getName());
+            chatService.sendMessage(currentState.getName(), currentState.getFirstMessage(), currentState.getName());
+            createChatRoomController.execute(currentState.getName(), currentState.getFirstMessage());
         }
     });
 
@@ -217,11 +215,6 @@ public CreateChatRoomView(CreateChatRoomViewModel createChatRoomViewModel) {
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Change cursor to hand
         return button;
     }
-
-
-
-
-
     /**
      * React to a button click that results in evt.
      * @param evt the ActionEvent to react to

@@ -36,38 +36,66 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
         this.usersRef = database.getReference("users");
         this.chatRoomsRef = database.getReference("chat_rooms");
     }
-
+    /**
+     * Updates the system to record this user's password.
+     *
+     * @param user the user whose password is to be updated
+     */
     @Override
     public void changePassword(User user) {
         usersRef.child(user.getName()).child("password").setValueAsync(user.getPassword());
 
     }
-
+    /**
+     * Returns the name of the chatRoom.
+     *
+     * @return the name of the chatRoom.; null indicates that there isn't a name.
+     */
     @Override
     public String getName() {
         return "";
     }
-
+    /**
+     * Returns the name of the chatRoom.
+     *
+     * @return the name of the chatRoom.; null indicates that there isn't a name.
+     */
     @Override
     public String getFirstMessage() {
         return "";
     }
-
+    /**
+     * Sets the name of the chatRoom.
+     *
+     * @param firstMessage the name of the ChatRoom
+     * @return the name of the chatRoom.; null indicates that there isn't a name.
+     */
     @Override
     public void setFirstMessage(String firstMessage) {
 
     }
-
+    /**
+     * Sets the name of the chatRoom.
+     *
+     * @param name the name of the ChatRoom
+     * @return the name of the chatRoom.; null indicates that there isn't a name.
+     */
     @Override
     public void setName(String name) {
 
     }
-
+    /**
+     * Saves the ChatRoom.
+     *
+     * @param chatRoom the chatRoom to save
+     */
     @Override
     public void save(ChatRoom chatRoom) {
         chatRoomsRef.child(chatRoom.getName()).setValueAsync(chatRoom);
     }
-
+    /**
+     * Returns the ChatRoom.
+     */
     @Override
     public ChatRoom getChatRoom() {
         CompletableFuture<ChatRoom> chatRoomFuture = new CompletableFuture<>();
@@ -91,7 +119,12 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
             return null;
         }
     }
-
+    /**
+     * Gets a message by its ID.
+     *
+     * @param messageId the ID of the message to retrieve
+     * @return the message with the given ID
+     */
     @Override
     public Message getMessage(String messageId) {
         CompletableFuture<Message> messageFuture = new CompletableFuture<>();
@@ -114,7 +147,12 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
             return null;
         }
     }
-
+    /**
+     * Updates the content of a message.
+     *
+     * @param messageId  the ID of the message to update
+     * @param newContent the new content for the message
+     */
     @Override
     public void updateMessage(String messageId, String newContent) {
         chatRoomsRef.orderByChild("messages/"+ messageId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -131,7 +169,12 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
             }
         });
     }
-
+    /**
+     * Returns the user with the given username.
+     *
+     * @param username the username to look up
+     * @return the user with the given username
+     */
     @Override
     public User get(String username) {
         CompletableFuture<User> userFuture = new CompletableFuture<>();
@@ -159,19 +202,31 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
             return null;
         }
     }
-
-
+    /**
+     * Returns the username of the curren user of the application.
+     *
+     * @return the username of the current user; null indicates that no one is logged into the application.
+     */
     @Override
     public String getCurrentUsername() {
         return currentUsername;
     }
-
+    /**
+     * Sets the username indicating who is the current user of the application.
+     *
+     * @param username the new current username; null to indicate that no one is currently logged into the application.
+     */
     @Override
     public void setCurrentUsername(String username) {
         this.currentUsername = username;
 
     }
-
+    /**
+     * Sets the username indicating who is the current user of the application.
+     *
+     * @param username the new current username.
+     * @return UID.
+     */
     @Override
     public String getUidByUsername(String username) {
         CompletableFuture<String> uidFuture = new CompletableFuture<>();
@@ -193,7 +248,12 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
             return null;
         }
     }
-
+    /**
+     * Checks if the given username exists.
+     *
+     * @param username the username to look for
+     * @return true if a user with the given username exists; false otherwise
+     */
     @Override
     public boolean existsByName(String username) {
         CompletableFuture<Boolean> existsFuture = new CompletableFuture<>();
@@ -215,12 +275,21 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
             return false;
         }
     }
-
+    /**
+     * Saves the user.
+     *
+     * @param user the user to save
+     */
     @Override
     public void save(User user) {
         usersRef.child(user.getName()).setValueAsync(user);
     }
-
+    /**
+     * Saves the user.
+     *
+     * @param username the user to save
+     * @param uid      the user to save
+     */
     @Override
     public void saveUid(String username, String uid) {
         usersRef.child(username).child("uid").setValueAsync(uid);
