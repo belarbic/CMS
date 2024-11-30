@@ -14,6 +14,19 @@ public interface CreateChatRoomUserDataAccessInterface {
     String getName();
 
     /**
+     * Returns the name of the chatRoom.
+     * @return the name of the chatRoom.; null indicates that there isn't a name.
+     */
+    String getFirstMessage();
+
+    /**
+     * Sets the name of the chatRoom.
+     * @param firstMessage the name of the ChatRoom
+     * @return the name of the chatRoom.; null indicates that there isn't a name.
+     */
+    void setFirstMessage(String firstMessage);
+
+    /**
      * Sets the name of the chatRoom.
      * @param name the name of the ChatRoom
      * @return the name of the chatRoom.; null indicates that there isn't a name.

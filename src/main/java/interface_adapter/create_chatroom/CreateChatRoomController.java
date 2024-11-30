@@ -19,10 +19,11 @@ public class CreateChatRoomController {
     /**
      * Executes the Create ChatRoom Use Case.
      * @param name the name of the chatRoom
+     * @param firstMessage the first message in the chatRoom
      */
-    public void execute(String name) {
+    public void execute(String name, String firstMessage) {
         final CreateChatRoomInputData createChatRoomInputData = new CreateChatRoomInputData(
-                name);
+                name, firstMessage);
 
         createChatRoomUseCaseInteractor.execute(createChatRoomInputData);
     }
