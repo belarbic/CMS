@@ -44,15 +44,26 @@ public class CreateChatRoomPresenter implements CreateChatRoomOutputBoundary {
         createChatRoomState.setName("x");
         createChatRoomViewModel.setState(createChatRoomState);
         createChatRoomViewModel.firePropertyChanged();
-
-        // This code tells the View Manager to switch to the LoginView.
-        this.viewManagerModel.setState(createChatRoomViewModel.getViewName());
-        this.viewManagerModel.firePropertyChanged();
+        if (response.getName() != "" && response.getFirstMessage() != "") {
+            this.viewManagerModel.setState(loggedInViewModel.getViewName());
+            this.viewManagerModel.firePropertyChanged();
+        }
+        else {
+            // This code tells the View Manager to switch to the LoginView.
+            this.viewManagerModel.setState(createChatRoomViewModel.getViewName());
+            this.viewManagerModel.firePropertyChanged();
+        }
     }
 
     @Override
     public void prepareFailView(String error) {
         // No need to add code here. We'll assume that logout can't fail.
         // Thought question: is this a reasonable assumption?
+    }
+
+    @Override
+    public void switchToLoggedInView() {
+        viewManagerModel.setState(loggedInViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }

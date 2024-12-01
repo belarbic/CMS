@@ -10,4 +10,6 @@ public interface CreateChatRoomInputBoundary {
      * @param createChatRoomInputData the input data
      */
     void execute(CreateChatRoomInputData createChatRoomInputData);
+
+    void switchToLoggedInView();
 }

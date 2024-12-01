@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.Color;
 
 import app.ChatService;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.create_chatroom.CreateChatRoomController;
 import interface_adapter.create_chatroom.CreateChatRoomState;
 import interface_adapter.create_chatroom.CreateChatRoomViewModel;
@@ -29,6 +30,7 @@ public class CreateChatRoomView extends JPanel implements ActionListener, Proper
     private final JButton createChatRoom;
     private final JButton cancel;
     private CreateChatRoomController createChatRoomController;
+    private ViewManagerModel viewManagerModel;
 
 public CreateChatRoomView(CreateChatRoomViewModel createChatRoomViewModel) {
     this.createChatRoomViewModel = createChatRoomViewModel;
@@ -80,7 +82,11 @@ public CreateChatRoomView(CreateChatRoomViewModel createChatRoomViewModel) {
         }
     });
 
-    cancel.addActionListener(this);
+    cancel.addActionListener(evt -> {
+        if (evt.getSource().equals(cancel)) {
+            createChatRoomController.switchToLoggedInView();
+        }
+    });
 
     // Document listeners for name and message input fields
 //    addNameListener();

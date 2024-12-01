@@ -32,10 +32,13 @@ public class CreateChatRoomInteractor implements CreateChatRoomInputBoundary {
         chatService.addMessageListener(name);
         chatService.sendMessage(name, firstMessage, userDataAccessObject.getCurrentUsername());
         CreateChatRoomOutputData outputData = new CreateChatRoomOutputData(
-                userDataAccessObject.getName(),
-                userDataAccessObject.getFirstMessage(),
+                name,
+                firstMessage,
                 false
         );
         createChatRoomPresenter.prepareSuccessView(outputData);
+    }
+    public void switchToLoggedInView() {
+        createChatRoomPresenter.switchToLoggedInView();
     }
 }

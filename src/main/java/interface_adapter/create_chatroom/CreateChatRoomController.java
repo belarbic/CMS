@@ -25,4 +25,7 @@ public class CreateChatRoomController {
 
         createChatRoomUseCaseInteractor.execute(createChatRoomInputData);
     }
+    public void switchToLoggedInView() {
+        createChatRoomUseCaseInteractor.switchToLoggedInView();
+    }
 }
