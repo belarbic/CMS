@@ -32,7 +32,7 @@ public class ViewChatRoomsPresenter implements ViewChatRoomsOutputBoundary {
         // the empty string.
 
         final LoggedInState loggedInState = loggedInViewModel.getState();
-        loggedInState.setUsername("");
+//        loggedInState.setUsername("");
         loggedInViewModel.setState(loggedInState);
         loggedInViewModel.firePropertyChanged();
 
