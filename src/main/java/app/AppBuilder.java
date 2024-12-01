@@ -269,6 +269,7 @@ public class AppBuilder {
                 new ChatRoomController(chatRoomInteractor);
         loggedInView.setChatRoomController(chatRoomController);
         chatRoomView.setChatRoomController(chatRoomController);
+        viewChatRoomsView.setChatRoomController(chatRoomController);
         return this;
     }
 

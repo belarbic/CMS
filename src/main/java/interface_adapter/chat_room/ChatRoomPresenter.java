@@ -31,24 +31,18 @@ public class ChatRoomPresenter implements ChatRoomOutputBoundary {
         // We also need to set the username in the LoggedInState to
         // the empty string.
 
-        final LoggedInState loggedInState = loggedInViewModel.getState();
-//        loggedInState.setUsername("");
-        loggedInViewModel.setState(loggedInState);
-        loggedInViewModel.firePropertyChanged();
-
+//        final LoggedInState loggedInState = loggedInViewModel.getState();
+////        loggedInState.setUsername("");
+//        loggedInViewModel.setState(loggedInState);
+//        loggedInViewModel.firePropertyChanged();
+//
         final ChatRoomState chatRoomState = chatRoomViewModel.getState();
         chatRoomState.setName("x");
         chatRoomViewModel.setState(chatRoomState);
         chatRoomViewModel.firePropertyChanged();
-        if (response.getName() != "" && response.getFirstMessage() != "") {
-            this.viewManagerModel.setState(loggedInViewModel.getViewName());
-            this.viewManagerModel.firePropertyChanged();
-        }
-        else {
             // This code tells the View Manager to switch to the LoginView.
-            this.viewManagerModel.setState(chatRoomViewModel.getViewName());
-            this.viewManagerModel.firePropertyChanged();
-        }
+        this.viewManagerModel.setState(chatRoomViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
     }
 
     @Override

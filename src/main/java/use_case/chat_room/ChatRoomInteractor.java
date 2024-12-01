@@ -21,13 +21,6 @@ public class ChatRoomInteractor implements ChatRoomInputBoundary {
             chatRoomPresenter.prepareFailView("ChatRoom needs a name!");
             return; // Exit early if validation fails
         }
-
-//        userDataAccessObject.setName(name);
-//        userDataAccessObject.setFirstMessage(firstMessage);
-        ChatService chatService = new ChatService();
-        System.out.println(name);
-        chatService.addMessageListener(name);
-        chatService.sendMessage(name, firstMessage, userDataAccessObject.getCurrentUsername());
         ChatRoomOutputData outputData = new ChatRoomOutputData(
                 name,
                 firstMessage,

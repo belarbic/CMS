@@ -1,7 +1,5 @@
 package use_case.chat_room;
 
-import use_case.create_chatroom.CreateChatRoomInputData;
-
 public interface ChatRoomInputBoundary {
     /**
      * Executes the chatRoom use case.

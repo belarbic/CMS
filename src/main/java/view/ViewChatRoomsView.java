@@ -8,7 +8,6 @@ import java.beans.PropertyChangeListener;
 import java.util.Map;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionListener;
 
 import app.ChatService;
 import interface_adapter.chat_room.ChatRoomController;
@@ -59,7 +58,9 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
             if (e.getValueIsAdjusting() && chatRoomList.getSelectedValue() != null) {
                 String selectedValue = (String) chatRoomList.getSelectedValue();
                 System.out.println("Selected chat room: " + selectedValue);
-                viewChatRoomsController.openChatRoom();
+//                viewChatRoomsController.openChatRoom();
+                chatRoomController.execute(selectedValue, "hello");
+
             }
         });
         getChatRoomList();
@@ -91,8 +92,6 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
         this.add(buttons);
     }
 
-
-
     /**
      * React to a button click that results in evt.
      * @param evt the ActionEvent to react to
@@ -116,6 +115,10 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
 
     public void setViewChatRoomsController(ViewChatRoomsController viewChatRoomsController) {
         this.viewChatRoomsController = viewChatRoomsController;
+    }
+
+    public void setChatRoomController(ChatRoomController chatRoomController) {
+        this.chatRoomController = chatRoomController;
     }
 
     public void getChatRoomList() {
