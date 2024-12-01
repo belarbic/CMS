@@ -19,16 +19,6 @@ public interface User {
      */
     String getPassword();
 
-    /**
-     * Returns the onlineStatus of the user.
-     * @return the onlineStatus of the user.
-     */
-    boolean getOnlineStatus();
-
-    /**
-     * Returns the chatRooms of the user.
-     * @return the chatRooms of the user.
-     */
     ArrayList<ChatRoom> getChatRooms();
 
 }

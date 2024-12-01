@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import data_access.InMemoryUserDataAccessObject;
+import data_access.FirebaseUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
@@ -86,7 +86,8 @@ public class AppBuilder {
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     // thought question: is the hard dependency below a problem?
-    private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+//    private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+    private final FirebaseUserDataAccessObject userDataAccessObject = new FirebaseUserDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -336,7 +337,7 @@ public class AppBuilder {
      * @return the application
      */
     public JFrame build() {
-        final JFrame application = new JFrame("Chat Messaging System");
+        final JFrame application = new JFrame("Chat Messenger v1.0");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);

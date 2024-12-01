@@ -3,6 +3,9 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 .idea/easycode.ignore
+*.json
+cmspractice-uoft-710dcd9b775c.json
+firebase_config.json
 
 .idea/
 CMS.iml
@@ -33,3 +36,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+.idea/

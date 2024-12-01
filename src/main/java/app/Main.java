@@ -1,6 +1,11 @@
 package app;
 
 import javax.swing.JFrame;
+import java.io.FileInputStream;
+
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 
 /**
  * The Main class of our application.
@@ -8,9 +13,25 @@ import javax.swing.JFrame;
 public class Main {
     /**
      * Builds and runs the CA architecture of the application.
-     * @param args unused arguments
      */
+
+    public static void initializeFirebase() {
+        try (FileInputStream fileInputStream = new FileInputStream("cmspractice-uoft-710dcd9b775c.json")) {
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(fileInputStream))    // Load Firebase credentials.
+                    .setDatabaseUrl("https://cmspractice-uoft-default-rtdb.firebaseio.com/")
+                    .build();
+            FirebaseApp app = FirebaseApp.initializeApp(options);    // Initialize Firebase app.
+            System.out.println("Firebase initialized Successfully");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
+//        chatService.addMessageListener("groupId1");
+//        chatService.sendMessage("groupId1", "Hello World!", "TestUser");
+        initializeFirebase();
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                                             .addLoginView()
@@ -31,6 +52,9 @@ public class Main {
                                             .build();
 
         application.pack();
+        application.setSize(600, 550);
         application.setVisible(true);
+        ChatService chatService = new ChatService();
+        chatService.getChatList();
     }
 }

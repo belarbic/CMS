@@ -1,16 +1,12 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
@@ -60,161 +56,280 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JButton testEditMessage;
     private EditMessageController editMessageController;
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel) {
-        this.loggedInViewModel = loggedInViewModel;
-        this.loggedInViewModel.addPropertyChangeListener(this);
+        public LoggedInView(LoggedInViewModel loggedInViewModel) {
+            this.loggedInViewModel = loggedInViewModel;
+            this.loggedInViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel("Welcome! ");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+            // Title label styling and alignment
+            final JLabel title = new JLabel("Welcome! ");
+            title.setFont(new Font("Arial", Font.BOLD, 24));  // Set font size and bold
+            title.setAlignmentX(Component.CENTER_ALIGNMENT);  // Center title alignment
 
-        // final LabelTextPanel passwordInfo = new LabelTextPanel(
-        //        new JLabel("Password"), passwordInputField);
+            // Add vertical space above the title to move it down
+            this.add(Box.createVerticalStrut(20));  // Adds 20 pixels of space above the title
 
-        final JLabel usernameInfo = new JLabel("Currently logged in: ");
-        name = new JLabel();
-        final JLabel welcomeStatement = new JLabel("What would you like to do? ");
+            // Create additional info labels
+            final JLabel usernameInfo = new JLabel("Currently logged in: ");
+            usernameInfo.setFont(new Font("Arial", Font.PLAIN, 16));  // Set consistent font size
+            usernameInfo.setAlignmentX(Component.CENTER_ALIGNMENT);  // Center alignment for username info
 
-        final JPanel buttons = new JPanel();
-        logOut = new JButton("Log Out");
-        buttons.add(logOut);
+            name = new JLabel();
+            name.setFont(new Font("Arial", Font.PLAIN, 16));  // Consistent font for username display
+            name.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        changePassword = new JButton("Change Password");
-        buttons.add(changePassword);
+            final JLabel welcomeStatement = new JLabel("What would you like to do? ");
+            welcomeStatement.setFont(new Font("Arial", Font.PLAIN, 16));  // Consistent font for statement
+            welcomeStatement.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // this code creates Change Username button and adds it to buttons.
-        changeUsername = new JButton("Change Username");
-        buttons.add(changeUsername);
+            // Panel for buttons, with consistent layout and spacing
+            final JPanel buttons = new JPanel();
+            buttons.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Center buttons with spacing
 
-        // this code creates the Create Chat Room button and adds it to buttons.
-        createChatRoom = new JButton("Create Chatroom");
-        buttons.add(createChatRoom);
+            // Button creation with consistent styling
+            logOut = createButton("Log Out", new Color(255, 92, 92), Color.WHITE);
+            buttons.add(logOut);
 
-        // this code creates the View Chat Room button and adds it to buttons.
-        viewChatRooms = new JButton("View Chatrooms");
-        buttons.add(viewChatRooms);
+            changePassword = createButton("Change Password", new Color(34, 193, 195), Color.WHITE);
+            buttons.add(changePassword);
 
-        searchMessages = new JButton("Search Messages");
-        buttons.add(searchMessages);
+            changeUsername = createButton("Change Username", new Color(204, 204, 204), Color.BLACK);
+            buttons.add(changeUsername);
 
-        testEditMessage = new JButton("Test Edit Message");
-        buttons.add(testEditMessage);
+            createChatRoom = createButton("Create Chatroom", new Color(34, 193, 195), Color.WHITE);
+            buttons.add(createChatRoom);
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            viewChatRooms = createButton("View Chatrooms", new Color(34, 193, 195), Color.WHITE);
+            buttons.add(viewChatRooms);
 
-        /*
-        passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
+            searchMessages = createButton("Search Messages", new Color(34, 193, 195), Color.WHITE);
+            buttons.add(searchMessages);
 
-            private void documentListenerHelper() {
-                final LoggedInState currentState = loggedInViewModel.getState();
-                currentState.setPassword(passwordInputField.getText());
-                loggedInViewModel.setState(currentState);
-            }
+            testEditMessage = createButton("Test Edit Message", new Color(34, 193, 195), Color.WHITE);
+            buttons.add(testEditMessage);
 
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-        });
-
-        changePassword.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(changePassword)) {
-                        final LoggedInState currentState = loggedInViewModel.getState();
-
-                        this.changePasswordController.execute(
-                                currentState.getUsername(),
-                                currentState.getPassword()
-                        );
-                    }
+            // Action listeners for each button, triggering the appropriate controller actions
+            logOut.addActionListener(evt -> {
+                if (evt.getSource().equals(logOut)) {
+                    final LoggedInState currentState = loggedInViewModel.getState();
+                    logoutController.execute(currentState.getUsername());
                 }
-        );
-*/
-        logOut.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(logOut)) {
-                        // 1. get the state out of the loggedInViewModel. It contains the username.
-                        final LoggedInState currentState = loggedInViewModel.getState();
-                        // 2. Execute the logout Controller.
-                        logoutController.execute(
-                                currentState.getUsername()
-                        );
-                    }
+            });
+
+            createChatRoom.addActionListener(evt -> {
+                if (evt.getSource().equals(createChatRoom)) {
+                    final LoggedInState currentState = loggedInViewModel.getState();
+                    createChatRoomController.execute(currentState.getUsername(), "");
                 }
-        );
+            });
 
-        createChatRoom.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(createChatRoom)) {
-                        // 1. get the state out of the loggedInViewModel. It contains the username.
-                        final LoggedInState currentState = loggedInViewModel.getState();
-                        // 2. Execute the createChatRoom Controller.
-                        createChatRoomController.execute(
-                                currentState.getUsername(),
-                                ""
-                        );
-                    }
+            viewChatRooms.addActionListener(evt -> {
+                if (evt.getSource().equals(viewChatRooms)) {
+                    final LoggedInState currentState = loggedInViewModel.getState();
+                    viewChatRoomsController.execute();
                 }
-        );
+            });
 
-        viewChatRooms.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(viewChatRooms)) {
-                        // 1. get the state out of the loggedInViewModel. It contains the username.
-                        final LoggedInState currentState = loggedInViewModel.getState();
-                        // 2. Execute the createChatRoom Controller.
-                        viewChatRoomsController.execute();
-                    }
+            searchMessages.addActionListener(evt -> {
+                if (evt.getSource().equals(searchMessages)) {
+                    final LoggedInState currentState = loggedInViewModel.getState();
+                    searchMessageController.execute("", currentState.getUsername());
                 }
-        );
+            });
 
-        searchMessages.addActionListener(
-                evt -> {
-                    if (evt.getSource().equals(searchMessages)) {
-                        final LoggedInState currentState = loggedInViewModel.getState();
-                        searchMessageController.execute(
-                                "",
-                                currentState.getUsername()
-                        );
-                    }
+            testEditMessage.addActionListener(evt -> {
+                if (evt.getSource().equals(testEditMessage)) {
+                    final LoggedInState currentState = loggedInViewModel.getState();
+                    editMessageController.execute("test-message-id", "Hello World", currentState.getUsername());
                 }
-        );
+            });
 
-        testEditMessage.addActionListener(
-                evt -> {
-                    if (evt.getSource().equals(testEditMessage)) {
-                        final LoggedInState currentState = loggedInViewModel.getState();
-                        editMessageController.execute(
-                                "test-message-id",
-                                "Hello World",
-                                currentState.getUsername()
-                        );
-                    }
-                }
-        );
+            // Set layout of the main panel
+            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(title);
-        this.add(usernameInfo);
-        this.add(name);
-        this.add(welcomeStatement);
+            // Add components to the main panel
+            this.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30)); // Padding around the view
+            this.setBackground(new Color(240, 240, 240)); // Light gray background to match previous views
+            this.add(title);
+            this.add(usernameInfo);
+            this.add(name);
+            this.add(welcomeStatement);
 
-        // this.add(passwordInfo);
-        // this.add(passwordErrorField);
-        this.add(buttons);
-    }
+            // Add buttons panel
+            this.add(buttons);
+        }
+
+        // Method to create buttons with consistent styling
+        private JButton createButton(String labelText, Color backgroundColor, Color textColor) {
+            JButton button = new JButton(labelText);
+            button.setFont(new Font("Arial", Font.PLAIN, 14)); // Font styling for button
+            button.setPreferredSize(new Dimension(200, 40));
+            button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40)); // Allow to grow horizontally
+            button.setFocusPainted(false);  // Remove focus outline for a clean look
+            button.setBackground(backgroundColor);  // Set background color for the button
+            button.setForeground(textColor);  // Set text color for the button
+            button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Padding inside button
+            button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Change cursor to hand
+            return button;
+        }
+
+
+
+
+//    public LoggedInView(LoggedInViewModel loggedInViewModel) {
+//        this.loggedInViewModel = loggedInViewModel;
+//        this.loggedInViewModel.addPropertyChangeListener(this);
+//
+//        final JLabel title = new JLabel("Welcome! ");
+//        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+//
+//        // final LabelTextPanel passwordInfo = new LabelTextPanel(
+//        //        new JLabel("Password"), passwordInputField);
+//
+//        final JLabel usernameInfo = new JLabel("Currently logged in: ");
+//        name = new JLabel();
+//        final JLabel welcomeStatement = new JLabel("What would you like to do? ");
+//
+//        final JPanel buttons = new JPanel();
+//        logOut = new JButton("Log Out");
+//        buttons.add(logOut);
+//
+//        changePassword = new JButton("Change Password");
+//        buttons.add(changePassword);
+//
+//        // this code creates Change Username button and adds it to buttons.
+//        changeUsername = new JButton("Change Username");
+//        buttons.add(changeUsername);
+//
+//        // this code creates the Create Chat Room button and adds it to buttons.
+//        createChatRoom = new JButton("Create Chatroom");
+//        buttons.add(createChatRoom);
+//
+//        // this code creates the View Chat Room button and adds it to buttons.
+//        viewChatRooms = new JButton("View Chatrooms");
+//        buttons.add(viewChatRooms);
+//
+//        searchMessages = new JButton("Search Messages");
+//        buttons.add(searchMessages);
+//
+//        testEditMessage = new JButton("Test Edit Message");
+//        buttons.add(testEditMessage);
+//
+//        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+//
+//        /*
+//        passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
+//
+//            private void documentListenerHelper() {
+//                final LoggedInState currentState = loggedInViewModel.getState();
+//                currentState.setPassword(passwordInputField.getText());
+//                loggedInViewModel.setState(currentState);
+//            }
+//
+//            @Override
+//            public void insertUpdate(DocumentEvent e) {
+//                documentListenerHelper();
+//            }
+//
+//            @Override
+//            public void removeUpdate(DocumentEvent e) {
+//                documentListenerHelper();
+//            }
+//
+//            @Override
+//            public void changedUpdate(DocumentEvent e) {
+//                documentListenerHelper();
+//            }
+//        });
+//
+//        changePassword.addActionListener(
+//                // This creates an anonymous subclass of ActionListener and instantiates it.
+//                evt -> {
+//                    if (evt.getSource().equals(changePassword)) {
+//                        final LoggedInState currentState = loggedInViewModel.getState();
+//
+//                        this.changePasswordController.execute(
+//                                currentState.getUsername(),
+//                                currentState.getPassword()
+//                        );
+//                    }
+//                }
+//        );
+//*/
+//        logOut.addActionListener(
+//                // This creates an anonymous subclass of ActionListener and instantiates it.
+//                evt -> {
+//                    if (evt.getSource().equals(logOut)) {
+//                        // 1. get the state out of the loggedInViewModel. It contains the username.
+//                        final LoggedInState currentState = loggedInViewModel.getState();
+//                        // 2. Execute the logout Controller.
+//                        logoutController.execute(
+//                                currentState.getUsername()
+//                        );
+//                    }
+//                }
+//        );
+//
+//        createChatRoom.addActionListener(
+//                // This creates an anonymous subclass of ActionListener and instantiates it.
+//                evt -> {
+//                    if (evt.getSource().equals(createChatRoom)) {
+//                        // 1. get the state out of the loggedInViewModel. It contains the username.
+//                        final LoggedInState currentState = loggedInViewModel.getState();
+//                        // 2. Execute the createChatRoom Controller.
+//                        createChatRoomController.execute(
+//                                currentState.getUsername(),
+//                                ""
+//                        );
+//                    }
+//                }
+//        );
+//
+//        viewChatRooms.addActionListener(
+//                // This creates an anonymous subclass of ActionListener and instantiates it.
+//                evt -> {
+//                    if (evt.getSource().equals(viewChatRooms)) {
+//                        // 1. get the state out of the loggedInViewModel. It contains the username.
+//                        final LoggedInState currentState = loggedInViewModel.getState();
+//                        // 2. Execute the createChatRoom Controller.
+//                        viewChatRoomsController.execute();
+//                    }
+//                }
+//        );
+//
+//        searchMessages.addActionListener(
+//                evt -> {
+//                    if (evt.getSource().equals(searchMessages)) {
+//                        final LoggedInState currentState = loggedInViewModel.getState();
+//                        searchMessageController.execute(
+//                                "",
+//                                currentState.getUsername()
+//                        );
+//                    }
+//                }
+//        );
+//
+//        testEditMessage.addActionListener(
+//                evt -> {
+//                    if (evt.getSource().equals(testEditMessage)) {
+//                        final LoggedInState currentState = loggedInViewModel.getState();
+//                        editMessageController.execute(
+//                                "test-message-id",
+//                                "Hello World",
+//                                currentState.getUsername()
+//                        );
+//                    }
+//                }
+//        );
+//
+//        this.add(title);
+//        this.add(usernameInfo);
+//        this.add(name);
+//        this.add(welcomeStatement);
+//
+//        // this.add(passwordInfo);
+//        // this.add(passwordErrorField);
+//        this.add(buttons);
+//    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
