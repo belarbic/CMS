@@ -1,10 +1,7 @@
 package interface_adapter.create_chatroom;
 
-import app.ChatService;
 import use_case.create_chatroom.CreateChatRoomInputBoundary;
 import use_case.create_chatroom.CreateChatRoomInputData;
-import use_case.login.LoginInputBoundary;
-import use_case.login.LoginInputData;
 
 /**
  * The controller for the Create ChatRoom Use Case.

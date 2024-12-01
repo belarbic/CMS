@@ -7,12 +7,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import interface_adapter.create_chatroom.CreateChatRoomController;
-import interface_adapter.create_chatroom.CreateChatRoomState;
-import interface_adapter.create_chatroom.CreateChatRoomViewModel;
 import interface_adapter.view_chatrooms.ViewChatRoomsController;
 import interface_adapter.view_chatrooms.ViewChatRoomsState;
 import interface_adapter.view_chatrooms.ViewChatRoomsViewModel;

@@ -28,6 +28,8 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
     private final DatabaseReference usersRef;
     private final DatabaseReference chatRoomsRef;
     private String currentUsername;
+    private String name;
+    private String firstMessage;
 
 
     public FirebaseUserDataAccessObject()
@@ -53,7 +55,7 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
      */
     @Override
     public String getName() {
-        return "";
+        return this.name;
     }
     /**
      * Returns the name of the chatRoom.
@@ -62,7 +64,7 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
      */
     @Override
     public String getFirstMessage() {
-        return "";
+        return this.firstMessage;
     }
     /**
      * Sets the name of the chatRoom.
@@ -71,7 +73,7 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
      */
     @Override
     public void setFirstMessage(String firstMessage) {
-
+        this.firstMessage = firstMessage;
     }
     /**
      * Sets the name of the chatRoom.
