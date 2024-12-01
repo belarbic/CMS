@@ -4,6 +4,7 @@ import com.google.firebase.database.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Connects to the chats node in the Firebase Realtime Database.
@@ -80,7 +81,8 @@ public class ChatService {
             }
         });
     }
-    public void getChatList() {
+    public CompletableFuture<Map<String, Object>> getChatList() {
+        CompletableFuture<Map<String, Object>> futureChatList = new CompletableFuture<>();
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -90,8 +92,10 @@ public class ChatService {
                     for (Map.Entry<String, Object> entry : chatList.entrySet()) {
                         System.out.println(entry.getKey() + ": " + entry.getValue());
                     }
+                    futureChatList.complete(chatList);
                 }
                 else {
+                    futureChatList.complete(new HashMap<>());
                     System.out.println("No chat found");
                 }
             }
@@ -100,5 +104,6 @@ public class ChatService {
                 System.out.println(databaseError.getMessage());
             }
         });
+        return futureChatList;
     }
 }

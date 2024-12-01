@@ -5,8 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Map;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
+
+import app.ChatService;
 import interface_adapter.view_chatrooms.ViewChatRoomsController;
 import interface_adapter.view_chatrooms.ViewChatRoomsState;
 import interface_adapter.view_chatrooms.ViewChatRoomsViewModel;
@@ -18,7 +22,7 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
 
     private final String viewName = "View Chatrooms";
     private final ViewChatRoomsViewModel viewChatRoomsViewModel;
-
+    private final JList<String> chatRoomList;
     private final JButton cancel;
     private ViewChatRoomsController viewChatRoomsController;
 
@@ -41,6 +45,22 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
         // Add vertical space between welcome statement and back button
         this.add(Box.createVerticalStrut(30));  // Adds 30 pixels of space between the two components
 
+        chatRoomList = new JList<>(new DefaultListModel<>());
+        chatRoomList.setFont(new Font("Arial", Font.PLAIN, 16));
+        chatRoomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        chatRoomList.setLayoutOrientation(JList.VERTICAL);
+        chatRoomList.setVisibleRowCount(-1);
+        JScrollPane chatRoomListScrollPane = new JScrollPane(chatRoomList);
+        chatRoomListScrollPane.setPreferredSize(new Dimension(80, 200));
+
+        chatRoomList.addListSelectionListener(e -> {
+            if (e.getValueIsAdjusting() && chatRoomList.getSelectedValue() != null) {
+                String selectedValue = (String) chatRoomList.getSelectedValue();
+                System.out.println("Selected chat room: " + selectedValue);
+            }
+        });
+        getChatRoomList();
+        this.add(Box.createVerticalStrut(30));  // Adds 30 pixels of space between the two components
         // Button panel
         final JPanel buttons = new JPanel();
         cancel = new JButton("Back");
@@ -64,6 +84,7 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
         // Add components to the main panel
         this.add(title);
         this.add(welcomeStatement);
+        this.add(chatRoomListScrollPane);
         this.add(buttons);
     }
 
@@ -92,5 +113,16 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
 
     public void setViewChatRoomsController(ViewChatRoomsController viewChatRoomsController) {
         this.viewChatRoomsController = viewChatRoomsController;
+    }
+    public void getChatRoomList() {
+        ChatService chatService = new ChatService();
+        chatService.getChatList().thenAccept(chatRooms -> {
+            if (chatRooms != null) {
+                DefaultListModel<String> listModel = (DefaultListModel<String>) chatRoomList.getModel();
+                for (Map.Entry<String, Object> entry : chatRooms.entrySet()) {
+                    listModel.addElement(entry.getKey());
+                }
+            }
+        });
     }
 }
