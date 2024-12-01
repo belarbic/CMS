@@ -38,5 +38,12 @@ really have a specific size and space.
 * At most, the layout is spaced it well enough for all users to be able to access them easily.
 
 ## Question 2
+Our chat messaging system would be marketed towards communities and organizations that need efficient,
+real-time communication, such as small businesses, professional teams, social groups and friends. It is particularly 
+suited for those seeking a user-friendly platform with essential features like message editing and deletion,
+providing flexibility and accessibility for users of all technical skill levels. Additionally, the program's
+customizable design makes it appealing for developers or businesses looking to integrate communication features
+into their existing platforms. Its focus on simplicity and functionality ensures it meets the needs of both
+formal and casual communication settings, making it versatile for all audiences.
 
 ## Question 3
