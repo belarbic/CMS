@@ -9,7 +9,7 @@ public class CommonUser implements User {
 
     private final String name;
     private final String password;
-    private ArrayList<ChatRoom> chatRooms;
+    private final ArrayList<ChatRoom> chatRooms;
 
     public CommonUser(String name, String password, ArrayList<ChatRoom> chatRooms) {
         this.name = name;
