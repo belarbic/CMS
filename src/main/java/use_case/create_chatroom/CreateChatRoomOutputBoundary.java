@@ -15,4 +15,6 @@ public interface CreateChatRoomOutputBoundary {
      * @param errorMessage the explanation of the failure
      */
     void prepareFailView(String errorMessage);
+
+    void switchToLoggedInView();
 }

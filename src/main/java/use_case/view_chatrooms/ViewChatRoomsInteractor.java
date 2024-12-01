@@ -21,4 +21,7 @@ public class ViewChatRoomsInteractor implements ViewChatRoomsInputBoundary {
         final ViewChatRoomsOutputData viewChatRoomsOutputData = new ViewChatRoomsOutputData(false);
         viewChatRoomsPresenter.prepareSuccessView(viewChatRoomsOutputData);
     }
+    public void switchToLoggedInView() {
+        viewChatRoomsPresenter.switchToLoggedInView();
+    }
 }

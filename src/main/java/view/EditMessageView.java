@@ -15,8 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import org.w3c.dom.css.RGBColor;
-
 import interface_adapter.edit_message.EditMessageController;
 import interface_adapter.edit_message.EditMessageState;
 import interface_adapter.edit_message.EditMessageViewModel;

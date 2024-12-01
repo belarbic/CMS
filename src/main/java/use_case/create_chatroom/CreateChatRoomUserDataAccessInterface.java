@@ -43,4 +43,6 @@ public interface CreateChatRoomUserDataAccessInterface {
      * Returns the ChatRoom.
      */
     ChatRoom getChatRoom();
+
+    String getCurrentUsername();
 }

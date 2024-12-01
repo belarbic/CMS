@@ -7,12 +7,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import interface_adapter.create_chatroom.CreateChatRoomController;
-import interface_adapter.create_chatroom.CreateChatRoomState;
-import interface_adapter.create_chatroom.CreateChatRoomViewModel;
 import interface_adapter.view_chatrooms.ViewChatRoomsController;
 import interface_adapter.view_chatrooms.ViewChatRoomsState;
 import interface_adapter.view_chatrooms.ViewChatRoomsViewModel;
@@ -58,7 +52,11 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
         cancel.setForeground(Color.WHITE); // White text color
         buttons.add(cancel);
 
-        cancel.addActionListener(this);  // Action listener for the button
+        cancel.addActionListener(evt -> {
+            if (evt.getSource().equals(cancel)) {
+                viewChatRoomsController.switchToLoggedInView();
+            }
+        });  // Action listener for the button
 
         // Layout the main panel
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

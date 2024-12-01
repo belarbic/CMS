@@ -32,7 +32,7 @@ public class ViewChatRoomsPresenter implements ViewChatRoomsOutputBoundary {
         // the empty string.
 
         final LoggedInState loggedInState = loggedInViewModel.getState();
-        loggedInState.setUsername("");
+//        loggedInState.setUsername("");
         loggedInViewModel.setState(loggedInState);
         loggedInViewModel.firePropertyChanged();
 
@@ -49,5 +49,11 @@ public class ViewChatRoomsPresenter implements ViewChatRoomsOutputBoundary {
     public void prepareFailView(String error) {
         // No need to add code here. We'll assume that logout can't fail.
         // Thought question: is this a reasonable assumption?
+    }
+
+    @Override
+    public void switchToLoggedInView() {
+        viewManagerModel.setState(loggedInViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }
