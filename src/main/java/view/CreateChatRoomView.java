@@ -7,11 +7,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.Color;
 
 import app.ChatService;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.create_chatroom.CreateChatRoomController;
 import interface_adapter.create_chatroom.CreateChatRoomState;
 import interface_adapter.create_chatroom.CreateChatRoomViewModel;
@@ -31,110 +30,16 @@ public class CreateChatRoomView extends JPanel implements ActionListener, Proper
     private final JButton createChatRoom;
     private final JButton cancel;
     private CreateChatRoomController createChatRoomController;
+    private ViewManagerModel viewManagerModel;
 
-//    public CreateChatRoomView(CreateChatRoomViewModel createChatRoomViewModel) {
-//
-//        this.createChatRoomViewModel = createChatRoomViewModel;
-//        this.createChatRoomViewModel.addPropertyChangeListener(this);
-//
-//        final JLabel title = new JLabel("Create Chatroom");
-//        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-//
-//        final LabelTextPanel nameInfo = new LabelTextPanel(
-//                new JLabel("Chatroom Name"), nameInputField);
-//
-//        final LabelTextPanel messageInfo = new LabelTextPanel(
-//                new JLabel("First Message"), messageInputField);
-//
-//        final JPanel buttons = new JPanel();
-//        createChatRoom = new JButton("Create!");
-//        buttons.add(createChatRoom);
-//        cancel = new JButton("Cancel");
-//        buttons.add(cancel);
-//
-//        createChatRoom.addActionListener(
-//                new ActionListener() {
-//                    public void actionPerformed(ActionEvent evt) {
-//                        if (evt.getSource().equals(createChatRoom)) {
-//                            final CreateChatRoomState currentState = createChatRoomViewModel.getState();
-//                            ChatService chatService = new ChatService();
-//                            chatService.addMessageListener(currentState.getName());
-//                            chatService.sendMessage(currentState.getName(), currentState.getFirstMessage(), currentState.getName());
-//                            createChatRoomController.execute(
-//                                    currentState.getName(),
-//                                    currentState.getFirstMessage()
-//                            );
-//                        }
-//                    }
-//                }
-//        );
-//
-//        cancel.addActionListener(this);
-//
-//        nameInputField.getDocument().addDocumentListener(new DocumentListener() {
-//
-//            private void documentListenerHelper() {
-//                final CreateChatRoomState currentState = createChatRoomViewModel.getState();
-//                currentState.setName(nameInputField.getText());
-//                createChatRoomViewModel.setState(currentState);
-//            }
-//
-//            @Override
-//            public void insertUpdate(DocumentEvent e) {
-//                documentListenerHelper();
-//            }
-//
-//            @Override
-//            public void removeUpdate(DocumentEvent e) {
-//                documentListenerHelper();
-//            }
-//
-//            @Override
-//            public void changedUpdate(DocumentEvent e) {
-//                documentListenerHelper();
-//            }
-//        });
-//
-//        messageInputField.getDocument().addDocumentListener(new DocumentListener() {
-//
-//            private void documentListenerHelper() {
-//                final CreateChatRoomState currentState = createChatRoomViewModel.getState();
-//                currentState.setName(messageInputField.getText());
-//                createChatRoomViewModel.setState(currentState);
-//            }
-//
-//            @Override
-//            public void insertUpdate(DocumentEvent e) {
-//                documentListenerHelper();
-//            }
-//
-//            @Override
-//            public void removeUpdate(DocumentEvent e) {
-//                documentListenerHelper();
-//            }
-//
-//            @Override
-//            public void changedUpdate(DocumentEvent e) {
-//                documentListenerHelper();
-//            }
-//        });
-//
-//        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-//
-//        this.add(title);
-//        this.add(nameInfo);
-//        this.add(nameErrorField);
-//        this.add(messageInfo);
-//        this.add(buttons);
-//    }
 public CreateChatRoomView(CreateChatRoomViewModel createChatRoomViewModel) {
     this.createChatRoomViewModel = createChatRoomViewModel;
     this.createChatRoomViewModel.addPropertyChangeListener(this);
 
     // Title label styling and alignment
     final JLabel title = new JLabel("Create Chatroom");
-    title.setFont(new Font("Arial", Font.BOLD, 24));  // Set font size and bold
-    title.setAlignmentX(Component.CENTER_ALIGNMENT);  // Center title alignment
+    title.setFont(new Font("Roboto", Font.BOLD, 28));  // Set font size and bold
+    title.setAlignmentX(Component.CENTER_ALIGNMENT); // Center title alignment
 
     // Add vertical spacing before the title to match the LoginView
     this.add(Box.createVerticalStrut(40));  // Adjust the value (40) for more or less space
@@ -147,6 +52,16 @@ public CreateChatRoomView(CreateChatRoomViewModel createChatRoomViewModel) {
     nameErrorField.setFont(new Font("Arial", Font.ITALIC, 12));
     nameErrorField.setForeground(Color.RED);
     nameErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+    // Ensure the input fields are consistent in size and font
+    nameInputField.setPreferredSize(new java.awt.Dimension(250, 35));  // Wider and taller input field
+    nameInputField.setFont(new Font("Arial", Font.PLAIN, 16));  // Larger text in input field
+    nameInfo.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10)); // Add padding for clarity
+
+    messageInputField.setPreferredSize(new java.awt.Dimension(250, 35));  // Wider and taller input field
+    messageInputField.setFont(new Font("Arial", Font.PLAIN, 16));  // Larger text in input field
+    messageInfo.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10)); // Add padding for clarity
+    messageInfo.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));  // Left margin for the entire panel
 
     // Create buttons panel and add buttons to it
     final JPanel buttons = new JPanel();
@@ -163,15 +78,15 @@ public CreateChatRoomView(CreateChatRoomViewModel createChatRoomViewModel) {
     // Button action listeners
     createChatRoom.addActionListener(evt -> {
         if (evt.getSource().equals(createChatRoom)) {
-            final CreateChatRoomState currentState = createChatRoomViewModel.getState();
-            ChatService chatService = new ChatService();
-            chatService.addMessageListener(currentState.getName());
-            chatService.sendMessage(currentState.getName(), currentState.getFirstMessage(), currentState.getName());
-            createChatRoomController.execute(currentState.getName(), currentState.getFirstMessage());
+            createChatRoomController.execute(nameInputField.getText(), messageInputField.getText());
         }
     });
 
-    cancel.addActionListener(this);
+    cancel.addActionListener(evt -> {
+        if (evt.getSource().equals(cancel)) {
+            createChatRoomController.switchToLoggedInView();
+        }
+    });
 
     // Document listeners for name and message input fields
 //    addNameListener();
@@ -187,7 +102,7 @@ public CreateChatRoomView(CreateChatRoomViewModel createChatRoomViewModel) {
     this.add(Box.createVerticalStrut(20)); // Spacing after the title
     this.add(nameInfo);
     this.add(nameErrorField);
-    this.add(Box.createVerticalStrut(10)); // Spacing between name and message fields
+    this.add(Box.createVerticalStrut(-10)); // Spacing between name and message fields
     this.add(messageInfo);
     this.add(Box.createVerticalStrut(20)); // Spacing before buttons
     this.add(buttons);

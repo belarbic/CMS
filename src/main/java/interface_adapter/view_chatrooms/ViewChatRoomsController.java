@@ -27,4 +27,7 @@ public class ViewChatRoomsController {
 
         viewChatRoomsUseCaseInteractor.execute(viewChatRoomsInputData);
     }
+    public void switchToLoggedInView() {
+        viewChatRoomsUseCaseInteractor.switchToLoggedInView();
+    }
 }

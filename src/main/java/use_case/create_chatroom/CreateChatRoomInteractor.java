@@ -1,5 +1,7 @@
 package use_case.create_chatroom;
 
+import app.ChatService;
+
 /**
  * The CreateChatRoom Interactor.
  */
@@ -17,14 +19,26 @@ public class CreateChatRoomInteractor implements CreateChatRoomInputBoundary {
     public void execute(CreateChatRoomInputData createChatRoomInputData) {
         final String name = createChatRoomInputData.getName();
         final String firstMessage = createChatRoomInputData.getFirstMessage();
-        userDataAccessObject.setName(name);
-        userDataAccessObject.setFirstMessage(firstMessage);
-        if (userDataAccessObject.getName().isEmpty() || userDataAccessObject.getName() == null) {
+
+        if (name == null || name.isEmpty()) {
             createChatRoomPresenter.prepareFailView("ChatRoom needs a name!");
+            return; // Exit early if validation fails
         }
-        else {
-            final CreateChatRoomOutputData createChatRoomOutputData = new CreateChatRoomOutputData(userDataAccessObject.getName(), userDataAccessObject.getFirstMessage(), false);
-            createChatRoomPresenter.prepareSuccessView(createChatRoomOutputData);
-        }
+
+//        userDataAccessObject.setName(name);
+//        userDataAccessObject.setFirstMessage(firstMessage);
+        ChatService chatService = new ChatService();
+        System.out.println(name);
+        chatService.addMessageListener(name);
+        chatService.sendMessage(name, firstMessage, userDataAccessObject.getCurrentUsername());
+        CreateChatRoomOutputData outputData = new CreateChatRoomOutputData(
+                name,
+                firstMessage,
+                false
+        );
+        createChatRoomPresenter.prepareSuccessView(outputData);
+    }
+    public void switchToLoggedInView() {
+        createChatRoomPresenter.switchToLoggedInView();
     }
 }

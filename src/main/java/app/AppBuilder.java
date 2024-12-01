@@ -72,11 +72,6 @@ import view.*;
  * <p/>
  * This is done by adding each View and then adding related Use Cases.
  */
-// Checkstyle note: you can ignore the "Class Data Abstraction Coupling"
-//                  and the "Class Fan-Out Complexity" issues for this lab; we encourage
-//                  your team to think about ways to refactor the code to resolve these
-//                  if your team decides to work with this as your starter code
-//                  for your final project this term.
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
@@ -85,8 +80,6 @@ public class AppBuilder {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-    // thought question: is the hard dependency below a problem?
-//    private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
     private final FirebaseUserDataAccessObject userDataAccessObject = new FirebaseUserDataAccessObject();
 
     private SignupView signupView;
@@ -103,6 +96,7 @@ public class AppBuilder {
     private SearchMessageViewModel searchMessageViewModel;
     private EditMessageView editMessageView;
     private EditMessageViewModel editMessageViewModel;
+
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -236,6 +230,7 @@ public class AppBuilder {
         final CreateChatRoomController createChatRoomController =
                 new CreateChatRoomController(createChatRoomInteractor);
         loggedInView.setCreateChatRoomController(createChatRoomController);
+        createChatRoomView.setCreateChatRoomController(createChatRoomController);
         return this;
     }
 
@@ -251,6 +246,7 @@ public class AppBuilder {
 
         final ViewChatRoomsController viewChatRoomsController = new ViewChatRoomsController(viewChatRoomsInteractor);
         loggedInView.setViewChatRoomsController(viewChatRoomsController);
+        viewChatRoomsView.setViewChatRoomsController(viewChatRoomsController);
         return this;
     }
 

@@ -5,6 +5,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord;
 import entity.User;
 import entity.UserFactory;
+import javax.annotation.Generated;
+
 
 /**
  * The Signup Interactor.
@@ -24,8 +26,14 @@ public class SignupInteractor implements SignupInputBoundary {
 
     @Override
     public void execute(SignupInputData signupInputData) {
-        if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
+        if (signupInputData.getUsername().isEmpty()) {
+            userPresenter.prepareFailView("Username cannot be empty.");
+        }
+        else if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
             userPresenter.prepareFailView("User already exists.");
+        }
+        else if (signupInputData.getPassword().isEmpty() || signupInputData.getRepeatPassword().isEmpty()) {
+            userPresenter.prepareFailView("Password cannot be empty.");
         }
         else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
             userPresenter.prepareFailView("Passwords don't match.");
@@ -33,32 +41,10 @@ public class SignupInteractor implements SignupInputBoundary {
         else {
             final User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword());
             userDataAccessObject.save(user);
-
-//            signUpFirebaseUser(signupInputData.getUsername(), signupInputData.getPassword());
             final SignupOutputData signupOutputData = new SignupOutputData(user.getName(), false);
             userPresenter.prepareSuccessView(signupOutputData);
         }
     }
-    /**
-     * The Signup Interactor. // RENAME
-     * @param email username.
-     * @param password password.
-     */
-
-    public void signUpFirebaseUser(String email, String password) {
-        try {
-            final UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-                    .setEmail(email)
-                    .setPassword(password);
-            final UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
-            userDataAccessObject.saveUid(email, userRecord.getUid());
-            System.out.println("Successfully created user: " + userRecord.getUid());
-        }
-        catch (FirebaseException firebaseException) {
-            firebaseException.printStackTrace();
-        }
-    }
-
     @Override
     public void switchToLoginView() {
         userPresenter.switchToLoginView();
