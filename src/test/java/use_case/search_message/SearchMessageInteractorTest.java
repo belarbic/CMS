@@ -16,12 +16,13 @@ class SearchMessageInteractorTest {
         InMemoryUserDataAccessObject userRepository = new InMemoryUserDataAccessObject();
 
         // Set up test data
-        UserFactory factory = new CommonUserFactory();
-        User user = factory.create("Paul", "password");
+        ArrayList<ChatRoom> chatRooms = new ArrayList<>();
         ChatRoom chatRoom = new ChatRoom("TestRoom", "first message");
         Message message = new Message("hello world", "Paul");
         chatRoom.addMessage(message);
-        user.getChatRooms().add(chatRoom);
+        chatRooms.add(chatRoom);
+
+        User user = new CommonUser("Paul", "password", chatRooms);
         userRepository.save(user);
 
         SearchMessageOutputBoundary successPresenter = new SearchMessageOutputBoundary() {
@@ -48,18 +49,18 @@ class SearchMessageInteractorTest {
         InMemoryUserDataAccessObject userRepository = new InMemoryUserDataAccessObject();
 
         // Set up test data with multiple matches
-        UserFactory factory = new CommonUserFactory();
-        User user = factory.create("Paul", "password");
+        ArrayList<ChatRoom> chatRooms = new ArrayList<>();
 
         ChatRoom chatRoom1 = new ChatRoom("Room1", "first message");
         chatRoom1.addMessage(new Message("hello world", "Paul"));
         chatRoom1.addMessage(new Message("hello there", "Paul"));
+        chatRooms.add(chatRoom1);
 
         ChatRoom chatRoom2 = new ChatRoom("Room2", "first message");
         chatRoom2.addMessage(new Message("saying hello", "Paul"));
+        chatRooms.add(chatRoom2);
 
-        user.getChatRooms().add(chatRoom1);
-        user.getChatRooms().add(chatRoom2);
+        User user = new CommonUser("Paul", "password", chatRooms);
         userRepository.save(user);
 
         SearchMessageOutputBoundary successPresenter = new SearchMessageOutputBoundary() {
@@ -169,12 +170,13 @@ class SearchMessageInteractorTest {
         InMemoryUserDataAccessObject userRepository = new InMemoryUserDataAccessObject();
 
         // Set up test data
-        UserFactory factory = new CommonUserFactory();
-        User user = factory.create("Paul", "password");
+        ArrayList<ChatRoom> chatRooms = new ArrayList<>();
         ChatRoom chatRoom = new ChatRoom("TestRoom", "first message");
         Message message = new Message("hello world", "Paul");
         chatRoom.addMessage(message);
-        user.getChatRooms().add(chatRoom);
+        chatRooms.add(chatRoom);
+
+        User user = new CommonUser("Paul", "password", chatRooms);
         userRepository.save(user);
 
         SearchMessageOutputBoundary failurePresenter = new SearchMessageOutputBoundary() {
@@ -199,12 +201,13 @@ class SearchMessageInteractorTest {
         InMemoryUserDataAccessObject userRepository = new InMemoryUserDataAccessObject();
 
         // Set up test data
-        UserFactory factory = new CommonUserFactory();
-        User user = factory.create("Paul", "password");
+        ArrayList<ChatRoom> chatRooms = new ArrayList<>();
         ChatRoom chatRoom = new ChatRoom("TestRoom", "first message");
         Message message = new Message("hello world", "Paul");
         chatRoom.addMessage(message);
-        user.getChatRooms().add(chatRoom);
+        chatRooms.add(chatRoom);
+
+        User user = new CommonUser("Paul", "password", chatRooms);
         userRepository.save(user);
 
         SearchMessageOutputBoundary successPresenter = new SearchMessageOutputBoundary() {

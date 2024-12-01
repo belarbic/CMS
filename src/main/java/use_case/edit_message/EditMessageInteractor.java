@@ -49,6 +49,9 @@ public class EditMessageInteractor implements EditMessageInputBoundary {
         if (message == null) {
             prepareFailureView("Message not found");
         }
+        else if (message.deleted()) {
+            prepareFailureView("Cannot edit a deleted message");
+        }
         else if (!message.getSender().equals(username)) {
             prepareFailureView("You can only edit your own messages");
         }
