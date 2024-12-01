@@ -1,4 +1,3 @@
-
 package use_case.edit_message;
 
 import entity.Message;
@@ -28,15 +27,19 @@ public class EditMessageInteractor implements EditMessageInputBoundary {
         final String newContent = editMessageInputData.getNewContent();
         final String username = editMessageInputData.getUsername();
 
+        // Validation checks
         if (isInvalidContent(newContent)) {
             prepareFailureView("Message content cannot be empty");
+            return; // Stop further processing if validation fails
         }
-        else if (!userDataAccessObject.existsByName(username)) {
+
+        if (!userDataAccessObject.existsByName(username)) {
             prepareFailureView("User not found");
+            return; // Stop further processing if user is not found
         }
-        else {
-            processMessageEdit(messageId, newContent, username);
-        }
+
+        // Process the message edit if all validations pass
+        processMessageEdit(messageId, newContent, username);
     }
 
     private boolean isInvalidContent(String content) {
@@ -46,25 +49,27 @@ public class EditMessageInteractor implements EditMessageInputBoundary {
     private void processMessageEdit(String messageId, String newContent, String username) {
         final Message message = userDataAccessObject.getMessage(messageId);
 
+        // Check if message exists and if the user is authorized to edit
         if (message == null) {
             prepareFailureView("Message not found");
-        }
-        else if (!message.getSender().equals(username)) {
+        } else if (!message.getSender().equals(username)) {
             prepareFailureView("You can only edit your own messages");
-        }
-        else {
+        } else {
+            // Update message if validation passes
             userDataAccessObject.updateMessage(messageId, newContent);
             prepareSuccessView(newContent);
         }
     }
 
     private void prepareSuccessView(String newContent) {
+        // Prepare success response
         final EditMessageOutputData editMessageOutputData =
                 new EditMessageOutputData(newContent, false);
         editMessagePresenter.prepareSuccessView(editMessageOutputData);
     }
 
     private void prepareFailureView(String error) {
+        // Prepare failure response with error message
         editMessagePresenter.prepareFailView(error);
     }
 }

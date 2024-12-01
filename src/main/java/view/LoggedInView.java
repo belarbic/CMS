@@ -31,6 +31,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private ChangePasswordController changePasswordController;
     private LogoutController logoutController;
 
+
     private final JLabel name;
 
     private final JButton logOut;
@@ -38,8 +39,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     // private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
 
-    // new button to change username
-    private final JButton changeUsername;
 
     // new button to create new chatroom
     private final JButton createChatRoom;
@@ -59,6 +58,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         public LoggedInView(LoggedInViewModel loggedInViewModel) {
             this.loggedInViewModel = loggedInViewModel;
             this.loggedInViewModel.addPropertyChangeListener(this);
+
+
 
             // Title label styling and alignment
             final JLabel title = new JLabel("Welcome! ");
@@ -92,8 +93,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             changePassword = createButton("Change Password", new Color(34, 193, 195), Color.WHITE);
             buttons.add(changePassword);
 
-            changeUsername = createButton("Change Username", new Color(204, 204, 204), Color.BLACK);
-            buttons.add(changeUsername);
 
             createChatRoom = createButton("Create Chatroom", new Color(34, 193, 195), Color.WHITE);
             buttons.add(createChatRoom);

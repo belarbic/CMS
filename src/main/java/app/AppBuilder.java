@@ -104,6 +104,7 @@ public class AppBuilder {
     private EditMessageView editMessageView;
     private EditMessageViewModel editMessageViewModel;
 
+
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
     }

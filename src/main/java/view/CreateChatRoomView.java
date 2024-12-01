@@ -131,10 +131,18 @@ public CreateChatRoomView(CreateChatRoomViewModel createChatRoomViewModel) {
     this.createChatRoomViewModel = createChatRoomViewModel;
     this.createChatRoomViewModel.addPropertyChangeListener(this);
 
+//    // Title label styling and alignment
+//    final JLabel title = new JLabel("Create Chatroom");
+//    title.setFont(new Font("Arial", Font.BOLD, 24));  // Set font size and bold
+//    title.setAlignmentX(Component.CENTER_ALIGNMENT);  // Center title alignment
+//
+//    // Add vertical spacing before the title to match the LoginView
+//    this.add(Box.createVerticalStrut(40));  // Adjust the value (40) for more or less space
+
     // Title label styling and alignment
     final JLabel title = new JLabel("Create Chatroom");
-    title.setFont(new Font("Arial", Font.BOLD, 24));  // Set font size and bold
-    title.setAlignmentX(Component.CENTER_ALIGNMENT);  // Center title alignment
+    title.setFont(new Font("Roboto", Font.BOLD, 28));  // Set font size and bold
+    title.setAlignmentX(Component.CENTER_ALIGNMENT); // Center title alignment
 
     // Add vertical spacing before the title to match the LoginView
     this.add(Box.createVerticalStrut(40));  // Adjust the value (40) for more or less space
@@ -147,6 +155,16 @@ public CreateChatRoomView(CreateChatRoomViewModel createChatRoomViewModel) {
     nameErrorField.setFont(new Font("Arial", Font.ITALIC, 12));
     nameErrorField.setForeground(Color.RED);
     nameErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+    // Ensure the input fields are consistent in size and font
+    nameInputField.setPreferredSize(new java.awt.Dimension(250, 35));  // Wider and taller input field
+    nameInputField.setFont(new Font("Arial", Font.PLAIN, 16));  // Larger text in input field
+    nameInfo.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10)); // Add padding for clarity
+
+    messageInputField.setPreferredSize(new java.awt.Dimension(250, 35));  // Wider and taller input field
+    messageInputField.setFont(new Font("Arial", Font.PLAIN, 16));  // Larger text in input field
+    messageInfo.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10)); // Add padding for clarity
+    messageInfo.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));  // Left margin for the entire panel
 
     // Create buttons panel and add buttons to it
     final JPanel buttons = new JPanel();
@@ -187,7 +205,7 @@ public CreateChatRoomView(CreateChatRoomViewModel createChatRoomViewModel) {
     this.add(Box.createVerticalStrut(20)); // Spacing after the title
     this.add(nameInfo);
     this.add(nameErrorField);
-    this.add(Box.createVerticalStrut(10)); // Spacing between name and message fields
+    this.add(Box.createVerticalStrut(-10)); // Spacing between name and message fields
     this.add(messageInfo);
     this.add(Box.createVerticalStrut(20)); // Spacing before buttons
     this.add(buttons);

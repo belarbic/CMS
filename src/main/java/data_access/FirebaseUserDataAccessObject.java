@@ -34,7 +34,7 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
     {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         this.usersRef = database.getReference("users");
-        this.chatRoomsRef = database.getReference("chat_rooms");
+        this.chatRoomsRef = database.getReference("chats");
     }
     /**
      * Updates the system to record this user's password.
@@ -68,7 +68,6 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
      * Sets the name of the chatRoom.
      *
      * @param firstMessage the name of the ChatRoom
-     * @return the name of the chatRoom.; null indicates that there isn't a name.
      */
     @Override
     public void setFirstMessage(String firstMessage) {
@@ -78,11 +77,32 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
      * Sets the name of the chatRoom.
      *
      * @param name the name of the ChatRoom
-     * @return the name of the chatRoom.; null indicates that there isn't a name.
      */
     @Override
     public void setName(String name) {
+        CompletableFuture<ChatRoom> chatRoomFuture = new CompletableFuture<>();
+        chatRoomsRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                ChatRoom chatRoom = dataSnapshot.getValue(ChatRoom.class);
+//                chatRoomFuture.complete(chatRoom);
+                if (dataSnapshot.exists()) {
+                    System.out.println("Chat room exists");
+                }
+                else {
+                    ChatRoom chatRoom = new ChatRoom(name, "");
+                    chatRoom.setName(name);
+                    chatRoomsRef.child(name).setValueAsync(chatRoom);
+                    System.out.println("New chat room created");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                chatRoomFuture.completeExceptionally(new RuntimeException(databaseError.getMessage()));
+            }
+        });
     }
     /**
      * Saves the ChatRoom.
