@@ -29,8 +29,8 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         EditMessageUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
-    private final Map<String, String> usersUids = new HashMap<>();
     private final Map<String, ChatRoom> chatRooms = new HashMap<>();
+    private final Map<String, String> usersUids = new HashMap<>();
 
     private String currentUsername;
     private ChatRoom chatRoom;

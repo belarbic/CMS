@@ -41,4 +41,65 @@ class LogoutInteractorTest {
         assertNull(userRepository.getCurrentUsername());
     }
 
+
+    @Test
+    void logoutWithValidUsernameAfterPreviousLogoutTest() {
+        LogoutInputData inputData = new LogoutInputData("Paul");
+        InMemoryUserDataAccessObject userRepository = new InMemoryUserDataAccessObject();
+
+        // Add Paul to the repository and log in.
+        UserFactory factory = new CommonUserFactory();
+        User user = factory.create("Paul", "password");
+        userRepository.save(user);
+        userRepository.setCurrentUsername("Paul");
+
+        // Log out Paul.
+        LogoutOutputBoundary successPresenter = new LogoutOutputBoundary() {
+            @Override
+            public void prepareSuccessView(LogoutOutputData user) {
+                assertEquals("Paul", user.getUsername());
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                fail("Logout should succeed.");
+            }
+        };
+        LogoutInputBoundary interactor = new LogoutInteractor(userRepository, successPresenter);
+        interactor.execute(inputData);
+
+        // Test again with the same username after logout
+        interactor.execute(inputData);
+        // Ensure that the user is logged out and the current username is null
+        assertNull(userRepository.getCurrentUsername());
+    }
+
+    @Test
+    void logoutWithoutFirebaseTest() {
+        LogoutInputData inputData = new LogoutInputData("Paul");
+        InMemoryUserDataAccessObject userRepository = new InMemoryUserDataAccessObject();
+
+        // For this test, do not perform any Firebase interaction.
+        UserFactory factory = new CommonUserFactory();
+        User user = factory.create("Paul", "password");
+        userRepository.save(user);
+        userRepository.setCurrentUsername("Paul");
+
+        LogoutOutputBoundary successPresenter = new LogoutOutputBoundary() {
+            @Override
+            public void prepareSuccessView(LogoutOutputData user) {
+                assertEquals("Paul", user.getUsername());
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                fail("Logout should succeed.");
+            }
+        };
+
+        LogoutInputBoundary interactor = new LogoutInteractor(userRepository, successPresenter);
+        interactor.execute(inputData);
+        assertNull(userRepository.getCurrentUsername());
+    }
+
 }

@@ -1,17 +1,12 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -34,27 +29,47 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
     private ViewChatRoomsController viewChatRoomsController;
 
     public ViewChatRoomsView(ViewChatRoomsViewModel viewChatRoomsViewModel) {
-
         this.viewChatRoomsViewModel = viewChatRoomsViewModel;
         this.viewChatRoomsViewModel.addPropertyChangeListener(this);
 
+        // Title styling
         final JLabel title = new JLabel("View Chatrooms");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font("Arial", Font.BOLD, 24));  // Set font size and bold
+        title.setAlignmentX(Component.CENTER_ALIGNMENT); // Center title alignment
+        this.add(Box.createVerticalStrut(50)); // Adds space below the title
 
-        final JLabel welcomeStatement = new JLabel("Here are the chatrooms you're a part of: ");
+        // Welcome statement styling
+        final JLabel welcomeStatement = new JLabel("Here are the chatrooms you're a part of:");
+        welcomeStatement.setFont(new Font("Arial", Font.BOLD, 16));  // Set font size and bold
+        welcomeStatement.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment for text
+        this.add(welcomeStatement);
 
+        // Add vertical space between welcome statement and back button
+        this.add(Box.createVerticalStrut(30));  // Adds 30 pixels of space between the two components
+
+        // Button panel
         final JPanel buttons = new JPanel();
-        cancel = new JButton("Cancel");
+        cancel = new JButton("Back");
+        cancel.setFont(new Font("Arial", Font.PLAIN, 14)); // Consistent font for the button
+        cancel.setPreferredSize(new Dimension(200, 40)); // Set button size
+        cancel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));  // Allow horizontal expansion
+        cancel.setFocusPainted(false);  // Remove focus border
+        cancel.setBackground(new Color(255, 92, 92));  // Light red color for 'Back' button
+        cancel.setForeground(Color.WHITE); // White text color
         buttons.add(cancel);
 
-        cancel.addActionListener(this);
+        cancel.addActionListener(this);  // Action listener for the button
 
+        // Layout the main panel
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        // Add components to the main panel
         this.add(title);
         this.add(welcomeStatement);
         this.add(buttons);
     }
+
+
 
     /**
      * React to a button click that results in evt.
@@ -62,6 +77,7 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
      */
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
+
     }
 
     @Override

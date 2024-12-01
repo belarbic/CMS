@@ -38,8 +38,8 @@ public class LoginInteractor implements LoginInputBoundary {
                 loginPresenter.prepareFailView("Incorrect password for \"" + username + "\".");
             }
             else {
-                final boolean result = signInFirebaseUser(username, password);
-                System.out.println("result: " + result);
+//                final boolean result = signInFirebaseUser(username, password);
+//                System.out.println("result: " + result);
                 final User user = userDataAccessObject.get(loginInputData.getUsername());
 
                 userDataAccessObject.setCurrentUsername(user.getName());
