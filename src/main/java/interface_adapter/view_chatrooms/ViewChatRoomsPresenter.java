@@ -50,4 +50,10 @@ public class ViewChatRoomsPresenter implements ViewChatRoomsOutputBoundary {
         // No need to add code here. We'll assume that logout can't fail.
         // Thought question: is this a reasonable assumption?
     }
+
+    @Override
+    public void switchToLoggedInView() {
+        viewManagerModel.setState(loggedInViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
 }

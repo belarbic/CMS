@@ -246,6 +246,7 @@ public class AppBuilder {
 
         final ViewChatRoomsController viewChatRoomsController = new ViewChatRoomsController(viewChatRoomsInteractor);
         loggedInView.setViewChatRoomsController(viewChatRoomsController);
+        viewChatRoomsView.setViewChatRoomsController(viewChatRoomsController);
         return this;
     }
 

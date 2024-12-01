@@ -3,12 +3,8 @@ package interface_adapter.create_chatroom;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.login.LoginState;
-import interface_adapter.login.LoginViewModel;
 import use_case.create_chatroom.CreateChatRoomOutputBoundary;
 import use_case.create_chatroom.CreateChatRoomOutputData;
-import use_case.logout.LogoutOutputBoundary;
-import use_case.logout.LogoutOutputData;
 
 /**
  * The Presenter for the Logout Use Case.
@@ -36,7 +32,7 @@ public class CreateChatRoomPresenter implements CreateChatRoomOutputBoundary {
         // the empty string.
 
         final LoggedInState loggedInState = loggedInViewModel.getState();
-        loggedInState.setUsername("");
+//        loggedInState.setUsername("");
         loggedInViewModel.setState(loggedInState);
         loggedInViewModel.firePropertyChanged();
 

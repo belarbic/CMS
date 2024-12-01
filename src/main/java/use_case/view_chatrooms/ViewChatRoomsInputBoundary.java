@@ -10,4 +10,6 @@ public interface ViewChatRoomsInputBoundary {
      * @param viewChatRoomsInputData the input data
      */
     void execute(ViewChatRoomsInputData viewChatRoomsInputData);
+
+    void switchToLoggedInView();
 }
