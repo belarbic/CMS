@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
 import app.ChatService;
+import interface_adapter.chat_room.ChatRoomController;
 import interface_adapter.view_chatrooms.ViewChatRoomsController;
 import interface_adapter.view_chatrooms.ViewChatRoomsState;
 import interface_adapter.view_chatrooms.ViewChatRoomsViewModel;
@@ -25,6 +26,7 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
     private final JList<String> chatRoomList;
     private final JButton cancel;
     private ViewChatRoomsController viewChatRoomsController;
+    private ChatRoomController chatRoomController;
 
     public ViewChatRoomsView(ViewChatRoomsViewModel viewChatRoomsViewModel) {
         this.viewChatRoomsViewModel = viewChatRoomsViewModel;
@@ -57,6 +59,7 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
             if (e.getValueIsAdjusting() && chatRoomList.getSelectedValue() != null) {
                 String selectedValue = (String) chatRoomList.getSelectedValue();
                 System.out.println("Selected chat room: " + selectedValue);
+                viewChatRoomsController.openChatRoom();
             }
         });
         getChatRoomList();
@@ -114,6 +117,7 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
     public void setViewChatRoomsController(ViewChatRoomsController viewChatRoomsController) {
         this.viewChatRoomsController = viewChatRoomsController;
     }
+
     public void getChatRoomList() {
         ChatService chatService = new ChatService();
         chatService.getChatList().thenAccept(chatRooms -> {

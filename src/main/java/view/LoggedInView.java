@@ -11,6 +11,7 @@ import javax.swing.*;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.chat_room.ChatRoomController;
 import interface_adapter.create_chatroom.CreateChatRoomController;
 import interface_adapter.create_chatroom.CreateChatRoomViewModel;
 import interface_adapter.edit_message.EditMessageController;
@@ -39,6 +40,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     // private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
 
+    private ChatRoomController chatRoomController;
 
     // new button to create new chatroom
     private final JButton createChatRoom;
@@ -209,5 +211,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setEditMessageController(EditMessageController editMessageController) {
         this.editMessageController = editMessageController;
+    }
+    public void setChatRoomController(ChatRoomController chatRoomController) {
+            this.chatRoomController = chatRoomController;
     }
 }

@@ -17,4 +17,6 @@ public interface ViewChatRoomsOutputBoundary {
     void prepareFailView(String errorMessage);
 
     void switchToLoggedInView();
+
+    void openChatRoom();
 }

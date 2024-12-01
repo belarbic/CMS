@@ -24,4 +24,8 @@ public class ViewChatRoomsInteractor implements ViewChatRoomsInputBoundary {
     public void switchToLoggedInView() {
         viewChatRoomsPresenter.switchToLoggedInView();
     }
+    @Override
+    public void openChatRoom() {
+        viewChatRoomsPresenter.openChatRoom();
+    }
 }

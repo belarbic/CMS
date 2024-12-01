@@ -45,6 +45,8 @@ public class Main {
                                             .addLogoutUseCase()
                                             .addCreateChatRoomView()
                                             .addCreateChatRoomUseCase()
+                                            .addChatRoomView()
+                                            .addChatRoomUseCase()
                                             .addSearchMessageView()
                                             .addSearchMessageUseCase()
                                             .addEditMessageView()

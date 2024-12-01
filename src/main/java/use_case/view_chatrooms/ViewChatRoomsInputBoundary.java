@@ -12,4 +12,6 @@ public interface ViewChatRoomsInputBoundary {
     void execute(ViewChatRoomsInputData viewChatRoomsInputData);
 
     void switchToLoggedInView();
+
+    void openChatRoom();
 }

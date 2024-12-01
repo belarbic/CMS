@@ -30,4 +30,7 @@ public class ViewChatRoomsController {
     public void switchToLoggedInView() {
         viewChatRoomsUseCaseInteractor.switchToLoggedInView();
     }
+    public void openChatRoom() {
+        viewChatRoomsUseCaseInteractor.openChatRoom();
+    }
 }

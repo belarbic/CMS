@@ -1,33 +1,30 @@
-package interface_adapter.view_chatrooms;
+package interface_adapter.chat_room;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.chat_room.ChatRoomViewModel;
-import use_case.view_chatrooms.ViewChatRoomsOutputBoundary;
-import use_case.view_chatrooms.ViewChatRoomsOutputData;
+import use_case.chat_room.ChatRoomOutputBoundary;
+import use_case.chat_room.ChatRoomOutputData;
 
 /**
  * The Presenter for the Logout Use Case.
  */
-public class ViewChatRoomsPresenter implements ViewChatRoomsOutputBoundary {
+public class ChatRoomPresenter implements ChatRoomOutputBoundary {
 
     private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
-    private final ViewChatRoomsViewModel viewChatRoomsViewModel;
     private final ChatRoomViewModel chatRoomViewModel;
 
-    public ViewChatRoomsPresenter(ViewManagerModel viewManagerModel,
+    public ChatRoomPresenter(ViewManagerModel viewManagerModel,
                                    LoggedInViewModel loggedInViewModel,
-                                  ViewChatRoomsViewModel viewChatRoomsViewModel, ChatRoomViewModel chatRoomViewModel) {
+                                   ChatRoomViewModel chatRoomViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
-        this.viewChatRoomsViewModel = viewChatRoomsViewModel;
         this.chatRoomViewModel = chatRoomViewModel;
     }
 
     @Override
-    public void prepareSuccessView(ViewChatRoomsOutputData response) {
+    public void prepareSuccessView(ChatRoomOutputData response) {
         // We need to switch to the login view, which should have
         // an empty username and password.
 
@@ -39,13 +36,19 @@ public class ViewChatRoomsPresenter implements ViewChatRoomsOutputBoundary {
         loggedInViewModel.setState(loggedInState);
         loggedInViewModel.firePropertyChanged();
 
-        final ViewChatRoomsState viewChatRoomsState = viewChatRoomsViewModel.getState();
-        viewChatRoomsViewModel.setState(viewChatRoomsState);
-        viewChatRoomsViewModel.firePropertyChanged();
-
-        // This code tells the View Manager to switch to the LoginView.
-        this.viewManagerModel.setState(viewChatRoomsViewModel.getViewName());
-        this.viewManagerModel.firePropertyChanged();
+        final ChatRoomState chatRoomState = chatRoomViewModel.getState();
+        chatRoomState.setName("x");
+        chatRoomViewModel.setState(chatRoomState);
+        chatRoomViewModel.firePropertyChanged();
+        if (response.getName() != "" && response.getFirstMessage() != "") {
+            this.viewManagerModel.setState(loggedInViewModel.getViewName());
+            this.viewManagerModel.firePropertyChanged();
+        }
+        else {
+            // This code tells the View Manager to switch to the LoginView.
+            this.viewManagerModel.setState(chatRoomViewModel.getViewName());
+            this.viewManagerModel.firePropertyChanged();
+        }
     }
 
     @Override
@@ -59,10 +62,5 @@ public class ViewChatRoomsPresenter implements ViewChatRoomsOutputBoundary {
         viewManagerModel.setState(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
-
-    @Override
-    public void openChatRoom() {
-        viewManagerModel.setState(chatRoomViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-    }
 }
+

@@ -6,6 +6,7 @@ import entity.ConcreteUser;
 import entity.Message;
 import entity.User;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
+import use_case.chat_room.ChatRoomUserDataAccessInterface;
 import use_case.create_chatroom.CreateChatRoomUserDataAccessInterface;
 import use_case.edit_message.EditMessageUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
@@ -21,6 +22,7 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface,
         CreateChatRoomUserDataAccessInterface,
+        ChatRoomUserDataAccessInterface,
         ViewChatRoomsUserDataAccessInterface,
         SearchMessageUserDataAccessInterface,
         EditMessageUserDataAccessInterface {
