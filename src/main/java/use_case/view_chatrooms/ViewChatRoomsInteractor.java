@@ -1,7 +1,7 @@
 package use_case.view_chatrooms;
 
 /**
- * The CreateChatRoom Interactor.
+ * The ViewChatRoom Interactor.
  */
 public class ViewChatRoomsInteractor implements ViewChatRoomsInputBoundary {
     private final ViewChatRoomsUserDataAccessInterface userDataAccessObject;
@@ -18,6 +18,7 @@ public class ViewChatRoomsInteractor implements ViewChatRoomsInputBoundary {
         final ViewChatRoomsOutputData viewChatRoomsOutputData = new ViewChatRoomsOutputData(false);
         viewChatRoomsPresenter.prepareSuccessView(viewChatRoomsOutputData);
     }
+
     public void switchToLoggedInView() {
         viewChatRoomsPresenter.switchToLoggedInView();
     }
