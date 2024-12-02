@@ -26,7 +26,6 @@ public class LoginController {
     public LoginController(LoginInputBoundary loginUseCaseInteractor) {
         this.loginUseCaseInteractor = loginUseCaseInteractor;
     }
-
     /**
      * Executes the Login Use Case.
      * @param username the username of the user logging in

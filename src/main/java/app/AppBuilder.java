@@ -12,6 +12,7 @@ import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
+import interface_adapter.change_password.ChangePasswordViewModel;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.chat_room.ChatRoomController;
 import interface_adapter.chat_room.ChatRoomPresenter;
@@ -104,6 +105,8 @@ public class AppBuilder {
     private EditMessageViewModel editMessageViewModel;
     private ChatRoomView chatRoomView;
     private ChatRoomViewModel chatRoomViewModel;
+    private ChangePasswordView changePasswordView;
+    private ChangePasswordViewModel changePasswordViewModel;
 
 
     public AppBuilder() {
@@ -201,6 +204,17 @@ public class AppBuilder {
         chatRoomViewModel = new ChatRoomViewModel();
         chatRoomView = new ChatRoomView(chatRoomViewModel);
         cardPanel.add(chatRoomView, chatRoomView.getViewName());
+        return this;
+    }
+    /**
+     * Adds the ChatRoom View to the application.
+     *
+     * @return this builder
+     */
+    public AppBuilder addChangePasswordView() {
+        changePasswordViewModel = new ChangePasswordViewModel();
+        changePasswordView = new ChangePasswordView(changePasswordViewModel);
+        cardPanel.add(changePasswordView, changePasswordView.getViewName());
         return this;
     }
 
@@ -327,7 +341,7 @@ public class AppBuilder {
         final EditMessageController editMessageController = new EditMessageController(
                 editMessageInteractor);
 
-        editMessageView.setEditMessageController(editMessageController);
+        loggedInView.setEditMessageController(editMessageController);
         return this;
     }
 
@@ -338,7 +352,7 @@ public class AppBuilder {
      */
     public AppBuilder addChangePasswordUseCase() {
         final ChangePasswordOutputBoundary changePasswordOutputBoundary =
-                new ChangePasswordPresenter(loggedInViewModel);
+                new ChangePasswordPresenter(loggedInViewModel, viewManagerModel, changePasswordViewModel);
 
         final ChangePasswordInputBoundary changePasswordInteractor =
                 new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);

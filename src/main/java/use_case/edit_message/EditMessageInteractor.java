@@ -42,6 +42,16 @@ public class EditMessageInteractor implements EditMessageInputBoundary {
         processMessageEdit(messageId, newContent, username);
     }
 
+    @Override
+    public void switchToEditMessageView() {
+        editMessagePresenter.switchToEditMessageView();
+    }
+
+    @Override
+    public void switchToLoggedInView() {
+        editMessagePresenter.switchToLoggedInView();
+    }
+
     private boolean isInvalidContent(String content) {
         return content == null || content.trim().isEmpty();
     }

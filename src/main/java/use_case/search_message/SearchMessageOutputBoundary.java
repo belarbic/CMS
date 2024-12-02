@@ -16,4 +16,8 @@ public interface SearchMessageOutputBoundary {
      * @param error the error message
      */
     void prepareFailView(String error);
+
+    void switchToLoggedInView();
+
+    void switchToSearchMessageView();
 }

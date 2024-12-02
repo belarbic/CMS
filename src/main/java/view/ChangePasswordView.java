@@ -8,22 +8,29 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import interface_adapter.change_password.ChangePasswordController;
+import interface_adapter.change_password.ChangePasswordViewModel;
+import interface_adapter.chat_room.ChatRoomController;
+import interface_adapter.edit_message.EditMessageViewModel;
 
 /**
  * The View for changing the password.
  */
 public class ChangePasswordView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private final ChangePasswordController changePasswordController;
+    private ChangePasswordController changePasswordController;
+    private ChangePasswordViewModel changePasswordViewModel;
 
     private JTextField usernameField;
     private JPasswordField oldPasswordField;
     private JPasswordField newPasswordField;
     private JButton submitButton;
     private JButton cancelButton;
+    private final String viewName = "ChangePasswordView";
 
-    public ChangePasswordView(ChangePasswordController changePasswordController) {
-        this.changePasswordController = changePasswordController;
+    public ChangePasswordView(ChangePasswordViewModel changePasswordViewModel) {
+        this.changePasswordViewModel = changePasswordViewModel;
+        this.changePasswordViewModel.addPropertyChangeListener(this);
+
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -101,6 +108,9 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+    }
+    public String getViewName() {
+        return viewName;
     }
 }
 

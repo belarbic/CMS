@@ -105,7 +105,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             searchMessages = createButton("Search Messages", new Color(34, 193, 195), Color.WHITE);
             buttons.add(searchMessages);
 
-            testEditMessage = createButton("Test Edit Message", new Color(34, 193, 195), Color.WHITE);
+            testEditMessage = createButton("Edit Message", new Color(34, 193, 195), Color.WHITE);
             buttons.add(testEditMessage);
 
             // Action listeners for each button, triggering the appropriate controller actions
@@ -132,17 +132,29 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
             searchMessages.addActionListener(evt -> {
                 if (evt.getSource().equals(searchMessages)) {
-                    final LoggedInState currentState = loggedInViewModel.getState();
-                    searchMessageController.execute("", currentState.getUsername());
+//                    final LoggedInState currentState = loggedInViewModel.getState();
+//                    searchMessageController.execute("", currentState.getUsername());
+                    searchMessageController.switchToSearchMessageView();
                 }
             });
 
             testEditMessage.addActionListener(evt -> {
                 if (evt.getSource().equals(testEditMessage)) {
-                    final LoggedInState currentState = loggedInViewModel.getState();
-                    editMessageController.execute("test-message-id", "Hello World", currentState.getUsername());
+//                    final LoggedInState currentState = loggedInViewModel.getState();
+//                    editMessageController.execute("test-message-id", "Hello World", currentState.getUsername());
+                    editMessageController.switchToEditMessageView();
                 }
             });
+
+            changePassword.addActionListener(evt -> {
+                if (evt.getSource().equals(changePassword)) {
+//                    final LoggedInState currentState = loggedInViewModel.getState();
+//                    changePasswordController.execute("123456", currentState.getUsername());
+                    changePasswordController.switchToChangePasswordView();
+                }
+            });
+
+
 
             // Set layout of the main panel
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -184,6 +196,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             JOptionPane.showMessageDialog(null, "password updated for " + state.getUsername());
         }
     }
+
 
     public String getViewName() {
         return viewName;

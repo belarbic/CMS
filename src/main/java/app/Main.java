@@ -43,6 +43,7 @@ public class Main {
                                             .addChatRoomUseCase()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
+                                            .addChangePasswordView()
                                             .addChangePasswordUseCase()
                                             .addLogoutUseCase()
                                             .addCreateChatRoomView()

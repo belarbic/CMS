@@ -41,6 +41,14 @@ public class SearchMessageInteractor implements SearchMessageInputBoundary {
             searchAndPresentMessages(username, keyword);
         }
     }
+    public void switchToLoggedInView() {
+        searchMessagePresenter.switchToLoggedInView();
+    }
+
+    @Override
+    public void switchToSearchMessageView() {
+        searchMessagePresenter.switchToSearchMessageView();
+    }
 
     private boolean isInvalidKeyword(String keyword) {
         return keyword == null || keyword.trim().isEmpty();
