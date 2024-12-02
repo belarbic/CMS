@@ -9,14 +9,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
-import java.awt.Color;
-import java.util.List;
 
-import app.ChatService;
-import entity.Message;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.chat_room.ChatRoomController;
-import interface_adapter.chat_room.ChatRoomState;
 import interface_adapter.chat_room.ChatRoomViewModel;
 
 /**
@@ -34,12 +29,6 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
     private final String viewName = "Chatroom";
     private final ChatRoomViewModel chatRoomViewModel;
 
-    private final JTextField nameInputField = new JTextField(15);
-    private final JTextField messageInputField = new JTextField(15);
-    private final JLabel nameErrorField = new JLabel();
-
-//    private final JButton chatRoom;
-//    private final JButton cancel;
     private ChatRoomController chatRoomController;
     private ViewManagerModel viewManagerModel;
 
@@ -82,16 +71,6 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
         refreshMessages();
 
         setVisible(true);
-
-        // Add components to the main panel
-//        this.add(title);
-//        this.add(Box.createVerticalStrut(20)); // Spacing after the title
-//        this.add(nameInfo);
-//        this.add(nameErrorField);
-//        this.add(Box.createVerticalStrut(-10)); // Spacing between name and message fields
-//        this.add(messageInfo);
-//        this.add(Box.createVerticalStrut(20)); // Spacing before buttons
-//        this.add(buttons);
     }
 
     /**
