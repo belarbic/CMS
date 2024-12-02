@@ -31,6 +31,13 @@ public class ChatRoomController {
     public void loadMessages(String chatRoomName) {
         chatRoomUseCaseInteractor.loadMessages(chatRoomName);
     }
+    public String getChatRoomName() {
+        return chatRoomUseCaseInteractor.getChatRoomName();
+    }
+    public String getUserName() {
+        return chatRoomUseCaseInteractor.getUserName();
+    }
+
 }
 
 

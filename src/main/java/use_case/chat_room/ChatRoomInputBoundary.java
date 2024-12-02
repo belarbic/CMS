@@ -10,4 +10,8 @@ public interface ChatRoomInputBoundary {
     void switchToLoggedInView();
 
     void loadMessages(String chatRoomName);
+
+    String getChatRoomName();
+
+    String getUserName();
 }

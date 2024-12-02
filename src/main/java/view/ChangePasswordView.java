@@ -35,9 +35,9 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Title styling
-        JLabel title = new JLabel("hello");
-        title.setFont(new Font("Arial", Font.BOLD, 24));
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        final JLabel title = new JLabel("Change Password");
+        title.setFont(new Font("Roboto", Font.BOLD, 28));  // Set font size and bold
+        title.setAlignmentX(Component.CENTER_ALIGNMENT); // Center title alignment
         add(title);
 
         // Space between title and form

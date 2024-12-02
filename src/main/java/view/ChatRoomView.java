@@ -7,9 +7,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Map;
 
 import javax.swing.*;
 
+import app.ChatService;
+import app.Message;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.chat_room.ChatRoomController;
 import interface_adapter.chat_room.ChatRoomViewModel;
@@ -85,6 +88,12 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
 //        } else {
 //            sendMessagePresenter.presentFailView("Message cannot be empty!");
 //        }
+        String userName = chatRoomController.getUserName();
+        String chatRoomName = chatRoomController.getChatRoomName();
+        final String content = inputField.getText().trim();
+        ChatService chatService = new ChatService();
+        chatService.sendMessage(chatRoomName, content, userName);
+        refreshMessages();
     }
 
     /**
@@ -156,6 +165,15 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
 //                .map(message -> message.getSender() + ": " + message.getContent())
 //                .toList();
 //        messageArea.setText(String.join("\n", messages));
+        String chatRoomName = chatRoomController.getChatRoomName();
+        ChatService chatService = new ChatService();
+        chatService.getMessagesForChatRoom(chatRoomName).thenAccept(messages -> {
+            System.out.println("Received messages: ");
+            for (Map.Entry<String, Message> messageEntry : messages.entrySet()) {
+                System.out.println(messageEntry.getKey() + ": " + messageEntry.getValue().getContent());
+                messageArea.append(messageEntry.getKey() + ": " + messageEntry.getValue().getContent() + "\n");
+            }
+        });
     }
 
     public void showError(String errorMessage) {

@@ -39,4 +39,7 @@ public class ChatRoomInputData {
     ArrayList<Message> getMessages() {
         return messages;
     }
+    void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
+    }
 }
