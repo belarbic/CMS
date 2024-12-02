@@ -1,4 +1,3 @@
-
 package use_case.search_message;
 
 import data_access.InMemoryUserDataAccessObject;

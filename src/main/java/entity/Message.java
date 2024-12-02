@@ -15,7 +15,6 @@ public class Message {
     private boolean deleted;
 
     public Message(String content, String sender) {
-        // TODO make a call to the API for ID
         this.id = "";
         this.content = content;
         this.sender = sender;
@@ -64,7 +63,6 @@ public class Message {
     }
 
     public String getChatRoom() {
-        // TODO have to discuss this
         return "";
     }
 }

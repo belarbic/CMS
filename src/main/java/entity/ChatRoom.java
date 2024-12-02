@@ -14,7 +14,6 @@ public class ChatRoom {
 
     public ChatRoom(String name, String firstMessage) {
         this.name = name;
-        // TODO participants added with calls to API
         this.participants = new ArrayList<User>();
         this.messages = new ArrayList<Message>();
         this.messages.add(new Message(firstMessage, null));
