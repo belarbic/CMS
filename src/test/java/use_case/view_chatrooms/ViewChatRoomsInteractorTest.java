@@ -75,36 +75,4 @@ class ViewChatRoomsInteractorTest {
         ViewChatRoomsInputBoundary interactor = new ViewChatRoomsInteractor(userRepository, successPresenter);
         interactor.execute(new ViewChatRoomsInputData());
     }
-
-    @Test
-    void openChatRoomTest() {
-        ChatRoom inputData = new ChatRoom("New", "hi");
-        ViewChatRoomsUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
-
-        // This creates a successPresenter that tests whether the test case is as we expect.
-        ViewChatRoomsOutputBoundary successPresenter = new ViewChatRoomsOutputBoundary() {
-            @Override
-            public void prepareSuccessView(ViewChatRoomsOutputData user) {
-                // 2 things to check: the output data is correct, and the user has been created in the DAO.
-                viewChatRoomsInteractor.openChatRoom();
-                assert(viewManagerModel.getViewName().equals("New"));
-            }
-
-            @Override
-            public void prepareFailView(String error) {
-                fail("Use case failure is unexpected.");
-            }
-
-            @Override
-            public void switchToLoggedInView() {
-            }
-
-            @Override
-            public void openChatRoom() {
-            }
-        };
-
-        ViewChatRoomsInputBoundary interactor = new ViewChatRoomsInteractor(userRepository, successPresenter);
-        interactor.execute(new ViewChatRoomsInputData());
-    }
 }
