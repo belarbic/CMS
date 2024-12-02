@@ -1,7 +1,8 @@
 package app;
 
-import javax.swing.JFrame;
 import java.io.FileInputStream;
+
+import javax.swing.JFrame;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
@@ -11,6 +12,10 @@ import com.google.firebase.FirebaseOptions;
  * The Main class of our application.
  */
 public class Main {
+
+    static final int WIDTH = 600;
+    static final int HEIGHT = 550;
+
     /**
      * Builds and runs the CA architecture of the application.
      */
@@ -55,7 +60,7 @@ public class Main {
                                             .build();
 
         application.pack();
-        application.setSize(600, 550);
+        application.setSize(WIDTH, HEIGHT);
         application.setVisible(true);
         ChatService chatService = new ChatService();
         chatService.getChatList();

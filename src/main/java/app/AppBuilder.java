@@ -61,17 +61,19 @@ import use_case.search_message.SearchMessageOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import use_case.view_chatrooms.ViewChatRoomsInputBoundary;
+import use_case.view_chatrooms.ViewChatRoomsInteractor;
+import use_case.view_chatrooms.ViewChatRoomsOutputBoundary;
+import view.ChangePasswordView;
+import view.ChatRoomView;
 import view.CreateChatRoomView;
 import view.EditMessageView;
 import view.LoggedInView;
 import view.LoginView;
 import view.SearchMessageView;
 import view.SignupView;
+import view.ViewChatRoomsView;
 import view.ViewManager;
-import use_case.view_chatrooms.ViewChatRoomsInputBoundary;
-import use_case.view_chatrooms.ViewChatRoomsInteractor;
-import use_case.view_chatrooms.ViewChatRoomsOutputBoundary;
-import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -206,6 +208,7 @@ public class AppBuilder {
         cardPanel.add(chatRoomView, chatRoomView.getViewName());
         return this;
     }
+
     /**
      * Adds the ChatRoom View to the application.
      *

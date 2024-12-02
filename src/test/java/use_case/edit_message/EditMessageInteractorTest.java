@@ -45,6 +45,12 @@ class EditMessageInteractorTest {
             public void prepareFailView(String error) {
                 fail("Use case failure is unexpected.");
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToEditMessageView(){}
         };
 
         interactor = new EditMessageInteractor(userRepository, successPresenter);
@@ -76,6 +82,12 @@ class EditMessageInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("Cannot edit a deleted message", error);
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToEditMessageView(){}
         };
 
         interactor = new EditMessageInteractor(userRepository, failurePresenter);
@@ -100,6 +112,12 @@ class EditMessageInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("Message content cannot be empty", error);
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToEditMessageView(){}
         };
 
         interactor = new EditMessageInteractor(userRepository, failurePresenter);
@@ -124,6 +142,12 @@ class EditMessageInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("Message content cannot be empty", error);
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToEditMessageView(){}
         };
 
         interactor = new EditMessageInteractor(userRepository, failurePresenter);
@@ -148,6 +172,12 @@ class EditMessageInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("Message content cannot be empty", error);
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToEditMessageView(){}
         };
 
         interactor = new EditMessageInteractor(userRepository, failurePresenter);
@@ -168,6 +198,12 @@ class EditMessageInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("User not found", error);
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToEditMessageView(){}
         };
 
         interactor = new EditMessageInteractor(userRepository, failurePresenter);
@@ -194,6 +230,12 @@ class EditMessageInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("Message not found", error);
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToEditMessageView(){}
         };
 
         interactor = new EditMessageInteractor(userRepository, failurePresenter);
@@ -224,6 +266,12 @@ class EditMessageInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("You can only edit your own messages", error);
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToEditMessageView(){}
         };
 
         interactor = new EditMessageInteractor(userRepository, failurePresenter);

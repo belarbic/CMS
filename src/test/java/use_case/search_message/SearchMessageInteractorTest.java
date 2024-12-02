@@ -36,6 +36,13 @@ class SearchMessageInteractorTest {
             public void prepareFailView(String error) {
                 fail("Use case failure is unexpected.");
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToSearchMessageView(){}
+
         };
 
         SearchMessageInputBoundary interactor = new SearchMessageInteractor(userRepository, successPresenter);
@@ -73,6 +80,12 @@ class SearchMessageInteractorTest {
             public void prepareFailView(String error) {
                 fail("Use case failure is unexpected.");
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToSearchMessageView(){}
         };
 
         SearchMessageInputBoundary interactor = new SearchMessageInteractor(userRepository, successPresenter);
@@ -94,6 +107,12 @@ class SearchMessageInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("Search keyword cannot be empty", error);
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToSearchMessageView(){}
         };
 
         SearchMessageInputBoundary interactor = new SearchMessageInteractor(userRepository, failurePresenter);
@@ -115,6 +134,12 @@ class SearchMessageInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("Search keyword cannot be empty", error);
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToSearchMessageView(){}
         };
 
         SearchMessageInputBoundary interactor = new SearchMessageInteractor(userRepository, failurePresenter);
@@ -136,6 +161,12 @@ class SearchMessageInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("Search keyword cannot be empty", error);
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToSearchMessageView(){}
         };
 
         SearchMessageInputBoundary interactor = new SearchMessageInteractor(userRepository, failurePresenter);
@@ -157,6 +188,12 @@ class SearchMessageInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("User not found", error);
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToSearchMessageView(){}
         };
 
         SearchMessageInputBoundary interactor = new SearchMessageInteractor(userRepository, failurePresenter);
@@ -188,6 +225,12 @@ class SearchMessageInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("No messages found containing: xyz", error);
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToSearchMessageView(){}
         };
 
         SearchMessageInputBoundary interactor = new SearchMessageInteractor(userRepository, failurePresenter);
@@ -221,6 +264,12 @@ class SearchMessageInteractorTest {
             public void prepareFailView(String error) {
                 fail("Use case failure is unexpected.");
             }
+
+            @Override
+            public void switchToLoggedInView(){}
+
+            @Override
+            public void switchToSearchMessageView(){}
         };
 
         SearchMessageInputBoundary interactor = new SearchMessageInteractor(userRepository, successPresenter);
