@@ -4,6 +4,8 @@ import com.google.firebase.database.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 /**
  * Connects to the chats node in the Firebase Realtime Database.
@@ -80,7 +82,8 @@ public class ChatService {
             }
         });
     }
-    public void getChatList() {
+    public CompletableFuture<Map<String, Object>> getChatList() {
+        CompletableFuture<Map<String, Object>> futureChatList = new CompletableFuture<>();
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -90,14 +93,114 @@ public class ChatService {
                     for (Map.Entry<String, Object> entry : chatList.entrySet()) {
                         System.out.println(entry.getKey() + ": " + entry.getValue());
                     }
+                    futureChatList.complete(chatList);
                 }
                 else {
+                    futureChatList.complete(new HashMap<>());
                     System.out.println("No chat found");
                 }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println(databaseError.getMessage());
+            }
+        });
+        return futureChatList;
+    }
+    public CompletableFuture<Map<String, Message>> getMessagesForChatRoom(String chatRoomName) {
+        CompletableFuture<Map<String, Message>> futureMessages = new CompletableFuture<>();
+        chatRef.child(chatRoomName).child("messages").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, Message> chatRoomMessages = new HashMap<>();
+                    System.out.println("Chat Room Messages: ");
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Message message = snapshot.getValue(Message.class);
+                        chatRoomMessages.put(message.getSender(), message);
+                    }
+                    futureMessages.complete(chatRoomMessages);
+                }
+                else {
+                    futureMessages.complete(new HashMap<>());
+                    System.out.println("No chat found");
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println(databaseError.getMessage());
+            }
+        });
+        return futureMessages;
+    }
+    public void addMessageListener(String chatRoomName, Consumer<Message> onNewMessage) {
+        chatRef.child(chatRoomName).child("messages").addChildEventListener(new ChildEventListener() {
+
+            /**
+             * This method is triggered when a new child is added to the location to which this listener was
+             * added.
+             *
+             * @param snapshot          An immutable snapshot of the data at the new child location
+             * @param previousChildName The key name of sibling location ordered before the new child. This
+             *                          will be null for the first child node of a location.
+             */
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
+                Message message = snapshot.getValue(Message.class);
+                if (message != null) {
+                    onNewMessage.accept(message);
+                }
+            }
+
+            /**
+             * This method is triggered when the data at a child location has changed.
+             *
+             * @param snapshot          An immutable snapshot of the data at the new data at the child location
+             * @param previousChildName The key name of sibling location ordered before the child. This will
+             *                          be null for the first child node of a location.
+             */
+            @Override
+            public void onChildChanged(DataSnapshot snapshot, String previousChildName) {
+
+            }
+
+            /**
+             * This method is triggered when a child is removed from the location to which this listener was
+             * added.
+             *
+             * @param snapshot An immutable snapshot of the data at the child that was removed.
+             */
+            @Override
+            public void onChildRemoved(DataSnapshot snapshot) {
+
+            }
+
+            /**
+             * This method is triggered when a child location's priority changes. See {@link
+             * DatabaseReference#setPriorityAsync(Object)} and <a
+             * href="https://firebase.google.com/docs/database/android/retrieve-data#data_order"
+             * target="_blank">Ordered Data</a> for more information on priorities and ordering data.
+             *
+             * @param snapshot          An immutable snapshot of the data at the location that moved.
+             * @param previousChildName The key name of the sibling location ordered before the child
+             *                          location. This will be null if this location is ordered first.
+             */
+            @Override
+            public void onChildMoved(DataSnapshot snapshot, String previousChildName) {
+
+            }
+
+            /**
+             * This method will be triggered in the event that this listener either failed at the server, or
+             * is removed as a result of the security and Firebase rules. For more information on securing
+             * your data, see: <a href="https://firebase.google.com/docs/database/security/quickstart"
+             * target="_blank"> Security Quickstart</a>
+             *
+             * @param error A description of the error that occurred
+             */
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.out.println("Error listening to message test: " + error.getMessage());
             }
         });
     }

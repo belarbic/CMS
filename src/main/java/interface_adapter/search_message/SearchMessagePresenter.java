@@ -55,4 +55,16 @@ public class SearchMessagePresenter implements SearchMessageOutputBoundary {
         this.searchMessageViewModel.setState(searchMessageState);
         this.searchMessageViewModel.firePropertyChanged();
     }
+
+    @Override
+    public void switchToLoggedInView() {
+        viewManagerModel.setState(searchMessageViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void switchToSearchMessageView() {
+        viewManagerModel.setState(searchMessageViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
 }

@@ -3,6 +3,7 @@ package interface_adapter.view_chatrooms;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.chat_room.ChatRoomViewModel;
 import use_case.view_chatrooms.ViewChatRoomsOutputBoundary;
 import use_case.view_chatrooms.ViewChatRoomsOutputData;
 
@@ -14,13 +15,15 @@ public class ViewChatRoomsPresenter implements ViewChatRoomsOutputBoundary {
     private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
     private final ViewChatRoomsViewModel viewChatRoomsViewModel;
+    private final ChatRoomViewModel chatRoomViewModel;
 
     public ViewChatRoomsPresenter(ViewManagerModel viewManagerModel,
                                    LoggedInViewModel loggedInViewModel,
-                                  ViewChatRoomsViewModel viewChatRoomsViewModel) {
+                                  ViewChatRoomsViewModel viewChatRoomsViewModel, ChatRoomViewModel chatRoomViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.viewChatRoomsViewModel = viewChatRoomsViewModel;
+        this.chatRoomViewModel = chatRoomViewModel;
     }
 
     @Override
@@ -54,6 +57,12 @@ public class ViewChatRoomsPresenter implements ViewChatRoomsOutputBoundary {
     @Override
     public void switchToLoggedInView() {
         viewManagerModel.setState(loggedInViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void openChatRoom() {
+        viewManagerModel.setState(chatRoomViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

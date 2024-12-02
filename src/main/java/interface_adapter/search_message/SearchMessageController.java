@@ -29,4 +29,10 @@ public class SearchMessageController {
 
         searchMessageUseCaseInteractor.execute(searchMessageInputData);
     }
+    public void switchToLoggedInView() {
+        searchMessageUseCaseInteractor.switchToLoggedInView();
+    }
+    public void switchToSearchMessageView() {
+        searchMessageUseCaseInteractor.switchToSearchMessageView();
+    }
 }

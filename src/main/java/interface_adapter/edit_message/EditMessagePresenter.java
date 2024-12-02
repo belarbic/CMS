@@ -55,4 +55,15 @@ public class EditMessagePresenter implements EditMessageOutputBoundary {
         this.editMessageViewModel.setState(editMessageState);
         this.editMessageViewModel.firePropertyChanged();
     }
+    @Override
+    public void switchToLoggedInView() {
+        viewManagerModel.setState(editMessageViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void switchToEditMessageView() {
+        viewManagerModel.setState(editMessageViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
 }

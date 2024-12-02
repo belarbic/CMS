@@ -9,4 +9,9 @@ public interface EditMessageInputBoundary {
      * @param editMessageInputData the input data
      */
     void execute(EditMessageInputData editMessageInputData);
+
+    void switchToLoggedInView();
+
+    void switchToEditMessageView();
+
 }

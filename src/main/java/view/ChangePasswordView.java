@@ -8,29 +8,36 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import interface_adapter.change_password.ChangePasswordController;
+import interface_adapter.change_password.ChangePasswordViewModel;
+import interface_adapter.chat_room.ChatRoomController;
+import interface_adapter.edit_message.EditMessageViewModel;
 
 /**
  * The View for changing the password.
  */
 public class ChangePasswordView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private final ChangePasswordController changePasswordController;
+    private ChangePasswordController changePasswordController;
+    private ChangePasswordViewModel changePasswordViewModel;
 
     private JTextField usernameField;
     private JPasswordField oldPasswordField;
     private JPasswordField newPasswordField;
     private JButton submitButton;
     private JButton cancelButton;
+    private final String viewName = "Change Password";
 
-    public ChangePasswordView(ChangePasswordController changePasswordController) {
-        this.changePasswordController = changePasswordController;
+    public ChangePasswordView(ChangePasswordViewModel changePasswordViewModel) {
+        this.changePasswordViewModel = changePasswordViewModel;
+        this.changePasswordViewModel.addPropertyChangeListener(this);
+
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Title styling
-        JLabel title = new JLabel("hello");
-        title.setFont(new Font("Arial", Font.BOLD, 24));
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        final JLabel title = new JLabel("Change Password");
+        title.setFont(new Font("Roboto", Font.BOLD, 28));  // Set font size and bold
+        title.setAlignmentX(Component.CENTER_ALIGNMENT); // Center title alignment
         add(title);
 
         // Space between title and form
@@ -52,6 +59,7 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
 
         // New Password Field
         JLabel newPasswordLabel = new JLabel("New Password:");
+
         newPasswordLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         newPasswordField = new JPasswordField(20);
         add(newPasswordLabel);
@@ -63,6 +71,12 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
         submitButton.addActionListener(this);
         cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(this);
+
+        cancelButton.addActionListener(evt -> {
+            if (evt.getSource().equals(cancelButton)) {
+                changePasswordController.switchToChangePasswordView();
+            }
+        });  // Action listener for the button
 
         buttonsPanel.add(submitButton);
         buttonsPanel.add(cancelButton);
@@ -101,6 +115,9 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+    }
+    public String getViewName() {
+        return viewName;
     }
 }
 

@@ -1,19 +1,13 @@
 
 package view;
 
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.*;
 
 import interface_adapter.edit_message.EditMessageController;
 import interface_adapter.edit_message.EditMessageState;
@@ -30,7 +24,7 @@ public class EditMessageView extends JPanel implements ActionListener, PropertyC
     static final int WIDTH = 400;
     static final int HEIGHT = 300;
 
-    private final String viewName = "edit message";
+    private final String viewName = "Edit Message";
     private final EditMessageViewModel editMessageViewModel;
 
     private final JLabel timestampLabel = new JLabel();
@@ -51,43 +45,75 @@ public class EditMessageView extends JPanel implements ActionListener, PropertyC
         this.editMessageViewModel = editMessageViewModel;
         this.editMessageViewModel.addPropertyChangeListener(this);
 
-        // Main title
-        final JLabel title = new JLabel("Edit Message Screen");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Title label styling and alignment
+        final JLabel title = new JLabel("Edit Message");
+        title.setFont(new Font("Roboto", Font.BOLD, 24));  // Set font size and bold
+        title.setAlignmentX(Component.CENTER_ALIGNMENT); // Center title alignment
 
         // Original message panel
         final JPanel originalMessagePanel = new JPanel();
         originalMessagePanel.setLayout(new BoxLayout(originalMessagePanel, BoxLayout.Y_AXIS));
         originalMessagePanel.setBorder(BorderFactory.createTitledBorder("Original Message"));
+        originalMessagePanel.setPreferredSize(new Dimension(350, 200)); // Set a smaller size
 
+// Message header panel
         final JPanel messageHeaderPanel = new JPanel();
+        messageHeaderPanel.setLayout(new BoxLayout(messageHeaderPanel, BoxLayout.X_AXIS)); // Align horizontally
         messageHeaderPanel.add(timestampLabel);
         messageHeaderPanel.add(senderLabel);
 
+// Original message area setup
         originalMessageArea.setEditable(false);
         originalMessageArea.setLineWrap(true);
         originalMessageArea.setWrapStyleWord(true);
-
+        originalMessageArea.setPreferredSize(new Dimension(300, 100)); // Smaller area size
+        originalMessageArea.setBackground(new Color(245, 245, 245)); // Optional: set a different background color
         originalMessagePanel.add(messageHeaderPanel);
-        originalMessagePanel.add(originalMessageArea);
+        originalMessagePanel.add(new JScrollPane(originalMessageArea));
 
-        // Edit panel
+// Edit panel
         final JPanel editPanel = new JPanel();
         editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
         editPanel.setBorder(BorderFactory.createTitledBorder("New Message"));
+        editPanel.setPreferredSize(new Dimension(350, 150)); // Set a smaller size
 
+// Content input area setup
         contentInputArea.setLineWrap(true);
         contentInputArea.setWrapStyleWord(true);
         contentInputArea.setBorder(BorderFactory.createEmptyBorder(EDIT_BORDER, EDIT_BORDER, EDIT_BORDER, EDIT_BORDER));
+        contentInputArea.setPreferredSize(new Dimension(300, 100)); // Smaller area size
         editPanel.add(contentInputArea);
 
-        // Buttons panel
+// Buttons panel
         final JPanel buttons = new JPanel();
-        save = new JButton("Save Changes");
-        buttons.add(save);
-        cancel = new JButton("Cancel");
-        buttons.add(cancel);
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS)); // Align buttons horizontally
+        buttons.setPreferredSize(new Dimension(350, 50)); // Smaller button panel
 
+// Save button
+        save = new JButton("Search Messages");
+        save.setFont(new Font("Segoe UI", Font.BOLD, 14)); // Modern, bold font
+        save.setPreferredSize(new Dimension(150, 40)); // Smaller button width
+        save.setFocusPainted(false); // Remove focus border
+        save.setBackground(new Color(92, 184, 92)); // Light green color for the search button
+        save.setForeground(Color.WHITE); // White text
+        save.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Pointer cursor on hover
+        buttons.add(save);
+
+// Cancel button
+        buttons.add(Box.createHorizontalStrut(20));
+
+        cancel = new JButton("Cancel");
+        cancel.setFont(new Font("Segoe UI", Font.BOLD, 14)); // Modern, bold font
+        cancel.setPreferredSize(new Dimension(150, 40)); // Smaller button width
+        cancel.setFocusPainted(false); // Remove focus border
+        cancel.setBackground(new Color(255, 92, 92)); // Light red color for 'Cancel' button
+        cancel.setForeground(Color.WHITE); // White text
+        cancel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Pointer cursor on hover
+        buttons.add(cancel);
+// Adjust button spacing
+        buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+// Panel setup: Adjust layout for overall form
         save.addActionListener(
                 evt -> {
                     if (evt.getSource().equals(save)) {
@@ -101,7 +127,13 @@ public class EditMessageView extends JPanel implements ActionListener, PropertyC
                 }
         );
 
-        cancel.addActionListener(this);
+//        cancel.addActionListener(this);
+
+        cancel.addActionListener(evt -> {
+            if (evt.getSource().equals(cancel)) {
+                editMessageController.switchToLoggedInView();
+            }
+        });  // Action listener for the button
 
         // Error message
         editErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -156,13 +188,5 @@ public class EditMessageView extends JPanel implements ActionListener, PropertyC
      */
     public String getViewName() {
         return viewName;
-    }
-
-    /**
-     * Sets the edit message controller.
-     * @param controller the controller to set
-     */
-    public void setEditMessageController(EditMessageController controller) {
-        this.editMessageController = controller;
     }
 }

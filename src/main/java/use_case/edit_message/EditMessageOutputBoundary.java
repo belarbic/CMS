@@ -15,4 +15,9 @@ public interface EditMessageOutputBoundary {
      * @param error the error message
      */
     void prepareFailView(String error);
+
+    void switchToLoggedInView();
+
+    void switchToEditMessageView();
+
 }

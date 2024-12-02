@@ -8,7 +8,6 @@ import use_case.edit_message.EditMessageInputData;
  * The controller for the Edit Message Use Case.
  */
 public class EditMessageController {
-
     private final EditMessageInputBoundary editMessageUseCaseInteractor;
 
     /**
@@ -29,6 +28,12 @@ public class EditMessageController {
         final EditMessageInputData editMessageInputData = new EditMessageInputData(messageId, newContent, username);
 
         editMessageUseCaseInteractor.execute(editMessageInputData);
+    }
+    public void switchToLoggedInView() {
+        editMessageUseCaseInteractor.switchToLoggedInView();
+    }
+    public void switchToEditMessageView() {
+        editMessageUseCaseInteractor.switchToEditMessageView();
     }
 }
 

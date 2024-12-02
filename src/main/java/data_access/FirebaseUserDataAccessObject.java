@@ -6,6 +6,7 @@ import entity.ConcreteUser;
 import entity.Message;
 import entity.User;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
+import use_case.chat_room.ChatRoomUserDataAccessInterface;
 import use_case.create_chatroom.CreateChatRoomUserDataAccessInterface;
 import use_case.edit_message.EditMessageUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
@@ -14,6 +15,8 @@ import use_case.search_message.SearchMessageUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 import use_case.view_chatrooms.ViewChatRoomsUserDataAccessInterface;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterface,
@@ -21,6 +24,7 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface,
         CreateChatRoomUserDataAccessInterface,
+        ChatRoomUserDataAccessInterface,
         ViewChatRoomsUserDataAccessInterface,
         SearchMessageUserDataAccessInterface,
         EditMessageUserDataAccessInterface {
@@ -316,4 +320,5 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
     public void saveUid(String username, String uid) {
         usersRef.child(username).child("uid").setValueAsync(uid);
     }
+
 }
