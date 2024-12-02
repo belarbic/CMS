@@ -19,7 +19,7 @@ This is a great program for users to be able to communicate with friends virtual
 
 To access most of the following features, 
 When you run the app, log in or sign up, until you are on the logged in screen below
-[img_3.png](img_3.png)
+![img_3.png](img_3.png)
 
 ***
 
@@ -29,7 +29,7 @@ This feature allows the user to create chatrooms and add other participants.
 From the logged in view, click on the create chatroom button, which will lead you to the screen below.
 Choose a name for your chatroom, add participants and you can add an optional first message! Then click create.
 
-![img_4.png](img_4.png)
+![img_11.png](img_11.png)
 
 Now, you can access your chatroom from the view chatrooms screen.
 
@@ -39,7 +39,7 @@ Now, you can access your chatroom from the view chatrooms screen.
 This feature allows the user to see the chatrooms they are a part of and to join a chatroom.
 
 From the logged in view, click on the view chatrooms button, which will lead you to the screen below.
-![img_5.png](img_5.png)
+![img_12.png](img_12.png)
 
 Here, you can see all the chatrooms you are a part of and can click on any of them to join them.
 
@@ -68,6 +68,7 @@ Now you have the program downloaded!
 #### Notes:
 - Make sure to have the latest version of IntelliJ
 - Use openjdk-22 version of Java
+- On the Mac OS the colours on the buttons aren't visible so it'll be white
 
 ***
 
@@ -78,18 +79,18 @@ Once the application is installed and running, follow the steps below to start u
 ### To Sign Up:
 1. Enter a valid **username** and **password**.
 
-![img_6.png](img_6.png)
+![img_5.png](img_5.png)
 2. Click on the **Sign Up** button.
 3. From the login screen, re-enter your username and password to access the logged in screen.
 
-![img_7.png](img_7.png)
-![img_8.png](img_8.png)
 
+![img_7.png](img_7.png)
+![img_3.png](img_3.png)
 ### To Send a Message:
 1. Log in with your credentials.
 2. Navigate to an existing chat room or create a new one.
 
-![img_9.png](img_9.png)
+![img_12.png](img_12.png)
 3. Type your message in the input field and press **Send**.
 
 ![img_10.png](img_10.png)
