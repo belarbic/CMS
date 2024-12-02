@@ -27,8 +27,10 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
 
     private final JTextArea messageArea;
     private final JTextField inputField;
+    private final JButton reloadChat;
     private final JButton sendButton;
     private final JButton backButton;
+    private boolean isListenerAdded = false;
 
     private final String viewName = "Chatroom";
     private final ChatRoomViewModel chatRoomViewModel;
@@ -61,6 +63,17 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
         inputField.setFont(new Font("Segoe UI", Font.PLAIN, 16)); // Plain font for errors
         inputField.setForeground(new Color(0, 0, 0)); // Red color for error messages
         inputField.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        reloadChat = new JButton("Reload Chat");
+        reloadChat.setFont(new Font("Segoe UI", Font.BOLD, 14)); // Modern, bold font for the button
+        reloadChat.setPreferredSize(new Dimension(150, 40)); // Smaller button width (150px)
+        reloadChat.setMaximumSize(new Dimension(150, 40));  // Limit width to 150px
+        reloadChat.setFocusPainted(false);  // Remove focus border
+        reloadChat.setBackground(new Color(255, 255, 255));  // Light red color for 'Back' button
+        reloadChat.setForeground(Color.BLACK); // White text color
+        reloadChat.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Padding inside the button
+        reloadChat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Pointer cursor on hover
+
         sendButton = new JButton("Send");
         sendButton.setFont(new Font("Segoe UI", Font.BOLD, 14)); // Modern, bold font for the button
         sendButton.setPreferredSize(new Dimension(150, 40)); // Smaller button width (150px)
@@ -80,20 +93,32 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
         backButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Padding inside the button
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Pointer cursor on hover
         inputPanel.add(inputField, BorderLayout.CENTER);
+        inputPanel.add(reloadChat, BorderLayout.PAGE_START);
         inputPanel.add(sendButton, BorderLayout.EAST);
         inputPanel.add(backButton, BorderLayout.WEST);
         add(inputPanel, BorderLayout.SOUTH);
+
+        reloadChat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                messageArea.setText("");
+                isListenerAdded = false;
+                refreshMessages();
+            }
+        });
 
         // Add action listener for sending messages
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sendMessage();
+                isListenerAdded = false;
                 refreshMessages();
             }
         });
         backButton.addActionListener(evt -> {
             if (evt.getSource().equals(backButton)) {
+                messageArea.setText("");
                 chatRoomController.switchToLoggedInView();
             }
         });  // Action listener for the button
@@ -205,12 +230,14 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
 //                messageArea.append(messageEntry.getKey() + ": " + messageEntry.getValue().getContent() + "\n");
 //            }
 //        });
-        chatService.addMessageListener(chatRoomName, newMessage -> {
-            SwingUtilities.invokeLater(() -> {
-                messageArea.append(newMessage.getSender() + ": " + newMessage.getContent() + "\n");
+        if (!isListenerAdded) {
+            chatService.addMessageListener(chatRoomName, newMessage -> {
+                SwingUtilities.invokeLater(() -> {
+                    messageArea.append(newMessage.getSender() + ": " + newMessage.getContent() + "\n");
+                });
             });
-
-        });
+            isListenerAdded = true;
+        }
     }
 
     /**
