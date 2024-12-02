@@ -103,8 +103,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             searchMessages = createButton("Search Messages", new Color(34, 193, 195), Color.WHITE);
             buttons.add(searchMessages);
 
+
             editMessage = createButton("Edit Message", new Color(34, 193, 195), Color.WHITE);
             buttons.add(editMessage);
+
+
 
             // Action listeners for each button, triggering the appropriate controller actions
             logOut.addActionListener(evt -> {

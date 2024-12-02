@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
@@ -174,9 +175,11 @@ public class ChatRoomScreenView extends JFrame implements MessageView {
      * Refreshes the messages displayed in the chatroom.
      */
     private void refreshMessages() {
-        List<String> messages = chatRoom.getMessages().stream()
-                .map(message -> message.getSender() + ": " + message.getContent())
-                .toList();
+        List<String> messages = new ArrayList<>();
+        for (Message message : chatRoom.getMessages()) {
+            String s = message.getSender() + ": " + message.getContent();
+            messages.add(s);
+        }
         messageArea.setText(String.join("\n", messages));
     }
 

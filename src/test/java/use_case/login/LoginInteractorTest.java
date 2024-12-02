@@ -30,6 +30,11 @@ class LoginInteractorTest {
             public void prepareFailView(String error) {
                 fail("Use case failure is unexpected.");
             }
+
+            @Override
+            public void switchToSignUpView() {
+
+            }
         };
 
         LoginInputBoundary interactor = new LoginInteractor(userRepository, successPresenter);
@@ -55,6 +60,11 @@ class LoginInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 fail("Use case failure is unexpected.");
+            }
+
+            @Override
+            public void switchToSignUpView() {
+
             }
         };
 
@@ -84,6 +94,11 @@ class LoginInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("Incorrect password for \"Paul\".", error);
             }
+
+            @Override
+            public void switchToSignUpView() {
+
+            }
         };
 
         LoginInputBoundary interactor = new LoginInteractor(userRepository, failurePresenter);
@@ -104,6 +119,11 @@ class LoginInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 assertEquals("Paul: Account does not exist.", error);
+            }
+
+            @Override
+            public void switchToSignUpView() {
+
             }
         };
 
@@ -126,6 +146,11 @@ class LoginInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("Username cannot be empty.", error);
             }
+
+            @Override
+            public void switchToSignUpView() {
+
+            }
         };
 
         LoginInputBoundary interactor = new LoginInteractor(userRepository, failurePresenter);
@@ -147,6 +172,11 @@ class LoginInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("Password cannot be empty.", error);
             }
+
+            @Override
+            public void switchToSignUpView() {
+
+            }
         };
 
         LoginInputBoundary interactor = new LoginInteractor(userRepository, failurePresenter);
@@ -167,6 +197,11 @@ class LoginInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 assertTrue(error.equals("Username cannot be empty.") || error.equals("Password cannot be empty."));
+            }
+
+            @Override
+            public void switchToSignUpView() {
+
             }
         };
 
@@ -195,6 +230,11 @@ class LoginInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("Incorrect password for \"Paul\".", error);
             }
+
+            @Override
+            public void switchToSignUpView() {
+
+            }
         });
 
         interactor.execute(inputData);
@@ -213,6 +253,11 @@ class LoginInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 assertTrue(error.contains("Username cannot be empty"));
+            }
+
+            @Override
+            public void switchToSignUpView() {
+
             }
         };
 
@@ -234,6 +279,11 @@ class LoginInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("Username cannot be empty.", error);
             }
+
+            @Override
+            public void switchToSignUpView() {
+
+            }
         };
 
         LoginInputBoundary interactor = new LoginInteractor(userRepository, failurePresenter);
@@ -253,6 +303,11 @@ class LoginInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 assertEquals("Password cannot be empty.", error);
+            }
+
+            @Override
+            public void switchToSignUpView() {
+
             }
         };
 
@@ -277,6 +332,11 @@ class LoginInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 assertEquals("Incorrect password for \"Paul\".", error);
+            }
+
+            @Override
+            public void switchToSignUpView() {
+
             }
         };
 
@@ -304,6 +364,11 @@ class LoginInteractorTest {
             public void prepareFailView(String error) {
                 fail("Unexpected failure: " + error);
             }
+
+            @Override
+            public void switchToSignUpView() {
+
+            }
         };
 
         LoginInputBoundary interactor = new LoginInteractor(userRepository, successPresenter);
@@ -319,6 +384,11 @@ class LoginInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 assertEquals("Incorrect password for \"Paul\".", error);
+            }
+
+            @Override
+            public void switchToSignUpView() {
+
             }
         };
 
@@ -344,6 +414,11 @@ class LoginInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 fail("Unexpected failure: " + error);
+            }
+
+            @Override
+            public void switchToSignUpView() {
+
             }
         });
 
@@ -373,6 +448,11 @@ class LoginInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 fail("Unexpected failure: " + error);  // Fail if we reach this point unexpectedly
+            }
+
+            @Override
+            public void switchToSignUpView() {
+
             }
         });
 
