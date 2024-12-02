@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.*;
 
@@ -16,6 +17,7 @@ import entity.User;
 import interface_adapter.delete_message.DeleteMessageController;
 import interface_adapter.delete_message.DeleteMessagePresenter;
 import interface_adapter.delete_message.DeleteMessageViewModel;
+import interface_adapter.search_message.SearchMessageController;
 import interface_adapter.send_message.SendMessageController;
 import interface_adapter.send_message.SendMessagePresenter;
 import interface_adapter.send_message.SendMessageViewModel;
@@ -31,6 +33,8 @@ public class ChatRoomScreenView extends JFrame implements MessageView {
     private final JTextArea messageArea;
     private final JTextField inputField;
     private final JButton sendButton;
+    private final JTextField searchField;
+    private final JButton searchButton;
 
     private final ChatRoom chatRoom;
     private final User currentUser;
@@ -42,11 +46,13 @@ public class ChatRoomScreenView extends JFrame implements MessageView {
 
     private final SendMessagePresenter sendMessagePresenter;
     private final DeleteMessagePresenter deleteMessagePresenter;
+    private final SearchMessageController searchMessageController;
 
     public ChatRoomScreenView(ChatRoom chatRoom,
                               User currentUser,
                               SendMessageController sendMessageController,
                               DeleteMessageController deleteMessageController,
+                              SearchMessageController searchMessageController,
                               SendMessagePresenter sendMessagePresenter,
                               DeleteMessagePresenter deleteMessagePresenter,
                               SendMessageViewModel sendMessageViewModel,
@@ -55,6 +61,7 @@ public class ChatRoomScreenView extends JFrame implements MessageView {
         this.currentUser = currentUser;
         this.sendMessageController = sendMessageController;
         this.deleteMessageController = deleteMessageController;
+        this.searchMessageController = searchMessageController;
         this.sendMessagePresenter = sendMessagePresenter;
         this.deleteMessagePresenter = deleteMessagePresenter;
         this.sendMessageViewModel = sendMessageViewModel;
@@ -65,6 +72,14 @@ public class ChatRoomScreenView extends JFrame implements MessageView {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(J_FRAME_WIDTH, J_FRAME_HEIGHT);
         setLayout(new BorderLayout());
+
+        // Search panel
+        JPanel searchPanel = new JPanel(new BorderLayout());
+        searchField = new JTextField();
+        searchButton = new JButton("Search");
+        searchPanel.add(searchField, BorderLayout.CENTER);
+        searchPanel.add(searchButton, BorderLayout.EAST);
+        add(searchPanel, BorderLayout.NORTH);
 
         // Message display area
         messageArea = new JTextArea();
@@ -90,8 +105,13 @@ public class ChatRoomScreenView extends JFrame implements MessageView {
             }
         });
 
-        // Load initial messages
-        refreshMessages();
+        // Add action listener for searching messages
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchMessages();
+            }
+        });
 
         setVisible(true);
     }
@@ -107,6 +127,19 @@ public class ChatRoomScreenView extends JFrame implements MessageView {
             refreshMessages(); // Refresh the view after sending a message
         } else {
             sendMessagePresenter.presentFailView("Message cannot be empty!");
+        }
+    }
+
+    /**
+     * Searches messages by content and updates the message area with filtered results.
+     */
+    private void searchMessages() {
+        String query = searchField.getText().trim();
+        if (!query.isEmpty()) {
+            // Delegate the search to the controller
+            searchMessageController.execute(query, currentUser.getName());
+        } else {
+            refreshMessages(); // Reset to show all messages
         }
     }
 
@@ -168,7 +201,7 @@ public class ChatRoomScreenView extends JFrame implements MessageView {
      */
     private void deleteMessage(String messageId) {
         deleteMessageController.execute(messageId, chatRoom.getName());
-        refreshMessages(); // Refresh the view after deleting the message
+        refreshMessages();
     }
 
     /**
