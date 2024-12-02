@@ -21,60 +21,115 @@ import interface_adapter.view_chatrooms.ViewChatRoomsViewModel;
 public class ViewChatRoomsView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName = "View Chatrooms";
-    private final ViewChatRoomsViewModel viewChatRoomsViewModel;
     private final JList<String> chatRoomList;
     private final JButton cancel;
     private ViewChatRoomsController viewChatRoomsController;
     private ChatRoomController chatRoomController;
 
     public ViewChatRoomsView(ViewChatRoomsViewModel viewChatRoomsViewModel) {
-        this.viewChatRoomsViewModel = viewChatRoomsViewModel;
-        this.viewChatRoomsViewModel.addPropertyChangeListener(this);
-
         // Title styling
         final JLabel title = new JLabel("View Chatrooms");
-        title.setFont(new Font("Arial", Font.BOLD, 24));  // Set font size and bold
+        title.setFont(new Font("Segoe UI", Font.BOLD, 28));  // Modern font with bold style
+        title.setForeground(new Color(40, 40, 40));  // Dark gray for text color
         title.setAlignmentX(Component.CENTER_ALIGNMENT); // Center title alignment
-        this.add(Box.createVerticalStrut(50)); // Adds space below the title
+        this.add(Box.createVerticalStrut(40)); // Adds space below the title
 
-        // Welcome statement styling
-        final JLabel welcomeStatement = new JLabel("Here are the chatrooms you're a part of:");
-        welcomeStatement.setFont(new Font("Arial", Font.BOLD, 16));  // Set font size and bold
+// Welcome statement styling
+        final JLabel welcomeStatement = new JLabel("Select a chatroom you're a part of:");
+        welcomeStatement.setFont(new Font("Segoe UI", Font.PLAIN, 16));  // Lighter font for readability
+        welcomeStatement.setForeground(new Color(100, 100, 100));  // Muted gray for the welcome message
         welcomeStatement.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment for text
         this.add(welcomeStatement);
 
-        // Add vertical space between welcome statement and back button
-        this.add(Box.createVerticalStrut(30));  // Adds 30 pixels of space between the two components
+// Add vertical space between welcome statement and chatroom list
+        this.add(Box.createVerticalStrut(-40));  // Adds 20 pixels of space
 
+// Chatroom list setup
         chatRoomList = new JList<>(new DefaultListModel<>());
-        chatRoomList.setFont(new Font("Arial", Font.PLAIN, 16));
+        chatRoomList.setFont(new Font("Segoe UI", Font.PLAIN, 16));  // Modern font
         chatRoomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         chatRoomList.setLayoutOrientation(JList.VERTICAL);
         chatRoomList.setVisibleRowCount(-1);
+        chatRoomList.setBackground(Color.WHITE);  // White background for the list
+        chatRoomList.setBorder(BorderFactory.createEmptyBorder(-40, 10, -40, 10)); // Padding inside the list
+
+        // Modern Scroll Pane
         JScrollPane chatRoomListScrollPane = new JScrollPane(chatRoomList);
-        chatRoomListScrollPane.setPreferredSize(new Dimension(80, 200));
+        chatRoomListScrollPane.setPreferredSize(new Dimension(300, 200));  // Set smaller dimensions for the scroll pane
+        chatRoomListScrollPane.setMinimumSize(new Dimension(300, 150));  // Minimum size to prevent it from shrinking too much
+        chatRoomListScrollPane.setMaximumSize(new Dimension(500, 200));  // Maximum size for flexibility
+        this.add(Box.createVerticalStrut(70));
+        chatRoomListScrollPane.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200), 1),  // Light gray border
+                BorderFactory.createEmptyBorder(5, 5, 5, 5) // Padding inside the scroll pane
+        ));
+
+// Modern Scrollbar Customization
+        chatRoomListScrollPane.getVerticalScrollBar().setUI(new javax.swing.plaf.basic.BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = new Color(180, 180, 180);  // Light gray color for the thumb
+                this.trackColor = new Color(240, 240, 240);  // Light background for the track
+            }
+
+            @Override
+            protected JButton createDecreaseButton(int orientation) {
+                JButton button = super.createDecreaseButton(orientation);
+                button.setBackground(new Color(240, 240, 240));  // Light background for the button
+                button.setPreferredSize(new Dimension(0, 0));  // Make it invisible (optional)
+                return button;
+            }
+
+            @Override
+            protected JButton createIncreaseButton(int orientation) {
+                JButton button = super.createIncreaseButton(orientation);
+                button.setBackground(new Color(240, 240, 240));  // Light background for the button
+                button.setPreferredSize(new Dimension(0, 0));  // Make it invisible (optional)
+                return button;
+            }
+        });
 
         chatRoomList.addListSelectionListener(e -> {
             if (e.getValueIsAdjusting() && chatRoomList.getSelectedValue() != null) {
                 String selectedValue = (String) chatRoomList.getSelectedValue();
                 System.out.println("Selected chat room: " + selectedValue);
-//                viewChatRoomsController.openChatRoom();
+                // Action when a chat room is selected
                 chatRoomController.execute(selectedValue, "hello");
-
             }
         });
-        getChatRoomList();
-        this.add(Box.createVerticalStrut(30));  // Adds 30 pixels of space between the two components
-        // Button panel
+
+        getChatRoomList(); // Method to populate the chatroom list
+        this.add(chatRoomListScrollPane);
+
+// Add vertical space between the chat room list and button panel (adjusted)
+        this.add(Box.createVerticalStrut(10));  // Adds 10 pixels of space instead of 30
+
+// Button panel setup
         final JPanel buttons = new JPanel();
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+        buttons.setBackground(new Color(240, 240, 240));  // Light background for the button panel
+
         cancel = new JButton("Back");
-        cancel.setFont(new Font("Arial", Font.PLAIN, 14)); // Consistent font for the button
-        cancel.setPreferredSize(new Dimension(200, 40)); // Set button size
-        cancel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));  // Allow horizontal expansion
+        cancel.setFont(new Font("Segoe UI", Font.BOLD, 14)); // Modern, bold font for the button
+        cancel.setPreferredSize(new Dimension(150, 40)); // Smaller button width (150px)
+        cancel.setMaximumSize(new Dimension(150, 40));  // Limit width to 150px
         cancel.setFocusPainted(false);  // Remove focus border
         cancel.setBackground(new Color(255, 92, 92));  // Light red color for 'Back' button
         cancel.setForeground(Color.WHITE); // White text color
-        buttons.add(cancel);
+        cancel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Padding inside the button
+        cancel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Pointer cursor on hover
+
+// Hover effect for the button
+        cancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cancel.setBackground(new Color(255, 70, 70));  // Darker red on hover
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cancel.setBackground(new Color(255, 92, 92));  // Original color
+            }
+        });
+
+        buttons.add(cancel); // Add button to the panel
 
         cancel.addActionListener(evt -> {
             if (evt.getSource().equals(cancel)) {
@@ -82,14 +137,18 @@ public class ViewChatRoomsView extends JPanel implements ActionListener, Propert
             }
         });  // Action listener for the button
 
-        // Layout the main panel
+// Layout the main panel
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        // Add components to the main panel
+// Add components to the main panel
         this.add(title);
+        this.add(Box.createVerticalStrut(40));
         this.add(welcomeStatement);
+        this.add(Box.createVerticalStrut(10));
         this.add(chatRoomListScrollPane);
+        this.add(Box.createVerticalStrut(20));
         this.add(buttons);
+        this.add(Box.createVerticalStrut(10));
     }
 
     /**
