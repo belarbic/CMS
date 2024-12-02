@@ -1,5 +1,6 @@
 package interface_adapter.chat_room;
 
+import entity.ChatRoom;
 import use_case.chat_room.ChatRoomInputBoundary;
 import use_case.chat_room.ChatRoomInputData;
 
@@ -26,6 +27,9 @@ public class ChatRoomController {
     }
     public void switchToLoggedInView() {
         chatRoomUseCaseInteractor.switchToLoggedInView();
+    }
+    public void loadMessages(String chatRoomName) {
+        chatRoomUseCaseInteractor.loadMessages(chatRoomName);
     }
 }
 

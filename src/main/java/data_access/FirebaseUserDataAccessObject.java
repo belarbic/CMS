@@ -15,6 +15,8 @@ import use_case.search_message.SearchMessageUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 import use_case.view_chatrooms.ViewChatRoomsUserDataAccessInterface;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterface,
@@ -318,4 +320,5 @@ public class FirebaseUserDataAccessObject implements SignupUserDataAccessInterfa
     public void saveUid(String username, String uid) {
         usersRef.child(username).child("uid").setValueAsync(uid);
     }
+
 }

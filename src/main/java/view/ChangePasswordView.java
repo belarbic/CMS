@@ -71,6 +71,12 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
         cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(this);
 
+        cancelButton.addActionListener(evt -> {
+            if (evt.getSource().equals(cancelButton)) {
+                changePasswordController.switchToChangePasswordView();
+            }
+        });  // Action listener for the button
+
         buttonsPanel.add(submitButton);
         buttonsPanel.add(cancelButton);
         add(buttonsPanel);

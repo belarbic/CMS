@@ -17,6 +17,9 @@ public class ChatRoomInteractor implements ChatRoomInputBoundary {
         final String name = chatRoomInputData.getName();
         final String firstMessage = chatRoomInputData.getFirstMessage();
 
+        ChatService chatService = new ChatService();
+        chatService.getMessagesForChatRoom(name);
+
         if (name == null || name.isEmpty()) {
             chatRoomPresenter.prepareFailView("ChatRoom needs a name!");
             return; // Exit early if validation fails
@@ -30,5 +33,10 @@ public class ChatRoomInteractor implements ChatRoomInputBoundary {
     }
     public void switchToLoggedInView() {
         chatRoomPresenter.switchToLoggedInView();
+    }
+
+    @Override
+    public void loadMessages(String chatRoomName) {
+
     }
 }

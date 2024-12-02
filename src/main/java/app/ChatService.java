@@ -106,4 +106,30 @@ public class ChatService {
         });
         return futureChatList;
     }
+    public CompletableFuture<Map<String, Message>> getMessagesForChatRoom(String chatRoomName) {
+        CompletableFuture<Map<String, Message>> futureMessages = new CompletableFuture<>();
+        chatRef.child(chatRoomName).child("messages").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, Message> chatRoomMessages = new HashMap<>();
+                    System.out.println("Chat Room Messages: ");
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Message message = snapshot.getValue(Message.class);
+                        chatRoomMessages.put(message.getSender(), message);
+                    }
+                    futureMessages.complete(chatRoomMessages);
+                }
+                else {
+                    futureMessages.complete(new HashMap<>());
+                    System.out.println("No chat found");
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println(databaseError.getMessage());
+            }
+        });
+        return futureMessages;
+    }
 }

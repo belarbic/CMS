@@ -8,4 +8,6 @@ public interface ChatRoomInputBoundary {
     void execute(ChatRoomInputData chatRoomInputData);
 
     void switchToLoggedInView();
+
+    void loadMessages(String chatRoomName);
 }
