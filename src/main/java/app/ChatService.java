@@ -1,11 +1,16 @@
 package app;
 
-import com.google.firebase.database.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Connects to the chats node in the Firebase Realtime Database.
@@ -83,12 +88,12 @@ public class ChatService {
         });
     }
     public CompletableFuture<Map<String, Object>> getChatList() {
-        CompletableFuture<Map<String, Object>> futureChatList = new CompletableFuture<>();
+        final CompletableFuture<Map<String, Object>> futureChatList = new CompletableFuture<>();
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    Map<String, Object> chatList = (HashMap<String, Object>) dataSnapshot.getValue();
+                    final Map<String, Object> chatList = (HashMap<String, Object>) dataSnapshot.getValue();
                     System.out.println("Chat List: ");
                     for (Map.Entry<String, Object> entry : chatList.entrySet()) {
                         System.out.println(entry.getKey() + ": " + entry.getValue());
@@ -100,6 +105,7 @@ public class ChatService {
                     System.out.println("No chat found");
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println(databaseError.getMessage());
@@ -107,16 +113,17 @@ public class ChatService {
         });
         return futureChatList;
     }
+
     public CompletableFuture<Map<String, Message>> getMessagesForChatRoom(String chatRoomName) {
-        CompletableFuture<Map<String, Message>> futureMessages = new CompletableFuture<>();
-        chatRef.child(chatRoomName).child("messages").addListenerForSingleValueEvent(new ValueEventListener() {
+        final CompletableFuture<Map<String, Message>> futureMessages = new CompletableFuture<>();
+        chatRef.child(chatRoomName).child(MESSAGES).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    Map<String, Message> chatRoomMessages = new HashMap<>();
+                    final Map<String, Message> chatRoomMessages = new HashMap<>();
                     System.out.println("Chat Room Messages: ");
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Message message = snapshot.getValue(Message.class);
+                        final Message message = snapshot.getValue(Message.class);
                         chatRoomMessages.put(message.getSender(), message);
                     }
                     futureMessages.complete(chatRoomMessages);
@@ -126,6 +133,7 @@ public class ChatService {
                     System.out.println("No chat found");
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println(databaseError.getMessage());
@@ -133,8 +141,9 @@ public class ChatService {
         });
         return futureMessages;
     }
+
     public void addMessageListener(String chatRoomName, Consumer<Message> onNewMessage) {
-        chatRef.child(chatRoomName).child("messages").addChildEventListener(new ChildEventListener() {
+        chatRef.child(chatRoomName).child(MESSAGES).addChildEventListener(new ChildEventListener() {
 
             /**
              * This method is triggered when a new child is added to the location to which this listener was
@@ -146,7 +155,7 @@ public class ChatService {
              */
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
-                Message message = snapshot.getValue(Message.class);
+                final Message message = snapshot.getValue(Message.class);
                 if (message != null) {
                     onNewMessage.accept(message);
                 }

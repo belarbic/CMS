@@ -68,13 +68,13 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     }
 
     @Override
-    public ChatRoom getChatRoom() {
-        return this.chatRoom;
+    public void save(User user) {
+        users.put(user.getName(), user);
     }
 
     @Override
-    public void save(User user) {
-        users.put(user.getName(), user);
+    public ChatRoom getChatRoom() {
+        return this.chatRoom;
     }
 
     /**
