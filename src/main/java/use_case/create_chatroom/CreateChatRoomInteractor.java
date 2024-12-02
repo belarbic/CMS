@@ -25,8 +25,6 @@ public class CreateChatRoomInteractor implements CreateChatRoomInputBoundary {
             return; // Exit early if validation fails
         }
 
-//        userDataAccessObject.setName(name);
-//        userDataAccessObject.setFirstMessage(firstMessage);
         ChatService chatService = new ChatService();
         System.out.println(name);
         chatService.addMessageListener(name);

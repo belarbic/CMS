@@ -5,8 +5,6 @@ package use_case.view_chatrooms;
  */
 public class ViewChatRoomsInputData {
 
-    // private final String name;
-
     public ViewChatRoomsInputData() {
     }
 

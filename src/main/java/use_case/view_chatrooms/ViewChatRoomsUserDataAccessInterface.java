@@ -1,7 +1,5 @@
 package use_case.view_chatrooms;
 
-import entity.ChatRoom;
-
 /**
  * DAO for the Create ChatRoom Use Case.
  */
