@@ -24,7 +24,7 @@ public class EditMessageView extends JPanel implements ActionListener, PropertyC
     static final int WIDTH = 400;
     static final int HEIGHT = 300;
 
-    private final String viewName = "edit message";
+    private final String viewName = "Edit Message";
     private final EditMessageViewModel editMessageViewModel;
 
     private final JLabel timestampLabel = new JLabel();

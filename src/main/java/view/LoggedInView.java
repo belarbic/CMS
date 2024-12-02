@@ -54,14 +54,12 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JButton searchMessages;
     private SearchMessageController searchMessageController;
 
-    private final JButton testEditMessage;
+    private final JButton editMessage;
     private EditMessageController editMessageController;
 
         public LoggedInView(LoggedInViewModel loggedInViewModel) {
             this.loggedInViewModel = loggedInViewModel;
             this.loggedInViewModel.addPropertyChangeListener(this);
-
-
 
             // Title label styling and alignment
             final JLabel title = new JLabel("Welcome! ");
@@ -105,8 +103,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             searchMessages = createButton("Search Messages", new Color(34, 193, 195), Color.WHITE);
             buttons.add(searchMessages);
 
-            testEditMessage = createButton("Edit Message", new Color(34, 193, 195), Color.WHITE);
-            buttons.add(testEditMessage);
+            editMessage = createButton("Edit Message", new Color(34, 193, 195), Color.WHITE);
+            buttons.add(editMessage);
 
             // Action listeners for each button, triggering the appropriate controller actions
             logOut.addActionListener(evt -> {
@@ -138,8 +136,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 }
             });
 
-            testEditMessage.addActionListener(evt -> {
-                if (evt.getSource().equals(testEditMessage)) {
+            editMessage.addActionListener(evt -> {
+                if (evt.getSource().equals(editMessage)) {
 //                    final LoggedInState currentState = loggedInViewModel.getState();
 //                    editMessageController.execute("test-message-id", "Hello World", currentState.getUsername());
                     editMessageController.switchToEditMessageView();

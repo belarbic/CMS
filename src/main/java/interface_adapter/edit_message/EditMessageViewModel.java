@@ -12,7 +12,7 @@ public class EditMessageViewModel extends ViewModel<EditMessageState> {
      * Creates a new EditMessageViewModel.
      */
     public EditMessageViewModel() {
-        super("edit message");
+        super("Edit Message");
         setState(new EditMessageState());
     }
 }

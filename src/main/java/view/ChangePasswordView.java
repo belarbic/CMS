@@ -25,7 +25,7 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
     private JPasswordField newPasswordField;
     private JButton submitButton;
     private JButton cancelButton;
-    private final String viewName = "ChangePasswordView";
+    private final String viewName = "Change Password";
 
     public ChangePasswordView(ChangePasswordViewModel changePasswordViewModel) {
         this.changePasswordViewModel = changePasswordViewModel;

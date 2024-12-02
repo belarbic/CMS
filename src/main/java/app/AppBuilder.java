@@ -386,7 +386,7 @@ public class AppBuilder {
      * @return the application
      */
     public JFrame build() {
-        final JFrame application = new JFrame("Chat Messenger v1.0");
+        final JFrame application = new JFrame("Chat Messenger Beta");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);

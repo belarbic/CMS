@@ -46,8 +46,6 @@ public class EditMessageInteractor implements EditMessageInputBoundary {
     public void switchToEditMessageView() {
         editMessagePresenter.switchToEditMessageView();
     }
-
-    @Override
     public void switchToLoggedInView() {
         editMessagePresenter.switchToLoggedInView();
     }
