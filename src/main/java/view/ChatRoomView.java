@@ -112,7 +112,6 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
             @Override
             public void actionPerformed(ActionEvent e) {
                 sendMessage();
-                isListenerAdded = false;
                 refreshMessages();
             }
         });

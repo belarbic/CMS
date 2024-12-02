@@ -90,7 +90,7 @@ public class EditMessageView extends JPanel implements ActionListener, PropertyC
         buttons.setPreferredSize(new Dimension(350, 50)); // Smaller button panel
 
 // Save button
-        save = new JButton("Search Messages");
+        save = new JButton("Save");
         save.setFont(new Font("Segoe UI", Font.BOLD, 14)); // Modern, bold font
         save.setPreferredSize(new Dimension(150, 40)); // Smaller button width
         save.setFocusPainted(false); // Remove focus border
@@ -188,5 +188,8 @@ public class EditMessageView extends JPanel implements ActionListener, PropertyC
      */
     public String getViewName() {
         return viewName;
+    }
+    public void setEditMessageController(EditMessageController editMessageController) {
+        this.editMessageController = editMessageController;
     }
 }

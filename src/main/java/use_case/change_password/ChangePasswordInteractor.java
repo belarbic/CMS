@@ -32,4 +32,7 @@ public class ChangePasswordInteractor implements ChangePasswordInputBoundary {
     public void switchToChangePasswordView() {
         changePasswordPresenter.switchToChangePasswordView();
     }
+    public void switchToLoggedInView() {
+        changePasswordPresenter.switchToLoggedInView();
+    }
 }
