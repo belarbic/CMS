@@ -57,7 +57,7 @@ public class EditMessagePresenter implements EditMessageOutputBoundary {
     }
     @Override
     public void switchToLoggedInView() {
-        viewManagerModel.setState(editMessageViewModel.getViewName());
+        viewManagerModel.setState(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 

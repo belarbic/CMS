@@ -16,5 +16,7 @@ public interface ChangePasswordOutputBoundary {
      */
     void prepareFailView(String errorMessage);
 
+    void switchToLoggedInView();
+
     void switchToChangePasswordView();
 }

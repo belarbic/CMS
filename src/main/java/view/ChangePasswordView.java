@@ -74,7 +74,7 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
 
         cancelButton.addActionListener(evt -> {
             if (evt.getSource().equals(cancelButton)) {
-                changePasswordController.switchToChangePasswordView();
+                changePasswordController.switchToLoggedInView();
             }
         });  // Action listener for the button
 
@@ -102,7 +102,7 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
             JOptionPane.showMessageDialog(this, "Password changed successfully!");
         } else if (actionCommand.equals("Cancel")) {
             // Handle cancel action (e.g., go back to the previous screen)
-            JOptionPane.showMessageDialog(this, "Password change canceled.");
+//            JOptionPane.showMessageDialog(this, "Password change canceled.");
         }
     }
 
@@ -118,6 +118,9 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
     }
     public String getViewName() {
         return viewName;
+    }
+    public void setChangePasswordController(ChangePasswordController changePasswordController) {
+        this.changePasswordController = changePasswordController;
     }
 }
 

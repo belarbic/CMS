@@ -342,6 +342,7 @@ public class AppBuilder {
                 editMessageInteractor);
 
         loggedInView.setEditMessageController(editMessageController);
+        editMessageView.setEditMessageController(editMessageController);
         return this;
     }
 
@@ -360,6 +361,7 @@ public class AppBuilder {
         final ChangePasswordController changePasswordController =
                 new ChangePasswordController(changePasswordInteractor);
         loggedInView.setChangePasswordController(changePasswordController);
+        changePasswordView.setChangePasswordController(changePasswordController);
         return this;
     }
 
