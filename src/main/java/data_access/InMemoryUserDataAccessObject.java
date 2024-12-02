@@ -14,6 +14,8 @@ import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.search_message.SearchMessageUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 import use_case.view_chatrooms.ViewChatRoomsUserDataAccessInterface;
+import use_case.send_message.SendMessageUserDataAccessInterface;
+import use_case.delete_message.DeleteMessageUserDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing user data. This implementation does
@@ -26,7 +28,9 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         CreateChatRoomUserDataAccessInterface,
         ViewChatRoomsUserDataAccessInterface,
         SearchMessageUserDataAccessInterface,
-        EditMessageUserDataAccessInterface {
+        EditMessageUserDataAccessInterface,
+        SendMessageUserDataAccessInterface,
+        DeleteMessageUserDataAccessInterface{
 
     private final Map<String, User> users = new HashMap<>();
     private final Map<String, ChatRoom> chatRooms = new HashMap<>();
@@ -142,5 +146,61 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         if (message != null) {
             message.setContent(newContent);
         }
+    }
+
+    @Override
+    public boolean chatRoomExists(String chatRoomName) {
+        return chatRooms.containsKey(chatRoomName);
+    }
+
+    @Override
+    public ChatRoom getChatRoomByName(String chatRoomName) {
+        return chatRooms.get(chatRoomName);
+    }
+
+    @Override
+    public Message getMessageById(String messageId, String chatRoomName) {
+        // Retrieve the chat room
+        ChatRoom chatRoom = chatRooms.get(chatRoomName);
+        if (chatRoom == null) {
+            // Chat room doesn't exist
+            return null;
+        }
+        // Search for the message in the chat room's message list
+        return chatRoom.getMessages().stream()
+                .filter(message -> message.getId().equals(messageId))
+                .findFirst()
+                // Return null if message not found
+                .orElse(null);
+    }
+
+    @Override
+    public void updateMessage(Message message) {
+        // The messages are already marked as deleted and assumed to be updated in the memory
+    }
+
+    @Override
+    public boolean userExistsInChatRoom(String username, String chatRoomName) {
+        ChatRoom chatRoom = chatRooms.get(chatRoomName);
+        if (chatRoom == null) {
+            return false;
+        }
+        return chatRoom.getParticipants().stream()
+                .anyMatch(user -> user.getName().equals(username));
+    }
+
+    @Override
+    public User getUserInChatRoom(String username, String chatRoomName) {
+        // Fetch the chat room
+        ChatRoom chatRoom = chatRooms.get(chatRoomName);
+        if (chatRoom == null) {
+            // Chat room doesn't exist
+            return null;
+        }
+        // Find the user in the participants list
+        return chatRoom.getParticipants().stream()
+                .filter(user -> user.getName().equals(username))
+                .findFirst()
+                .orElse(null);
     }
 }
