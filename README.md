@@ -85,7 +85,7 @@ Once the application is installed and running, follow the steps below to start u
 
 We welcome feedback to improve this project! Please submit your feedback via:
 
-- **Google Forms:** [Submit Feedback Here](https://forms.gle/ERkbM7CtuZeFJwec7)
+- **Google Forms:** [Submit Feedback Here](https://forms.gle/uWzWpWtg2EjF3Wtm9)
 
 Please note valid feedback counts as stating a possible feature that can be implemented and explaining
 said feature in enough detail to implement it.
