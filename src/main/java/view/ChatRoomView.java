@@ -89,6 +89,7 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
             @Override
             public void actionPerformed(ActionEvent e) {
                 sendMessage();
+                refreshMessages();
             }
         });
         backButton.addActionListener(evt -> {
@@ -98,8 +99,7 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
         });  // Action listener for the button
 
         // Load initial messages
-        refreshMessages();
-
+        fetchMessages();
         setVisible(true);
     }
 
@@ -209,6 +209,24 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
             SwingUtilities.invokeLater(() -> {
                 messageArea.append(newMessage.getSender() + ": " + newMessage.getContent() + "\n");
             });
+        });
+    }
+
+    /**
+     * Refreshes the messages displayed in the chatroom.
+     */
+    private void fetchMessages() {
+        String chatRoomName = "";
+        if (chatRoomController != null) {
+            chatRoomName = chatRoomController.getChatRoomName();
+        }
+        ChatService chatService = new ChatService();
+        chatService.getMessagesForChatRoom(chatRoomName).thenAccept(messages -> {
+            System.out.println("Received messages: ");
+            for (Map.Entry<String, Message> messageEntry : messages.entrySet()) {
+                System.out.println(messageEntry.getKey() + ": " + messageEntry.getValue().getContent());
+                messageArea.append(messageEntry.getKey() + ": " + messageEntry.getValue().getContent() + "\n");
+            }
         });
     }
 
