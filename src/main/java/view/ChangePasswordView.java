@@ -59,6 +59,7 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
 
         // New Password Field
         JLabel newPasswordLabel = new JLabel("New Password:");
+
         newPasswordLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         newPasswordField = new JPasswordField(20);
         add(newPasswordLabel);

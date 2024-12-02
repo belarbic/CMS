@@ -28,6 +28,7 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
     private final JTextArea messageArea;
     private final JTextField inputField;
     private final JButton sendButton;
+    private final JButton backButton;
 
     private final String viewName = "Chatroom";
     private final ChatRoomViewModel chatRoomViewModel;
@@ -57,9 +58,30 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
         // Input field and send button
         final JPanel inputPanel = new JPanel(new BorderLayout());
         inputField = new JTextField();
+        inputField.setFont(new Font("Segoe UI", Font.PLAIN, 16)); // Plain font for errors
+        inputField.setForeground(new Color(0, 0, 0)); // Red color for error messages
+        inputField.setAlignmentX(Component.CENTER_ALIGNMENT);
         sendButton = new JButton("Send");
+        sendButton.setFont(new Font("Segoe UI", Font.BOLD, 14)); // Modern, bold font for the button
+        sendButton.setPreferredSize(new Dimension(150, 40)); // Smaller button width (150px)
+        sendButton.setMaximumSize(new Dimension(150, 40));  // Limit width to 150px
+        sendButton.setFocusPainted(false);  // Remove focus border
+        sendButton.setBackground(new Color(255, 255, 255));  // Light red color for 'Back' button
+        sendButton.setForeground(Color.BLACK); // White text color
+        sendButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Padding inside the button
+        sendButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Pointer cursor on hover
+        backButton = new JButton("Back");
+        backButton.setFont(new Font("Segoe UI", Font.BOLD, 14)); // Modern, bold font for the button
+        backButton.setPreferredSize(new Dimension(150, 40)); // Smaller button width (150px)
+        backButton.setMaximumSize(new Dimension(150, 40));  // Limit width to 150px
+        backButton.setFocusPainted(false);  // Remove focus border
+        backButton.setBackground(new Color(255, 92, 92));  // Light red color for 'Back' button
+        backButton.setForeground(Color.WHITE); // White text color
+        backButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Padding inside the button
+        backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Pointer cursor on hover
         inputPanel.add(inputField, BorderLayout.CENTER);
         inputPanel.add(sendButton, BorderLayout.EAST);
+        inputPanel.add(backButton, BorderLayout.WEST);
         add(inputPanel, BorderLayout.SOUTH);
 
         // Add action listener for sending messages
@@ -69,6 +91,11 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
                 sendMessage();
             }
         });
+        backButton.addActionListener(evt -> {
+            if (evt.getSource().equals(backButton)) {
+                chatRoomController.switchToLoggedInView();
+            }
+        });  // Action listener for the button
 
         // Load initial messages
         refreshMessages();
@@ -93,7 +120,8 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
         final String content = inputField.getText().trim();
         ChatService chatService = new ChatService();
         chatService.sendMessage(chatRoomName, content, userName);
-        refreshMessages();
+        inputField.setText("");
+//        refreshMessages();
     }
 
     /**
@@ -165,14 +193,22 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
 //                .map(message -> message.getSender() + ": " + message.getContent())
 //                .toList();
 //        messageArea.setText(String.join("\n", messages));
-        String chatRoomName = chatRoomController.getChatRoomName();
+        String chatRoomName = "";
+        if (chatRoomController != null) {
+            chatRoomName = chatRoomController.getChatRoomName();
+        }
         ChatService chatService = new ChatService();
-        chatService.getMessagesForChatRoom(chatRoomName).thenAccept(messages -> {
-            System.out.println("Received messages: ");
-            for (Map.Entry<String, Message> messageEntry : messages.entrySet()) {
-                System.out.println(messageEntry.getKey() + ": " + messageEntry.getValue().getContent());
-                messageArea.append(messageEntry.getKey() + ": " + messageEntry.getValue().getContent() + "\n");
-            }
+//        chatService.getMessagesForChatRoom(chatRoomName).thenAccept(messages -> {
+//            System.out.println("Received messages: ");
+//            for (Map.Entry<String, Message> messageEntry : messages.entrySet()) {
+//                System.out.println(messageEntry.getKey() + ": " + messageEntry.getValue().getContent());
+//                messageArea.append(messageEntry.getKey() + ": " + messageEntry.getValue().getContent() + "\n");
+//            }
+//        });
+        chatService.addMessageListener(chatRoomName, newMessage -> {
+            SwingUtilities.invokeLater(() -> {
+                messageArea.append(newMessage.getSender() + ": " + newMessage.getContent() + "\n");
+            });
         });
     }
 
