@@ -209,6 +209,7 @@ public class ChatRoomView extends JPanel implements ActionListener, PropertyChan
             SwingUtilities.invokeLater(() -> {
                 messageArea.append(newMessage.getSender() + ": " + newMessage.getContent() + "\n");
             });
+
         });
     }
 
