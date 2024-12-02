@@ -7,8 +7,4 @@ public class ViewChatRoomsInputData {
 
     public ViewChatRoomsInputData() {
     }
-
-    public void getName() {
-    }
-
 }

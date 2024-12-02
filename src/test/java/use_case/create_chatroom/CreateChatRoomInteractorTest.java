@@ -196,4 +196,29 @@ class CreateChatRoomInteractorTest {
             assertEquals("Presenter cannot be null", e.getMessage());
         }
     }
+
+    @Test
+    void testOutputData() {
+        CreateChatRoomInputData inputData = new CreateChatRoomInputData("", "hi");
+        CreateChatRoomUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+
+        CreateChatRoomOutputBoundary successPresenter = new CreateChatRoomOutputBoundary() {
+            @Override
+            public void prepareSuccessView(CreateChatRoomOutputData user) {
+                assertEquals("New", user.getName());
+                assertEquals("hi", user.getFirstMessage());
+                }
+
+            @Override
+            public void prepareFailView(String error) {
+            }
+
+            @Override
+            public void switchToLoggedInView() {
+            }
+        };
+
+        CreateChatRoomInputBoundary interactor = new CreateChatRoomInteractor(userRepository, successPresenter);
+        interactor.execute(inputData);
+    }
 }

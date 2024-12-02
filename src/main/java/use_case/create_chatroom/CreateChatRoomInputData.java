@@ -15,14 +15,6 @@ public class CreateChatRoomInputData {
     private ArrayList<Message> messages;
     private final String firstMessage;
 
-    public CreateChatRoomInputData(String name, ArrayList<User> participants, Message message, String firstMessage) {
-        this.name = name;
-        this.participants = participants;
-        this.firstMessage = firstMessage;
-        this.messages = new ArrayList<Message>();
-        this.messages.add(message);
-    }
-
     public CreateChatRoomInputData(String name, String firstMessage) {
         this.name = name;
         this.firstMessage = firstMessage;
@@ -36,11 +28,4 @@ public class CreateChatRoomInputData {
         return firstMessage;
     }
 
-    ArrayList<User> getParticipants() {
-        return participants;
-    }
-
-    ArrayList<Message> getMessages() {
-        return messages;
-    }
 }
