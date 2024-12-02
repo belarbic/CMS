@@ -47,3 +47,15 @@ into their existing platforms. Its focus on simplicity and functionality ensures
 formal and casual communication settings, making it versatile for all audiences.
 
 ## Question 3
+If we don't take into account the diversity of our users when designing the Chat Messaging System (CMS), our project
+can be less accessible to some groups. Older users may find it difficult to navigate complicated interfaces or small
+text sizes, for instance, while users with disabilities, such those who have visual impairments, may encounter
+difficulties if the system does not support screen readers or has no visual settings that can be adjusted.
+As the embedded ethics modules emphasize, neglecting to account for user variety runs the potential of producing both
+relational and practical disadvantages, such as limiting communication access and making users feel inferior to others.
+We could use universal design principles to enhance CMS in order to address these possible drawbacks. Features like high
+contrast modes, text size adjustments, and compatibility with assistive technology like screen readers,
+for example, would be in line with the ideas of equitable use and visible information. Furthermore, addressing the
+difficulties encountered by older users or those who are not tech-savvy would involve streamlining the interface and
+providing easy-to-use navigation. By combining these qualities, we can make CMS more accessible to a wider range of
+users and less likely to cause harm.

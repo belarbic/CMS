@@ -21,4 +21,8 @@ public class EditMessageOutputData {
     public String getNewContent() {
         return newContent;
     }
+
+    public boolean isUseCaseFailed() {
+        return useCaseFailed;
+    }
 }
